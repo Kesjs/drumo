@@ -24,6 +24,12 @@ const IMAGES = {
   "transfagarasan": ["RO SB Transfagarasan 69.jpg", "Serpentinele drumului Transfăgărășan"],
   "bucuresti-ploaie": ["Bucharest after the rain.JPG", "Bulevard din București după ploaie, cu lucrări, limitare de viteză 40 și avertizare de drum alunecos"],
   "marcaje-apold": ["ROM Apold, Strada Principala 0001.jpg", "Marcaje rutiere de trecere pentru pietoni, bandă de autobuz și linie continuă în localitatea Apold"],
+  "dn7-brezoi": ["DN7 Brezoi1.JPG", "Drumul național DN7 (Valea Oltului) lângă Brezoi, cu marcaje de separare și panou rutier de distanțe"],
+  "otopeni-intrare": ["Henri Coanda Otopeni airport entrance.jpg", "Panouri rutiere de direcție și benzi de circulație pe DN1 spre Aeroportul Henri Coandă Otopeni"],
+  "nadlac-frontiera": ["Border checkpoint Nadlac - Nagylak - Romanian side-8759.jpg", "Panouri de semnalizare și benzi pentru camioane și autoturisme la punctul rutier Nădlac"],
+  "e79-baile-felix": ["Baile Felix - E79.jpg", "Drumul european E79 (DN76) la intrarea în Băile Felix, cu indicatoare de direcție și benzi rutiere"],
+  "chisineu-cris": ["Panneau de signalisation routière de direction à Chișineu-Criș.jpg", "Panou rutier de presemnalizare a direcțiilor spre Oradea și Arad în Chișineu-Criș (DN79)"],
+  "calea-victoriei": ["Mro-bucharest-calea-victoriei.jpg", "Trafic urban și semnalizare rutieră pe Calea Victoriei din București"],
 };
 
 async function meta(title) {

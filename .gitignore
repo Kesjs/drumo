@@ -32,6 +32,7 @@ next-env.d.ts
 
 # local tool caches & logs
 /.impeccable-home/
+/.impeccable/review/
 *.log
 server.log
 server.err.log

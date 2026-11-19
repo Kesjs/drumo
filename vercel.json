@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/atestate",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/purge-kyc",
+      "schedule": "0 3 * * *"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    accent-color: #0b4ea2;
+    scrollbar-color: #4a5461 #f5f6f3;
+    scrollbar-width: thin;
+  }
+
+  body {
+    @apply bg-chalk text-asphalt font-sans antialiased;
+    caret-color: #0b4ea2;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  dd,
+  li {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: #f2b705;
+    color: #18202b;
+  }
+
+  :focus-visible {
+    outline: 3px solid #0b4ea2;
+    outline-offset: 3px;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

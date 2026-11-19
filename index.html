@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EuroPermis — Examenul teoretic auto, online, cu plata înainte și rezultat imediat</title>
+<meta name="description" content="Înscrie-te, învață, plătește și dă testul teoretic pentru permis online. Verificare de identitate, cronometru strict și atestat cu cod QR verificabil.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap&subset=latin-ext" rel="stylesheet">
+<style>
+:root{--asphalt:#18202b;--chalk:#f5f6f3;--paper:#fff;--line:#d9dcd6;--ink2:#4a5461;--signal:#f2b705;--blue:#0b4ea2;--ok:#1f7a4d}
+@media (prefers-color-scheme:dark){:root{--asphalt:#eef0ec;--chalk:#12171e;--paper:#1a212b;--line:#2c3541;--ink2:#a7b0bc;--signal:#f2b705;--blue:#6ea3ee;--ok:#5fcf9a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--chalk);color:var(--asphalt);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",sans-serif;line-height:1.1;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+header{border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:700 22px "IBM Plex Sans Condensed",sans-serif;text-decoration:none;letter-spacing:.2px}
+.logo b{background:var(--signal);color:#18202b;padding:0 6px;margin-left:2px}
+.nav a.l{margin-left:22px;text-decoration:none;font-size:15px;color:var(--ink2)}
+.btn{display:inline-block;background:var(--signal);color:#18202b;font-weight:600;padding:14px 22px;border-radius:4px;text-decoration:none;border:2px solid #18202b}
+.btn.alt{background:transparent;color:var(--asphalt);border-color:var(--asphalt)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;padding:64px 0 56px;align-items:center}
+.hero h1{font-size:clamp(38px,6vw,64px);font-weight:700}
+.hero p.lead{font-size:19px;color:var(--ink2);max-width:52ch;margin:20px 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.assure{margin-top:20px;font-size:14px;color:var(--ink2)}
+/* demo exam */
+.exam{background:var(--paper);border:2px solid var(--asphalt);border-radius:6px;overflow:hidden}
+.exam .top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:2px solid var(--asphalt);font-size:14px}
+.timer{font:500 28px "IBM Plex Mono",monospace}
+.bar{height:6px;background:var(--line)}.bar i{display:block;height:100%;width:100%;background:var(--signal);transform-origin:left}
+.exam .body{padding:18px 16px}
+.slot{aspect-ratio:16/9;background:repeating-linear-gradient(45deg,var(--chalk),var(--chalk) 10px,var(--paper) 10px,var(--paper) 20px);border:1px dashed var(--ink2);display:grid;place-items:center;text-align:center;font-size:13px;color:var(--ink2);position:relative;margin-bottom:14px}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--paper)}
+.slot span{padding:0 12px}
+.q{font-weight:600;margin:0 0 10px}
+.ans{display:block;width:100%;text-align:left;font:inherit;background:var(--paper);color:inherit;border:1px solid var(--line);padding:10px 12px;margin-bottom:8px;border-radius:4px;cursor:pointer}
+.ans:hover{border-color:var(--asphalt)}.ans.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}.ans.bad{border-color:#c0392b}
+.note{font-size:13px;color:var(--ink2);margin:6px 0 0;min-height:20px}
+.strip{background:var(--asphalt);color:var(--chalk)}
+@media (prefers-color-scheme:dark){.strip{background:var(--paper);color:var(--asphalt)}}
+.strip ul{list-style:none;margin:0;padding:18px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;font-size:15px}
+.strip li{border-left:3px solid var(--signal);padding-left:12px}
+section{padding:72px 0}
+h2{font-size:clamp(30px,4vw,44px);margin-bottom:12px}
+.sub{color:var(--ink2);max-width:60ch;margin:0 0 36px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid var(--asphalt);background:var(--paper)}
+.steps div{padding:22px;border-right:1px solid var(--line)}.steps div:last-child{border:0}
+.steps b{font:500 15px "IBM Plex Mono",monospace;color:var(--blue)}
+.steps h3{font-size:22px;margin:8px 0}.steps p{margin:0;font-size:15px;color:var(--ink2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.signs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.signs .slot{aspect-ratio:1;margin:0}
+.cert{background:var(--paper);border:2px solid var(--asphalt);padding:22px;position:relative}
+.cert h3{font-size:20px;margin-bottom:10px}
+.cert dl{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:0;font-size:15px}
+.cert dt{color:var(--ink2)}.cert dd{margin:0;font-family:"IBM Plex Mono",monospace;font-size:14px}
+.qr{position:absolute;right:20px;bottom:20px;width:84px;height:84px;border:1px dashed var(--ink2);display:grid;place-items:center;font-size:11px;color:var(--ink2);text-align:center}
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.plan{background:var(--paper);border:2px solid var(--line);padding:24px;display:flex;flex-direction:column}
+.plan.main{border-color:var(--asphalt);box-shadow:6px 6px 0 var(--signal)}
+.plan h3{font-size:24px}.plan .p{font:700 40px "IBM Plex Sans Condensed",sans-serif;margin:10px 0 0}
+.plan small{color:var(--ink2)}.plan ul{padding-left:18px;margin:16px 0 22px;flex:1;font-size:15px}
+.fine{font-size:14px;color:var(--ink2);margin-top:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.grid3 h3{font-size:21px;margin-bottom:6px}.grid3 p{margin:0;color:var(--ink2);font-size:16px}
+details{border-top:1px solid var(--line);padding:16px 0}details:last-child{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:600;font-size:18px}details p{color:var(--ink2);margin:10px 0 0;max-width:70ch}
+footer{border-top:2px solid var(--asphalt);padding:36px 0;font-size:14px;color:var(--ink2)}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+footer a{display:block;text-decoration:none;margin-bottom:6px}footer b{color:var(--asphalt)}
+@media (max-width:860px){.hero,.two,.price,.grid3,footer .cols{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.strip ul{grid-template-columns:1fr 1fr}.nav .l{display:none}section{padding:52px 0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="logo" href="#">Euro<b>Permis</b></a>
+<nav><a class="l" href="#cum">Cum funcționează</a><a class="l" href="#tarife">Tarife</a><a class="l" href="#faq">Întrebări</a> <a class="btn" style="padding:8px 16px;margin-left:22px" href="#tarife">Începe</a></nav>
+</div></header>
+
+<main>
+<div class="wrap hero">
+<div>
+<h1>Testul teoretic auto, în condiții reale, de pe telefon.</h1>
+<p class="lead">Te înscrii, îți verificăm identitatea, alegi un pachet, plătești și intri în sala de examen. Rezultatul îl vezi imediat, împreună cu explicația fiecărui răspuns.</p>
+<div class="cta"><a class="btn" href="#tarife">Alege pachetul</a><a class="btn alt" href="#cum">Vezi cum funcționează</a></div>
+<p class="assure">Plata se face înainte de examen. Prețurile sunt afișate în lei, fără costuri ascunse.</p>
+</div>
+
+<div class="exam" aria-label="Întrebare demonstrativă">
+<div class="top"><span>Întrebare demonstrativă · 1 din 26</span><span class="timer" id="t" aria-live="off">25</span></div>
+<div class="bar"><i id="b"></i></div>
+<div class="body">
+<div class="slot"><img src="images/indicator-cedeaza-trecerea.webp" alt="Indicatorul rutier Cedează trecerea" onerror="this.remove()"><span>Imagine reală: indicatorul „Cedează trecerea” (vezi images/README.md)</span></div>
+<p class="q">Ce obligație îți impune acest indicator?</p>
+<button class="ans" data-ok="0">Să oprești întotdeauna vehiculul</button>
+<button class="ans" data-ok="1">Să acorzi prioritate vehiculelor din intersecție</button>
+<button class="ans" data-ok="0">Să circuli cu prioritate pe drumul pe care te afli</button>
+<p class="note" id="n">Exemplu de întrebare. În examen, timpul trece singur la următoarea întrebare.</p>
+</div></div>
+</div>
+
+<div class="strip"><div class="wrap"><ul>
+<li>Plată securizată, procesată prin Stripe</li>
+<li>Date personale tratate conform GDPR</li>
+<li>Servere în Uniunea Europeană</li>
+<li>Atestat cu cod QR verificabil public</li>
+</ul></div></div>
+
+<section id="cum"><div class="wrap">
+<h2>Patru pași, de la înscriere la atestat</h2>
+<p class="sub">Fiecare pas e scurt și îți arată ce urmează. Poți face totul de pe telefon.</p>
+<div class="steps">
+<div><b>1</b><h3>Cont și identitate</h3><p>Nume, contact, categorie de permis. Fotografie a actului de identitate și un selfie rapid.</p></div>
+<div><b>2</b><h3>Pachet și plată</h3><p>Alegi pachetul și plătești cu cardul, Apple Pay, Google Pay sau transfer instant. Fără plată, examenul rămâne blocat.</p></div>
+<div><b>3</b><h3>Învățare și examen</h3><p>Lecții scurte cu audio, apoi sala de examen cu cronometru pe fiecare întrebare.</p></div>
+<div><b>4</b><h3>Rezultat și atestat</h3><p>Scorul apare imediat, cu răspunsul corect și explicația. Primești un atestat PDF cu cod QR.</p></div>
+</div></div></section>
+
+<section style="background:var(--paper);border-block:1px solid var(--line)"><div class="wrap two">
+<div>
+<h2>Panouri reale, nu desene.</h2>
+<p class="sub" style="margin-bottom:20px">Lecțiile și întrebările folosesc imagini reale ale indicatoarelor din România și fotografii de drum și intersecții. Fiecare imagine are sursa și licența trecute în pagina „Credite imagini”.</p>
+<div class="signs">
+<div class="slot"><img src="images/indicator-oprire.webp" alt="Indicatorul Stop" onerror="this.remove()"><span>indicator real</span></div>
+<div class="slot"><img src="images/indicator-drum-cu-prioritate.webp" alt="Indicatorul Drum cu prioritate" onerror="this.remove()"><span>indicator real</span></div>
+<div class="slot"><img src="images/indicator-sens-giratoriu.webp" alt="Indicatorul Sens giratoriu" onerror="this.remove()"><span>indicator real</span></div>
+</div></div>
+<div class="cert">
+<h3>Atestat de reușită EuroPermis</h3>
+<dl><dt>Candidat</dt><dd>Nume Prenume</dd><dt>Categorie</dt><dd>B</dd><dt>Data</dt><dd>zz.ll.aaaa</dd><dt>Scor</dt><dd>00 / 26</dd><dt>Nr. atestat</dt><dd>EP-0000-0000</dd></dl>
+<div style="height:96px"></div>
+<div class="qr">QR de verificare</div>
+<p class="fine" style="margin:0;max-width:60%">Scanează codul QR și vezi dacă atestatul este autentic.</p>
+</div>
+</div></section>
+
+<section id="tarife"><div class="wrap">
+<h2>Trei pachete, prețuri clare</h2>
+<p class="sub">Alegi ce ai nevoie. Plata se face înainte de intrarea în sala de examen.</p>
+<div class="price">
+<div class="plan"><h3>Examen direct</h3><div class="p">30 €</div><small>≈ 150 lei</small>
+<ul><li>Ai învățat deja în altă parte</li><li>Intri direct în sala de examen</li><li>Rezultat și bilanț imediat</li></ul><a class="btn alt" href="#">Alege</a></div>
+<div class="plan main"><h3>Curs accelerat + examen</h3><div class="p">49 €</div><small>≈ 245 lei</small>
+<ul><li>Recapitulare rapidă a esențialului</li><li>Lecții scurte cu audio</li><li>Examen imediat după curs</li></ul><a class="btn" href="#">Alege</a></div>
+<div class="plan"><h3>Pachet complet</h3><div class="p">79 €</div><small>≈ 395 lei</small>
+<ul><li>Pregătire completă ghidată, cu audio</li><li>Teste de antrenament</li><li>Examenul final</li></ul><a class="btn alt" href="#">Alege</a></div>
+</div>
+<p class="fine">Sume în lei orientative, calculate la cursul zilei de plată. Metode de plată: card, Apple Pay, Google Pay, transfer instant.</p>
+</div></section>
+
+<section style="background:var(--paper);border-block:1px solid var(--line)"><div class="wrap">
+<h2>Ce se întâmplă cu datele și banii tăi</h2>
+<p class="sub">Spunem clar ce facem, ca să nu fii nevoit să ghicești.</p>
+<div class="grid3">
+<div><h3>Actul de identitate și selfie-ul</h3><p>Le folosim doar pentru a verifica că tu dai examenul. Se păstrează o perioadă scurtă, criptat, apoi se șterg automat.</p></div>
+<div><h3>Camera în timpul examenului</h3><p>Rămâne pornită pe toată durata testului. Ieșirea din pagină este înregistrată și apare în raportul tău.</p></div>
+<div><h3>Plata și rambursarea</h3><p>Plătești prin Stripe; noi nu vedem datele cardului. Condițiile de rambursare sunt scrise înainte de plată.</p></div>
+<div><h3>Probleme tehnice</h3><p>Dacă pică internetul sau aplicația din vina platformei, ai o procedură clară de reluare sau rambursare.</p></div>
+<div><h3>Suport</h3><p>Îți răspunde un om, în intervalul anunțat în pagina de contact.</p></div>
+<div><h3>Atestatul</h3><p>Fiecare atestat are număr unic și cod QR care duce la o pagină publică de verificare.</p></div>
+</div></div></section>
+
+<section id="faq"><div class="wrap">
+<h2>Întrebări frecvente</h2>
+<p class="sub">Răspunsuri directe, inclusiv la întrebările incomode.</p>
+<details><summary>Este valabil oficial?</summary><p>Atestatul EuroPermis atestă rezultatul obținut pe platforma noastră. Nu înlocuiește examenul oficial organizat de autoritățile din România, decât dacă și atunci când vom avea un acord sau un agrement în acest sens. Ți-o spunem înainte de plată, nu după.</p></details>
+<details><summary>Ce se întâmplă dacă pic?</summary><p>Vezi scorul, răspunsurile corecte și explicațiile. Condițiile pentru o nouă încercare sunt afișate pe pagina de tarife, înainte să plătești.</p></details>
+<details><summary>Pot da examenul de pe telefon?</summary><p>Da, cu cameră funcțională și conexiune stabilă. Înainte de start ai un test rapid al camerei, al sunetului și al conexiunii.</p></details>
+<details><summary>De ce cereți actul de identitate și selfie?</summary><p>Pentru a ne asigura că persoana care dă examenul este cea înscrisă. Datele sunt șterse după perioada anunțată în politica de confidențialitate.</p></details>
+<details><summary>Ce categorii de permis sunt disponibile?</summary><p>B, A, AM și celelalte categorii vor fi adăugate pe măsură ce banca de întrebări este completă. Lista curentă apare la înscriere.</p></details>
+</div></section>
+</main>
+
+<footer><div class="wrap cols">
+<div><b>EuroPermis</b><br>[Denumire societate] · CUI [●] · Nr. reg. com. [●]<br>[Adresă sediu]<br>contact@[domeniu].ro · [telefon]</div>
+<div><b>Legal</b><a href="#">Termeni și condiții</a><a href="#">Politica de confidențialitate</a><a href="#">Politica de cookie-uri</a><a href="#">Rambursări</a></div>
+<div><b>Platformă</b><a href="#cum">Cum funcționează</a><a href="#tarife">Tarife</a><a href="#faq">Întrebări</a><a href="#">Credite imagini</a></div>
+</div></footer>
+
+<script>
+(function(){
+var t=document.getElementById('t'),b=document.getElementById('b'),n=document.getElementById('n'),s=25,done=false;
+var btns=[].slice.call(document.querySelectorAll('.ans'));
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function end(msg){done=true;clearInterval(iv);n.textContent=msg;btns.forEach(function(x){x.disabled=true;if(x.dataset.ok==='1')x.classList.add('good')})}
+btns.forEach(function(x){x.addEventListener('click',function(){if(done)return;
+if(x.dataset.ok==='1'){end('Corect. Indicatorul „Cedează trecerea” obligă la acordarea priorității.')}else{x.classList.add('bad');end('Greșit. Indicatorul „Cedează trecerea” cere să acorzi prioritate, nu neapărat să oprești.')}})});
+var iv=setInterval(function(){s--;t.textContent=s;if(!reduce)b.style.transform='scaleX('+(s/25)+')';if(s<=0)end('Timpul a expirat. În examen se trece automat la următoarea întrebare.')},1000);
+if(reduce)b.style.transform='scaleX(1)';
+})();
+</script>
+</body>
+</html>

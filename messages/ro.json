@@ -1,0 +1,23 @@
+{
+  "brand": "Drumo",
+  "locale": "ro-RO",
+  "nav": {
+    "categories": "Categorii",
+    "howItWorks": "Cum funcționează",
+    "courses": "Cursuri",
+    "exam": "Examen",
+    "verify": "Verificare atestat",
+    "faq": "Întrebări",
+    "login": "Conectare",
+    "signup": "Înscrie-te",
+    "dashboard": "Tablou de bord"
+  },
+  "legal": {
+    "documentName": "atestat de reușită Drumo",
+    "disclaimer": "Atestatul de reușită Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile din România."
+  },
+  "payment": {
+    "noSubscription": "Fără abonament și fără pachete. Plătești o singură taxă pentru categoria aleasă.",
+    "refundSummary": "Rambursare integrală în 14 zile calendaristice dacă nu ai început cursurile sau testele; rambursare proporțională conform politicii afișate înainte de plată."
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T04:44:00Z",
+  "title": "Design System: Drumo",
+  "extensions": {
+    "colorMeta": {
+      "asphalt": { "role": "neutral", "displayName": "Asphalt Ink", "canonical": "#18202b", "tonalRamp": ["#0d1117", "#18202b", "#263140", "#3a4759", "#4a5461", "#707a88", "#a4adb8", "#e5e8ec"] },
+      "chalk": { "role": "neutral", "displayName": "Chalk Ground", "canonical": "#f5f6f3", "tonalRamp": ["#585c54", "#7a8075", "#9ea498", "#c2c7bc", "#d9dcd6", "#eaece7", "#f5f6f3", "#fafbf9"] },
+      "signal": { "role": "primary", "displayName": "Signal Yellow", "canonical": "#f2b705", "tonalRamp": ["#4d3800", "#856200", "#b88900", "#e0a900", "#f2b705", "#f6ca45", "#fae08c", "#fef6d6"] },
+      "sign": { "role": "secondary", "displayName": "Sign Blue", "canonical": "#0b4ea2", "tonalRamp": ["#051e42", "#073068", "#0b4ea2", "#1f68c4", "#4788db", "#7aaae8", "#b3cef2", "#e6effb"] },
+      "ok": { "role": "semantic", "displayName": "Verified Green", "canonical": "#1f7a4d", "tonalRamp": ["#0b2b1b", "#144d31", "#1f7a4d", "#2d9964", "#51b583", "#84cfa9", "#bce6d0", "#eaf7f0"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Condensed", "purpose": "Hero headline only." },
+      "headline": { "displayName": "Section Headline", "purpose": "Section and page headers." },
+      "title": { "displayName": "Card / Step Title", "purpose": "Chapters, cards, and journey steps." },
+      "body": { "displayName": "Body Sans", "purpose": "Explanations, lessons, and UI copy." },
+      "mono": { "displayName": "Tabular Mono", "purpose": "Timers, certificate codes, and amounts." }
+    },
+    "shadows": [
+      { "name": "dossier-plate", "value": "8px 8px 0 #f2b705", "purpose": "Signature offset plate behind landing product mockups." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Landing reveal and step transitions (<= 16px travel)." },
+      { "name": "ease-operate", "value": "cubic-bezier(0.2, 0, 0, 1)", "purpose": "Crisp 180ms UI state feedback inside workspace." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Signal yellow action button with asphalt border.",
+      "html": "<button class=\"ds-btn-primary\">Începe înscrierea</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; border: 2px solid #18202b; background: #f2b705; color: #18202b; padding: 14px 24px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: transform 150ms ease, background-color 150ms ease; } .ds-btn-primary:hover { background: #e0a900; } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 3px solid #0b4ea2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined asphalt action button.",
+      "html": "<button class=\"ds-btn-secondary\">Vezi parcursul</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; border: 2px solid #18202b; background: transparent; color: #18202b; padding: 14px 24px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: background-color 150ms ease; } .ds-btn-secondary:hover { background: #ffffff; } .ds-btn-secondary:focus-visible { outline: 3px solid #0b4ea2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Product Frame",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "Structured white dossier frame with asphalt border.",
+      "html": "<div class=\"ds-card\"><strong>Taxa categoriei B</strong><p>Plătit 60% · Cursuri deblocate</p></div>",
+      "css": ".ds-card { border-radius: 8px; border: 2px solid #18202b; background: #ffffff; color: #18202b; padding: 24px; } .ds-card p { margin: 8px 0 0; color: #4a5461; font-size: 0.875rem; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "High-contrast form input with Sign Blue focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"ex. Andrei Popescu\" />",
+      "css": ".ds-input { width: 100%; min-height: 44px; border-radius: 4px; border: 1.5px solid #18202b; background: #ffffff; color: #18202b; padding: 10px 14px; font-size: 0.9375rem; } .ds-input:focus-visible { outline: 3px solid #0b4ea2; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Administratif moderne",
+    "overview": "EuroPermis adopts the clarity and quiet authority of European road signage and official public-service stationery. Surfaces sit on warm chalk paper and crisp white sheets, anchored by deep asphalt ink, with signal yellow reserved strictly for primary actions and progress.",
+    "keyCharacteristics": [
+      "Warm chalk canvas with high-contrast asphalt ink and crisp structural rules",
+      "Signal yellow reserved exclusively for primary actions and progress",
+      "Condensed display headings paired with humanist sans and tabular mono with Romanian diacritics",
+      "Real Romanian road sign photography with explicit public attribution"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Signal yellow appears only on primary actions, active progress indicators, and focus highlights.", "section": "colors" },
+      { "name": "The Asphalt Text Rule", "body": "Never place white or light text on Signal Yellow; always pair with Asphalt Ink.", "section": "colors" },
+      { "name": "The Proper Diacritic Rule", "body": "Always use Romanian comma-below characters (ș, ț) via latin-ext.", "section": "typography" }
+    ],
+    "dos": [
+      "Do keep Signal Yellow (#f2b705) strictly under 10% of any viewport and always pair it with Asphalt Ink (#18202b) text.",
+      "Do use real Romanian road photographs from credits.json with proper alt text in Romanian.",
+      "Do respect prefers-reduced-motion on all Framer Motion transitions.",
+      "Do enforce 44px minimum touch targets on mobile for exam answers and controls."
+    ],
+    "donts": [
+      "Don't use purple gradients, neon accents, or gratuitous glassmorphism blur cards.",
+      "Don't use emojis or Unicode symbols as UI icons.",
+      "Don't add eyebrow kickers above headings or decorative section numbers.",
+      "Don't replace real road sign photographs with simplified vector drawings or AI imagery.",
+      "Don't ever label the platform document permis or permis de conducere."
+    ]
+  }
+}

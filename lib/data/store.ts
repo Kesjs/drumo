@@ -386,6 +386,19 @@ function createInitialLocalDb(): LocalDb {
 let writeLock: Promise<void> = Promise.resolve();
 
 async function readLocalDb(): Promise<LocalDb> {
+  if (isSupabaseConfigured()) {
+    try {
+      const svc = createSupabaseService();
+      if (svc) {
+        const { data } = await svc.from("app_config").select("value").eq("key", "runtime_state_v1").single();
+        if (data?.value && typeof data.value === "object") {
+          return data.value as LocalDb;
+        }
+      }
+    } catch {
+      // Fallback to local file if app_config row is not created yet
+    }
+  }
   try {
     const raw = await fs.readFile(LOCAL_DB_PATH, "utf8");
     return JSON.parse(raw) as LocalDb;
@@ -402,6 +415,23 @@ async function mutateLocalDb<T>(fn: (db: LocalDb) => Promise<T> | T): Promise<T>
     const db = await readLocalDb();
     result = await fn(db);
     await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(db, null, 2), "utf8");
+    if (isSupabaseConfigured()) {
+      try {
+        const svc = createSupabaseService();
+        if (svc) {
+          await svc.from("app_config").upsert(
+            {
+              key: "runtime_state_v1",
+              value: db,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "key" },
+          );
+        }
+      } catch {
+        // Ignore transient network error while keeping local snapshot consistent
+      }
+    }
   };
   writeLock = writeLock.then(run, run);
   await writeLock;

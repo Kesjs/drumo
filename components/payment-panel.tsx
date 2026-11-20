@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { CheckCircle2, Lock, ArrowRight } from "lucide-react";
 import { Button, FieldCheckbox, FieldLabel, FieldTextarea, NoticeBox, Panel, ProgressMeter, StatusTag } from "@/components/ui/primitives";
 import type { SeedCategory } from "@/lib/data/seed-content";
 import type { EnrollmentRecord, PaymentRecord, RefundRequestRecord } from "@/lib/data/store";
@@ -16,6 +17,7 @@ export function PaymentPanel({
   payments,
   refundRequests,
   checkoutStatus,
+  examUnlocked = false,
 }: {
   category: SeedCategory;
   initialCurrency: Currency;
@@ -23,6 +25,7 @@ export function PaymentPanel({
   payments: PaymentRecord[];
   refundRequests: RefundRequestRecord[];
   checkoutStatus?: string;
+  examUnlocked?: boolean;
 }) {
   const router = useRouter();
   const lockedCurrency = enrollment && enrollment.total_paid > 0 ? enrollment.currency : null;
@@ -34,35 +37,56 @@ export function PaymentPanel({
   const totalDue = enrollment?.total_due ?? fees.total;
   const totalPaid = enrollment?.total_paid ?? 0;
   const remaining = Math.max(0, totalDue - totalPaid);
-  const paidCount = payments.filter((p) => p.status === "succeeded").length;
+  const succeededPayments = [...payments]
+    .filter((p) => p.status === "succeeded")
+    .sort((a, b) => a.installment_no - b.installment_no);
+  const paidCount = succeededPayments.length;
+  const maxInst = Math.max(1, category.max_installments);
+  const nextInstNo = paidCount + 1;
+  const isLastAllowedInstallment = nextInstNo >= maxInst;
   const schedule = suggestedSchedule(category, currency);
-  const defaultNext =
-    mode === "full"
-      ? remaining
-      : paidCount === 0
-        ? fees.minFirst
-        : Math.min(remaining, schedule[paidCount] ?? remaining);
 
+  // Compute recommended next installment amount respecting remaining balance and last-installment rule
+  const computeSuggestedNext = (targetMode: PaymentMode, targetCurrency: Currency) => {
+    const f = feeFor(category, targetCurrency);
+    const rem = totalPaid === 0 ? f.total : Math.max(0, (enrollment?.total_due ?? f.total) - totalPaid);
+    if (rem <= 0) return 0;
+    if (targetMode === "full" || isLastAllowedInstallment) return rem;
+    if (paidCount === 0) return f.minFirst;
+    const leftoverSlots = Math.max(1, maxInst - paidCount);
+    const evenSplit = Math.floor(rem / leftoverSlots / 100) * 100;
+    const minLeave = Math.ceil(f.total * 0.1);
+    if (rem - evenSplit > 0 && rem - evenSplit < minLeave) return rem;
+    return Math.max(minLeave, Math.min(rem, evenSplit));
+  };
+
+  const defaultNext = computeSuggestedNext(mode, currency);
   const [amountMajor, setAmountMajor] = useState(String((defaultNext / 100).toFixed(0)));
   const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [justPaidMsg, setJustPaidMsg] = useState<string | null>(null);
   const [refundReason, setRefundReason] = useState("");
   const [refundMsg, setRefundMsg] = useState<string | null>(null);
+
+  // Sync suggested amount whenever server props (totalPaid, paidCount, remaining) update after a payment
+  useEffect(() => {
+    const nextMinor = computeSuggestedNext(mode, currency);
+    setAmountMajor(String((nextMinor / 100).toFixed(0)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPaid, paidCount, remaining, category.id]);
 
   function switchCurrency(c: Currency) {
     if (lockedCurrency) return;
     setCurrency(c);
-    const f = feeFor(category, c);
-    setAmountMajor(String(((mode === "full" ? f.total : f.minFirst) / 100).toFixed(0)));
+    const nextMinor = computeSuggestedNext(mode, c);
+    setAmountMajor(String((nextMinor / 100).toFixed(0)));
   }
 
   function switchMode(m: PaymentMode) {
     setMode(m);
-    const f = feeFor(category, currency);
-    const rem = totalPaid === 0 ? f.total : remaining;
-    const nextVal = m === "full" ? rem : paidCount === 0 ? f.minFirst : Math.min(rem, schedule[paidCount] ?? rem);
-    setAmountMajor(String((nextVal / 100).toFixed(0)));
+    const nextMinor = computeSuggestedNext(m, currency);
+    setAmountMajor(String((nextMinor / 100).toFixed(0)));
   }
 
   async function handlePay(e: React.FormEvent) {
@@ -72,9 +96,10 @@ export function PaymentPanel({
       return;
     }
     const parsedMajor = Number(amountMajor.replace(",", "."));
-    const amountMinor = Math.round(parsedMajor * 100);
+    const amountMinor = mode === "full" || isLastAllowedInstallment ? remaining : Math.round(parsedMajor * 100);
     setLoading(true);
     setError(null);
+    setJustPaidMsg(null);
 
     try {
       const res = await fetch("/api/payments/checkout", {
@@ -88,6 +113,12 @@ export function PaymentPanel({
       } else if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
       } else {
+        const willSettle = totalPaid + amountMinor >= totalDue;
+        setJustPaidMsg(
+          willSettle
+            ? "Taxa categoriei a fost achitată integral! Cursurile și sala de examen sunt acum deblocate din punct de vedere financiar."
+            : `Tranșa #${nextInstNo} (${formatMoney(amountMinor, currency)}) a fost înregistrată! Cursurile și evaluările sunt acum deblocate.`,
+        );
         router.refresh();
       }
     } catch {
@@ -117,11 +148,76 @@ export function PaymentPanel({
 
   const paidPct = totalDue > 0 ? Math.round((totalPaid / totalDue) * 100) : 0;
 
+  // Build dynamic installment schedule breakdown (paid + remaining planned slots)
+  const installmentRows = Array.from({ length: maxInst }, (_, idx) => {
+    const slotNo = idx + 1;
+    const paidRecord = succeededPayments[idx];
+    if (paidRecord) {
+      return {
+        slotNo,
+        status: "paid" as const,
+        amount: paidRecord.amount,
+        paidAt: paidRecord.paid_at ?? paidRecord.created_at,
+        unlocks:
+          slotNo === 1
+            ? "Deblochează toate cursurile pe capitole și evaluările"
+            : slotNo === maxInst
+              ? "Achită soldul final pentru sala de examen"
+              : "Reduce soldul rămas către examen",
+      };
+    }
+    if (remaining === 0) {
+      return null;
+    }
+    const unpaidSlotsCount = Math.max(1, maxInst - paidCount);
+    const unpaidOrder = idx - paidCount;
+    let plannedAmount = schedule[idx] ?? 0;
+    if (paidCount > 0) {
+      const even = Math.floor(remaining / unpaidSlotsCount / 100) * 100;
+      plannedAmount =
+        unpaidOrder === unpaidSlotsCount - 1
+          ? remaining - even * (unpaidSlotsCount - 1)
+          : even;
+    }
+    return {
+      slotNo,
+      status: slotNo === nextInstNo ? ("next" as const) : ("upcoming" as const),
+      amount: plannedAmount,
+      paidAt: null,
+      unlocks:
+        slotNo === 1
+          ? "Deblochează imediat cursurile, audio și testele de capitol"
+          : idx === maxInst - 1 || plannedAmount >= remaining
+            ? "Achită soldul final și deblochează financiar sala de examen"
+            : `Tranșa ${slotNo} din ${maxInst} (reduce soldul rămas)`,
+    };
+  }).filter(Boolean);
+
   return (
     <div className="space-y-6">
-      {checkoutStatus === "succes" ? (
+      {checkoutStatus === "succes" || justPaidMsg ? (
         <NoticeBox tone="success" title="Plată confirmată">
-          Plata a fost înregistrată și chitanța a fost trimisă pe e-mail.
+          <p>{justPaidMsg ?? "Plata a fost înregistrată și chitanța a fost trimisă pe e-mail."}</p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {totalPaid > 0 ? (
+              <Link
+                href="/capitole"
+                className="inline-flex min-h-[38px] items-center gap-1.5 rounded border border-asphalt bg-asphalt px-3.5 py-1.5 text-xs font-semibold text-chalk hover:bg-asphalt/90"
+              >
+                Mergi la cursuri și capitole
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : null}
+            {remaining === 0 ? (
+              <Link
+                href={examUnlocked ? "/examen/briefing" : "/evaluare-globala"}
+                className="inline-flex min-h-[38px] items-center gap-1.5 rounded border border-asphalt bg-signal px-3.5 py-1.5 text-xs font-semibold text-asphalt hover:bg-[#e0a900]"
+              >
+                {examUnlocked ? "Intră în sala de examen" : "Verifică pregătirea pentru examen"}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : null}
+          </div>
         </NoticeBox>
       ) : null}
       {checkoutStatus === "anulat" ? (
@@ -137,26 +233,128 @@ export function PaymentPanel({
             </h2>
           </div>
           <StatusTag tone={remaining === 0 ? "ok" : totalPaid > 0 ? "signal" : "neutral"}>
-            {remaining === 0 ? "Achitat integral" : totalPaid > 0 ? "Cursuri deblocate" : "Neachitat"}
+            {remaining === 0
+              ? "Achitat integral"
+              : totalPaid > 0
+                ? `Tranșa ${paidCount}/${maxInst} achitată · Cursuri deblocate`
+                : "Neachitat"}
           </StatusTag>
         </div>
         <div className="mt-3">
           <ProgressMeter value={paidPct} tone={remaining === 0 ? "ok" : "sign"} label="Progres plată taxă" />
         </div>
-        <div className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
-          <div className="rounded border border-line bg-chalk p-3">
-            <strong>Cursuri și evaluări:</strong> {totalPaid > 0 ? "Deblocate" : "Se deblochează la prima plată"}
+
+        {/* Step-by-step access milestones: Step 1 Formation -> Step 2 Exam Composition */}
+        <div className="mt-4 grid gap-3 border-t border-line pt-4 text-xs sm:grid-cols-2">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2">
+              {totalPaid > 0 ? (
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+              ) : (
+                <Lock className="mt-0.5 h-4 w-4 shrink-0 text-mute" />
+              )}
+              <div>
+                <p className="font-semibold text-asphalt">Etapa 1 · Acces la formare (Cursuri &amp; QCM)</p>
+                <p className="mt-0.5 text-mute">
+                  {totalPaid > 0
+                    ? "Deblocat — ai acces complet la toate capitolele, audio și evaluările adaptive."
+                    : `Se deblochează imediat la plata primei tranșe (minim ${formatMoney(fees.minFirst, currency)}).`}
+                </p>
+              </div>
+            </div>
+            {totalPaid > 0 ? (
+              <Link href="/capitole" className="shrink-0 font-semibold text-sign underline underline-offset-4">
+                Deschide
+              </Link>
+            ) : null}
           </div>
-          <div className="rounded border border-line bg-chalk p-3">
-            <strong>Examen teoretic:</strong>{" "}
-            {remaining === 0 ? "Taxa este achitată integral" : `Mai sunt de achitat ${formatMoney(remaining, currency)}`}
+
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2">
+              {remaining === 0 ? (
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+              ) : (
+                <Lock className="mt-0.5 h-4 w-4 shrink-0 text-sign" />
+              )}
+              <div>
+                <p className="font-semibold text-asphalt">Etapa 2 · Acces la susținerea examenului</p>
+                <p className="mt-0.5 text-mute">
+                  {remaining === 0
+                    ? "Taxa este achitată 100%. Poți susține examenul imediat ce KYC și pragul de pregătire sunt îndeplinite."
+                    : `Se deblochează la achitarea soldului rămas de ${formatMoney(remaining, currency)}.`}
+                </p>
+              </div>
+            </div>
+            {remaining === 0 ? (
+              <Link
+                href={examUnlocked ? "/examen/briefing" : "/tablou-de-bord"}
+                className="shrink-0 font-semibold text-sign underline underline-offset-4"
+              >
+                {examUnlocked ? "Examen" : "Stare"}
+              </Link>
+            ) : null}
+          </div>
+        </div>
+
+        {/* Visual Installment Schedule Breakdown */}
+        <div className="mt-4 border-t border-line pt-4">
+          <p className="font-mono text-xs font-semibold text-asphalt">
+            PLANIFICARE TRANȘE (MAXIM {maxInst} TRANȘE PENTRU CATEGORIA {category.code})
+          </p>
+          <div className="mt-2.5 divide-y divide-line border-y border-line text-xs">
+            {installmentRows.map((row) =>
+              row ? (
+                <div key={row.slotNo} className="flex flex-wrap items-center justify-between gap-2 py-2.5">
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={`inline-flex h-6 w-6 items-center justify-center rounded font-mono text-xs font-bold ${
+                        row.status === "paid"
+                          ? "bg-ok text-chalk"
+                          : row.status === "next"
+                            ? "bg-signal text-asphalt"
+                            : "bg-chalk text-mute"
+                      }`}
+                    >
+                      {row.slotNo}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-asphalt">
+                        Tranșa #{row.slotNo} ·{" "}
+                        <span className="font-mono tabular-nums">{formatMoney(row.amount, currency)}</span>
+                      </p>
+                      <p className="text-mute">{row.unlocks}</p>
+                    </div>
+                  </div>
+                  <div className="font-mono text-xs">
+                    {row.status === "paid" ? (
+                      <span className="font-semibold text-ok">
+                        Achitată ({formatRoDateTime(row.paidAt!)})
+                      </span>
+                    ) : row.status === "next" ? (
+                      <span className="font-semibold text-sign">Următoarea tranșă la plată</span>
+                    ) : (
+                      <span className="text-mute">Ulterior</span>
+                    )}
+                  </div>
+                </div>
+              ) : null,
+            )}
           </div>
         </div>
       </Panel>
 
       {remaining > 0 ? (
         <form onSubmit={handlePay} className="space-y-5 rounded-lg border-2 border-asphalt bg-surface p-6">
-          <h2 className="font-cond text-2xl font-bold">Efectuează o plată</h2>
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="font-cond text-2xl font-bold">
+              {paidCount === 0
+                ? "Pasul 1: Achită integral sau prima tranșă"
+                : `Continuă plata — Tranșa #${nextInstNo} din ${maxInst}`}
+            </h2>
+            <span className="font-mono text-xs text-mute">
+              Sold rămas: {formatMoney(remaining, currency)}
+            </span>
+          </div>
 
           {error ? <NoticeBox tone="error">{error}</NoticeBox> : null}
 
@@ -186,9 +384,15 @@ export function PaymentPanel({
                 mode === "full" ? "border-asphalt bg-signal/15" : "border-line bg-chalk"
               }`}
             >
-              <p className="font-cond text-xl font-bold">Plată integrală</p>
+              <p className="font-cond text-xl font-bold">
+                {paidCount === 0 ? "Plată integrală (100%)" : "Achită tot soldul rămas acum"}
+              </p>
               <p className="mt-1 font-mono text-sm font-semibold tabular-nums">{formatMoney(remaining, currency)}</p>
-              <p className="mt-1 text-xs text-mute">Deblochează cursurile și acoperă integral taxa de examen.</p>
+              <p className="mt-1 text-xs text-mute">
+                {paidCount === 0
+                  ? "Deblochează imediat cursurile și acoperă integral taxa pentru examen."
+                  : "Închide taxa categoriei și deblochează financiar sala de examen."}
+              </p>
             </button>
 
             <button
@@ -198,32 +402,72 @@ export function PaymentPanel({
                 mode === "installments" ? "border-asphalt bg-signal/15" : "border-line bg-chalk"
               }`}
             >
-              <p className="font-cond text-xl font-bold">Plată în tranșe</p>
+              <p className="font-cond text-xl font-bold">
+                {paidCount === 0
+                  ? `Plată în tranșe (până la ${maxInst} tranșe)`
+                  : isLastAllowedInstallment
+                    ? `Ultima tranșă (#${nextInstNo}/${maxInst})`
+                    : `Plătește tranșa #${nextInstNo} din ${maxInst}`}
+              </p>
               <p className="mt-1 font-mono text-sm font-semibold tabular-nums">
-                Minim prima tranșă: {formatMoney(fees.minFirst, currency)}
+                {paidCount === 0
+                  ? `Minim prima tranșă: ${formatMoney(fees.minFirst, currency)}`
+                  : isLastAllowedInstallment
+                    ? `Sold final obligatoriu: ${formatMoney(remaining, currency)}`
+                    : `Recomandat acum: ${formatMoney(computeSuggestedNext("installments", currency), currency)}`}
               </p>
               <p className="mt-1 text-xs text-mute">
-                Deblochează cursurile imediat; examenul rămâne blocat până la plata integrală.
+                {paidCount === 0
+                  ? "Deblochează cursurile imediat; examenul rămâne blocat până la plata integrală."
+                  : isLastAllowedInstallment
+                    ? "Ultima tranșă permisă stinge integral taxa și deblochează examenul."
+                    : "Poți achita tranșa intermediară sau o sumă mai mare."}
               </p>
             </button>
           </div>
 
           {mode === "installments" ? (
             <div>
-              <FieldLabel htmlFor="pay-amount">Sumă de plată acum ({currency})</FieldLabel>
-              <input
-                id="pay-amount"
-                type="number"
-                step="1"
-                min={paidCount === 0 ? fees.minFirst / 100 : 1}
-                max={remaining / 100}
-                value={amountMajor}
-                onChange={(e) => setAmountMajor(e.target.value)}
-                className="mt-1.5 flex min-h-[44px] w-full max-w-xs rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2 font-mono text-base font-medium tabular-nums"
-              />
+              <FieldLabel htmlFor="pay-amount">
+                Sumă de plată pentru tranșa #{nextInstNo} ({currency})
+              </FieldLabel>
+              <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                <input
+                  id="pay-amount"
+                  type="number"
+                  step="1"
+                  readOnly={isLastAllowedInstallment}
+                  min={paidCount === 0 ? fees.minFirst / 100 : isLastAllowedInstallment ? remaining / 100 : 1}
+                  max={remaining / 100}
+                  value={isLastAllowedInstallment ? String((remaining / 100).toFixed(0)) : amountMajor}
+                  onChange={(e) => setAmountMajor(e.target.value)}
+                  className="flex min-h-[44px] w-full max-w-xs rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2 font-mono text-base font-medium tabular-nums"
+                />
+                {!isLastAllowedInstallment && computeSuggestedNext("installments", currency) < remaining ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setAmountMajor(String((computeSuggestedNext("installments", currency) / 100).toFixed(0)))
+                      }
+                      className="min-h-[38px] rounded border border-line bg-chalk px-3 py-1.5 font-mono text-xs font-semibold text-asphalt hover:border-asphalt"
+                    >
+                      Tranșă sugerată ({formatMoney(computeSuggestedNext("installments", currency), currency)})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setAmountMajor(String((remaining / 100).toFixed(0)))}
+                      className="min-h-[38px] rounded border border-line bg-chalk px-3 py-1.5 font-mono text-xs font-semibold text-asphalt hover:border-asphalt"
+                    >
+                      Tot restul ({formatMoney(remaining, currency)})
+                    </button>
+                  </>
+                ) : null}
+              </div>
               <p className="mt-1 text-xs text-mute">
-                Tranșe maxime pentru {category.code}: {category.max_installments}. Rest actual:{" "}
-                {formatMoney(remaining, currency)}.
+                {isLastAllowedInstallment
+                  ? `Aceasta este ultima tranșă (#${nextInstNo} din ${maxInst}) și trebuie să acopere soldul rămas de ${formatMoney(remaining, currency)}.`
+                  : `Tranșe permise pentru ${category.code}: ${maxInst}. Sold rămas: ${formatMoney(remaining, currency)}.`}
               </p>
             </div>
           ) : null}

@@ -12,6 +12,8 @@ export function KycPanel({ kyc }: { kyc: KycRecord | null }) {
   const idInputRef = useRef<HTMLInputElement | null>(null);
   const selfieInputRef = useRef<HTMLInputElement | null>(null);
   const [documentType, setDocumentType] = useState<"ci" | "passport" | "eu_id">("ci");
+  const [idFile, setIdFile] = useState<File | null>(null);
+  const [selfieFile, setSelfieFile] = useState<File | null>(null);
   const [idFileName, setIdFileName] = useState("");
   const [selfieFileName, setSelfieFileName] = useState("");
   const [flagManualReview, setFlagManualReview] = useState(false);
@@ -20,17 +22,22 @@ export function KycPanel({ kyc }: { kyc: KycRecord | null }) {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!idFileName || !selfieFileName) {
+    if (!idFile || !selfieFile) {
       setMsg({ tone: "error", text: "Selectează fotografia actului și fotografia tip selfie." });
       return;
     }
     setLoading(true);
     setMsg(null);
     try {
+      const form = new FormData();
+      form.append("documentType", documentType);
+      form.append("idFile", idFile);
+      form.append("selfieFile", selfieFile);
+      form.append("flagManualReview", String(flagManualReview));
+
       const res = await fetch("/api/kyc/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ documentType, idFileName, selfieFileName, flagManualReview }),
+        body: form,
       });
       const data = await res.json();
       if (!res.ok) {
@@ -38,7 +45,7 @@ export function KycPanel({ kyc }: { kyc: KycRecord | null }) {
       } else {
         setMsg({
           tone: "success",
-          text: "Documentele au fost înregistrate criptat și trimise spre verificare.",
+          text: "Documentele au fost încărcate criptat și trimise spre verificare.",
         });
         router.refresh();
       }
@@ -124,7 +131,11 @@ export function KycPanel({ kyc }: { kyc: KycRecord | null }) {
                 id="kyc-doc"
                 type="file"
                 accept="image/*,.pdf"
-                onChange={(e) => setIdFileName(e.target.files?.[0]?.name || "")}
+                onChange={(e) => {
+                  const f = e.target.files?.[0] ?? null;
+                  setIdFile(f);
+                  setIdFileName(f?.name || "");
+                }}
                 className="sr-only"
               />
               <button
@@ -156,7 +167,11 @@ export function KycPanel({ kyc }: { kyc: KycRecord | null }) {
                 type="file"
                 accept="image/*"
                 capture="user"
-                onChange={(e) => setSelfieFileName(e.target.files?.[0]?.name || "")}
+                onChange={(e) => {
+                  const f = e.target.files?.[0] ?? null;
+                  setSelfieFile(f);
+                  setSelfieFileName(f?.name || "");
+                }}
                 className="sr-only"
               />
               <button

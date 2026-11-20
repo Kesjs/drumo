@@ -124,6 +124,37 @@ async function run() {
   if (r.status !== 200) throw new Error("Admin KYC approval failed");
   console.log("ok admin approved KYC");
 
+  // 8b. Pay installment #2 (450 RON = 45000 bani) -> totalPaid 1000 RON / 1450 RON -> exam STILL locked
+  r = await req("/api/payments/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: candCookie },
+    body: JSON.stringify({ mode: "installments", currency: "RON", amountMinor: 45000, method: "card" }),
+  });
+  if (r.status !== 200) throw new Error(`Second installment failed: ${await r.text()}`);
+  console.log("ok installment 2 (450 RON -> 1000/1450 RON)");
+
+  // 8c. Last allowed installment (#3 of 3) must settle remaining 450 RON; trying 200 RON must fail (400)
+  r = await req("/api/payments/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: candCookie },
+    body: JSON.stringify({ mode: "installments", currency: "RON", amountMinor: 20000, method: "card" }),
+  });
+  if (r.status !== 400) throw new Error(`Expected 400 when 3rd installment does not settle balance, got ${r.status}`);
+  console.log("ok last installment rule enforced");
+
+  // 8d. Pay final installment #3 (450 RON = 45000 bani) -> fee_fully_paid = true (1450/1450 RON)
+  r = await req("/api/payments/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: candCookie },
+    body: JSON.stringify({ mode: "installments", currency: "RON", amountMinor: 45000, method: "card" }),
+  });
+  if (r.status !== 200) throw new Error(`Final installment failed: ${await r.text()}`);
+  const meAfterPay = await (await req("/api/auth/me", { headers: { Cookie: candCookie } })).json();
+  if (!meAfterPay.snapshot?.access?.coursesUnlocked || !meAfterPay.snapshot?.access?.feeFullyPaid) {
+    throw new Error("Expected coursesUnlocked=true and feeFullyPaid=true after 3 installments");
+  }
+  console.log("ok installment 3 (450 RON -> 1450/1450 RON, feeFullyPaid = true)");
+
   // 9. Verify existing demo certificate PDF + public verify page
   r = await req("/api/verify/DR-0C1C-3Q3R");
   // Check seeded certificate from admin overview via login as demo candidate

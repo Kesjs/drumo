@@ -79,7 +79,11 @@ export default async function DashboardPage() {
             <div className="flex items-center justify-between gap-2">
               <h2 className="text-sm font-semibold text-mute">2. Taxa categoriei {snap.category.code}</h2>
               <StatusTag tone={snap.access.feeFullyPaid ? "ok" : snap.access.coursesUnlocked ? "signal" : "neutral"}>
-                {snap.access.feeFullyPaid ? "Plătită integral" : snap.access.coursesUnlocked ? "Tranșă activă" : "Neplătită"}
+                {snap.access.feeFullyPaid
+                  ? "Plătită integral"
+                  : snap.access.coursesUnlocked
+                    ? `Tranșa ${snap.payments.filter((p) => p.status === "succeeded").length}/${snap.category.max_installments} · Cursuri`
+                    : "Neplătită"}
               </StatusTag>
             </div>
             <p className="mt-2 font-mono text-lg font-bold tabular-nums">
@@ -88,8 +92,19 @@ export default async function DashboardPage() {
             <div className="mt-2">
               <ProgressMeter value={paidPct} tone={snap.access.feeFullyPaid ? "ok" : "sign"} label="Progres plată" />
             </div>
+            <p className="mt-2 text-xs text-mute">
+              {snap.access.feeFullyPaid
+                ? "Cursuri și examen deblocate financiar."
+                : snap.access.coursesUnlocked
+                  ? `Cursuri deblocate · Rest examen: ${formatMoney(Math.max(0, totalDue - totalPaid), currency)}`
+                  : "Prima tranșă deblochează toate cursurile."}
+            </p>
             <Link href="/plata" className="mt-3 inline-block text-sm font-semibold text-sign underline underline-offset-4">
-              {snap.access.feeFullyPaid ? "Vezi chitanțele" : "Plătește online"}
+              {snap.access.feeFullyPaid
+                ? "Vezi chitanțele"
+                : snap.access.coursesUnlocked
+                  ? "Achită următoarea tranșă"
+                  : "Achită prima tranșă"}
             </Link>
           </Panel>
 

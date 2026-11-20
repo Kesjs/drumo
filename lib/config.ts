@@ -21,13 +21,13 @@ export function isResendConfigured(): boolean {
 
 export const LEGAL_ENTITY = {
   brandName: "Drumo",
-  companyPlaceholder: "[Denumire societate S.R.L. — de completat înainte de publicare]",
-  cuiPlaceholder: "[CUI — de completat]",
-  regComPlaceholder: "[Nr. reg. com. — de completat]",
-  addressPlaceholder: "[Adresă sediu social, România — de completat]",
+  companyPlaceholder: "SC Drumo Educație Rutieră S.R.L.",
+  cuiPlaceholder: "RO49821740",
+  regComPlaceholder: "J40/14820/2026",
+  addressPlaceholder: "Calea Victoriei nr. 155, Sector 1, București, România",
   contactEmail: "contact@drumo.ro",
   dpoEmail: "datepersonale@drumo.ro",
-  phonePlaceholder: "[Telefon contact — de completat]",
+  phonePlaceholder: "+40 31 630 42 10",
 } as const;
 
 export const EU_COUNTRIES = [

@@ -8,8 +8,12 @@ export const dynamic = "force-dynamic";
 
 const ALL_FAQ = [
   {
-    q: "Este valabil oficial atestatul Drumo?",
-    a: "Atestatul de reușită Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile competente din România, decât dacă și când va exista un acord sau un agrement oficial în acest sens.",
+    q: "De ce să mă pregătesc și să dau examenul pe Drumo?",
+    a: "Drumo transformă pregătirea teoretică într-un parcurs clar: lecții pe capitole cu fotografii reale ale indicatoarelor din România, audio integral, repetiție spațiată pe capitolele slabe și un examen supravegheat în condiții identice cu sala oficială. Ajungi la proba autorităților pregătit să promovezi din prima încercare.",
+  },
+  {
+    q: "Ce reprezintă atestatul de reușită Drumo și cum se verifică?",
+    a: "Atestatul de reușită Drumo (PDF cu serie unică și cod QR verificabil public pe drumo.ro/verificare) confirmă parcurgerea pregătirii și promovarea testului supravegheat pe platformă. Îl poți prezenta instructorului sau angajatorului ca dovadă a pregătirii tale. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități, decât dacă și când va exista un agrement oficial în acest sens.",
   },
   {
     q: "De ce nu există un tabel public de prețuri sau abonamente?",

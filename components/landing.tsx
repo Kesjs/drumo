@@ -750,28 +750,28 @@ export function Certificate() {
 
 const faq = [
   [
-    "Este valabil oficial?",
-    "Nu înlocuiește examenul oficial organizat de autoritățile din România, decât dacă și când va exista un acord sau un agrement în acest sens. Ți-o spunem clar înainte de plată.",
+    "De ce să mă pregătesc și să dau examenul pe Drumo?",
+    "Drumo îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
   ],
   [
-    "Primesc permisul de conducere pe e-mail?",
-    "Nu. Permisul de conducere este eliberat doar de autorități. Tu primești atestatul de reușită Drumo, în maximum 3 zile de la examen.",
+    "La ce îmi folosește atestatul de reușită Drumo?",
+    "Atestatul de reușită Drumo (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe Drumo și nu înlocuiește permisul de conducere eliberat de autorități.",
   ],
   [
     "Pot plăti în tranșe?",
-    "Da. Prima plată deblochează cursurile, iar examenul se deblochează după achitarea integrală a taxei categoriei tale.",
+    "Da. Prima plată deblochează imediat toate cursurile pe capitole, lecțiile audio și evaluările adaptive. Restul taxei se achită în maximum 2–3 tranșe, înainte de a intra în sala de examen.",
   ],
   [
-    "Cât costă?",
-    "Taxa depinde de categoria de permis și o vezi la înscriere, înainte de plată. Nu există abonament.",
+    "Cât costă și există abonament?",
+    "Nu există abonament lunar sau costuri ascunse. Plătești o singură taxă pentru categoria aleasă, afișată clar la înscriere (în RON sau EUR), înainte de orice plată.",
   ],
   [
-    "Ce se întâmplă dacă nu trec?",
-    "Vezi scorul, răspunsurile corecte și explicațiile. Condițiile pentru o nouă încercare sunt afișate înainte de plată.",
+    "Ce se întâmplă dacă nu trec din prima?",
+    "Primești pe loc scorul, analiza fiecărei întrebări și explicația juridică a răspunsului corect, iar motorul adaptiv îți pregătește un plan de recapitulare pe capitolele slabe. Condițiile pentru o nouă încercare sunt afișate transparent înainte de plată.",
   ],
   [
     "De ce cereți act de identitate și selfie?",
-    "Ca să ne asigurăm că persoana care dă examenul este cea înscrisă. Datele se păstrează criptat, o perioadă scurtă, apoi se șterg automat.",
+    "Pentru ca atestatul tău Drumo să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
   ],
 ];
 

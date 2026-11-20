@@ -54,7 +54,7 @@ export function FieldInput({ className, ...rest }: React.InputHTMLAttributes<HTM
   return (
     <input
       className={cn(
-        "flex min-h-[44px] w-full rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2 text-base sm:text-sm text-asphalt placeholder:text-mute disabled:cursor-not-allowed disabled:bg-chalk disabled:opacity-60",
+        "flex min-h-[44px] w-full rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2 text-base sm:text-sm text-asphalt placeholder:text-mute transition-colors focus:border-sign focus:outline-none focus-visible:border-sign focus-visible:outline-none aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger disabled:cursor-not-allowed disabled:bg-chalk disabled:opacity-60",
         className,
       )}
       {...rest}
@@ -66,7 +66,7 @@ export function FieldTextarea({ className, ...rest }: React.TextareaHTMLAttribut
   return (
     <textarea
       className={cn(
-        "flex min-h-[96px] w-full rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2.5 text-base sm:text-sm text-asphalt placeholder:text-mute disabled:cursor-not-allowed disabled:bg-chalk disabled:opacity-60",
+        "flex min-h-[96px] w-full rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2.5 text-base sm:text-sm text-asphalt placeholder:text-mute transition-colors focus:border-sign focus:outline-none focus-visible:border-sign focus-visible:outline-none aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger disabled:cursor-not-allowed disabled:bg-chalk disabled:opacity-60",
         className,
       )}
       {...rest}
@@ -187,9 +187,9 @@ export function FieldSelect({
         onKeyDown={handleTriggerKeyDown}
         className={cn(
           "flex min-h-[44px] w-full items-center justify-between gap-2 rounded border-[1.5px] border-asphalt bg-surface px-3.5 py-2 text-left text-base text-asphalt transition-colors sm:text-sm",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sign focus-visible:ring-offset-1",
+          "focus:border-sign focus:outline-none focus-visible:border-sign focus-visible:outline-none",
           "disabled:cursor-not-allowed disabled:bg-chalk disabled:opacity-60",
-          open && "ring-2 ring-asphalt/20",
+          open && "border-sign",
         )}
       >
         <span className="truncate">{selectedOption?.label ?? "—"}</span>

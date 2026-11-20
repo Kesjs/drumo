@@ -431,25 +431,79 @@ export function ExamMock() {
 
 export function CertMock() {
   return (
-    <Frame title="drumo.ro/verificare/DR-0000-0000">
-      <div className="relative p-4 text-sm">
-        <p className="font-cond text-lg font-bold">Atestat de reușită Drumo</p>
-        <dl className="mt-2 grid grid-cols-[90px_1fr] gap-y-1 text-xs">
-          <dt className="text-mute">Candidat</dt>
-          <dd className="font-mono">Andrei P.</dd>
-          <dt className="text-mute">Categorie</dt>
-          <dd className="font-mono">B</dd>
-          <dt className="text-mute">Scor</dt>
-          <dd className="font-mono tabular-nums">24 / 26</dd>
-          <dt className="text-mute">Nr.</dt>
-          <dd className="font-mono">DR-0000-0000</dd>
-        </dl>
-        <div className="mt-3 flex items-end justify-between gap-3">
-          <p className="max-w-[60%] text-xs text-mute">
-            Trimis automat pe e-mail în maximum 3 zile de la examen.
+    <Frame>
+      <div className="bg-[#fcfcf9] text-sm">
+        {/* Official paper certificate header */}
+        <div className="flex items-center justify-between gap-3 border-b-2 border-asphalt bg-asphalt px-5 py-3.5 text-chalk">
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex h-7 items-center rounded-sm bg-signal px-2 font-cond text-sm font-bold tracking-tight text-asphalt">
+              Drumo
+            </span>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-signal">Document verificabil QR</p>
+              <p className="font-cond text-lg font-bold leading-none text-chalk">ATESTAT DE REUȘITĂ</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="font-mono text-xs text-chalk/70">SERIE UNICĂ</p>
+            <p className="font-mono text-xs font-bold tracking-wider text-signal">DR-0000-0000</p>
+          </div>
+        </div>
+
+        {/* Paper body */}
+        <div className="px-5 py-5">
+          <p className="text-xs text-mute">Se confirmă prin prezentul document că</p>
+          <p className="mt-1 font-cond text-3xl font-bold tracking-tight text-asphalt">Andrei Popescu</p>
+          <p className="mt-1 text-xs leading-relaxed text-asphalt">
+            a finalizat pregătirea teoretică și a promovat examenul supravegheat pentru{" "}
+            <strong className="font-semibold">Categoria B — Autoturisme</strong>.
           </p>
-          <div className="grid h-16 w-16 place-items-center rounded border border-asphalt/30 bg-chalk text-asphalt">
-            <QrCodeIcon className="h-10 w-10" aria-hidden="true" />
+
+          {/* Key verification metrics */}
+          <dl className="mt-4 grid grid-cols-3 divide-x divide-line border-y border-line py-3 text-xs">
+            <div className="pr-3">
+              <dt className="text-mute">Scor obținut</dt>
+              <dd className="mt-0.5 font-mono text-base font-bold tabular-nums text-ok">24 / 26</dd>
+            </div>
+            <div className="px-3">
+              <dt className="text-mute">Rezultat</dt>
+              <dd className="mt-0.5 font-mono text-sm font-bold text-asphalt">ADMIS</dd>
+            </div>
+            <div className="pl-3">
+              <dt className="text-mute">Emis la</dt>
+              <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-asphalt">19.11.2026</dd>
+            </div>
+          </dl>
+
+          {/* Footer: Seal + legal status + QR */}
+          <div className="mt-4 flex items-end justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <svg
+                viewBox="0 0 64 64"
+                className="h-14 w-14 shrink-0 text-sign"
+                aria-hidden="true"
+              >
+                <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+                <circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" strokeWidth="1.25" />
+                <text x="32" y="29" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor" fontFamily="monospace">
+                  DRUMO
+                </text>
+                <text x="32" y="40" textAnchor="middle" fontSize="6.5" fontWeight="600" fill="currentColor" fontFamily="monospace">
+                  VERIFICAT
+                </text>
+              </svg>
+              <div className="space-y-1 text-xs leading-snug text-mute">
+                <p className="font-semibold text-asphalt">Semnătură electronică &amp; registru public</p>
+                <p>Atestat de reușită Drumo · Nu este permis de conducere oficial.</p>
+              </div>
+            </div>
+
+            <div className="shrink-0 text-center">
+              <div className="inline-flex h-16 w-16 items-center justify-center rounded border border-asphalt bg-white p-1.5 text-asphalt">
+                <QrCodeIcon className="h-12 w-12" aria-hidden="true" />
+              </div>
+              <p className="mt-1 font-mono text-xs text-mute">drumo.ro/verificare</p>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { PublicHeader, PublicFooter } from "@/components/site-chrome";
-import { Hero, Trust, Categories, Journey, Payment, Exam, Signs, Certificate, Faq, FinalCta } from "@/components/landing";
+import { Hero, Trust, Categories, Journey, Payment, Exam, Signs, Certificate, Faq, ContactSection, FinalCta } from "@/components/landing";
 import { getCurrentUser } from "@/lib/data/store";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +19,7 @@ export default async function HomePage() {
         <Signs />
         <Certificate />
         <Faq />
+        <ContactSection />
         <FinalCta />
       </main>
       <PublicFooter />

@@ -13,7 +13,11 @@ import {
   DevicePhoneMobileIcon,
   BuildingLibraryIcon,
   EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
 } from "@heroicons/react/24/outline";
+import { ContactForm } from "./contact-form";
+import { LEGAL_ENTITY } from "@/lib/config";
 import {
   DashboardMock,
   SignupStepMock,
@@ -789,6 +793,50 @@ export function Faq() {
             <p className="mt-2 max-w-[65ch] text-mute">{a}</p>
           </details>
         ))}
+      </div>
+    </section>
+  );
+}
+
+export function ContactSection() {
+  return (
+    <section id="contact" className="border-t border-line bg-white py-20">
+      <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr]">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            Ai o întrebare? Scrie-ne direct.
+          </h2>
+          <p className="mt-3 max-w-[50ch] text-mute">
+            Echipa Drumo răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
+            identității (KYC) sau atestatul QR.
+          </p>
+          <dl className="mt-8 space-y-4 border-t border-line pt-6 text-sm">
+            <div className="flex items-start gap-3">
+              <EnvelopeIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
+              <div>
+                <dt className="font-semibold text-asphalt">E-mail suport</dt>
+                <dd className="font-mono text-mute">{LEGAL_ENTITY.contactEmail}</dd>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
+              <div>
+                <dt className="font-semibold text-asphalt">Telefon</dt>
+                <dd className="font-mono text-mute">{LEGAL_ENTITY.phonePlaceholder}</dd>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <MapPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
+              <div>
+                <dt className="font-semibold text-asphalt">Sediu</dt>
+                <dd className="text-mute">{LEGAL_ENTITY.addressPlaceholder}</dd>
+              </div>
+            </div>
+          </dl>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <ContactForm />
+        </Reveal>
       </div>
     </section>
   );

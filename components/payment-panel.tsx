@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Lock, ArrowRight } from "lucide-react";
+import {
+  CheckCircleIcon,
+  LockClosedIcon,
+  ArrowRightIcon,
+  CreditCardIcon,
+  DevicePhoneMobileIcon,
+  BuildingLibraryIcon,
+} from "@heroicons/react/24/outline";
 import { Button, FieldCheckbox, FieldLabel, FieldTextarea, NoticeBox, Panel, ProgressMeter, StatusTag } from "@/components/ui/primitives";
 import type { SeedCategory } from "@/lib/data/seed-content";
 import type { EnrollmentRecord, PaymentRecord, RefundRequestRecord } from "@/lib/data/store";
@@ -205,7 +212,7 @@ export function PaymentPanel({
                 className="inline-flex min-h-[38px] items-center gap-1.5 rounded border border-asphalt bg-asphalt px-3.5 py-1.5 text-xs font-semibold text-chalk hover:bg-asphalt/90"
               >
                 Mergi la cursuri și capitole
-                <ArrowRight className="h-3.5 w-3.5" />
+                <ArrowRightIcon className="h-3.5 w-3.5" />
               </Link>
             ) : null}
             {remaining === 0 ? (
@@ -214,7 +221,7 @@ export function PaymentPanel({
                 className="inline-flex min-h-[38px] items-center gap-1.5 rounded border border-asphalt bg-signal px-3.5 py-1.5 text-xs font-semibold text-asphalt hover:bg-[#e0a900]"
               >
                 {examUnlocked ? "Intră în sala de examen" : "Verifică pregătirea pentru examen"}
-                <ArrowRight className="h-3.5 w-3.5" />
+                <ArrowRightIcon className="h-3.5 w-3.5" />
               </Link>
             ) : null}
           </div>
@@ -249,9 +256,9 @@ export function PaymentPanel({
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-2">
               {totalPaid > 0 ? (
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+                <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
               ) : (
-                <Lock className="mt-0.5 h-4 w-4 shrink-0 text-mute" />
+                <LockClosedIcon className="mt-0.5 h-4 w-4 shrink-0 text-mute" />
               )}
               <div>
                 <p className="font-semibold text-asphalt">Etapa 1 · Acces la formare (Cursuri &amp; QCM)</p>
@@ -272,9 +279,9 @@ export function PaymentPanel({
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-2">
               {remaining === 0 ? (
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+                <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
               ) : (
-                <Lock className="mt-0.5 h-4 w-4 shrink-0 text-sign" />
+                <LockClosedIcon className="mt-0.5 h-4 w-4 shrink-0 text-sign" />
               )}
               <div>
                 <p className="font-semibold text-asphalt">Etapa 2 · Acces la susținerea examenului</p>
@@ -476,19 +483,20 @@ export function PaymentPanel({
             <span className="block text-sm font-semibold">Metodă de plată</span>
             <div className="mt-2 grid gap-2 sm:grid-cols-3">
               {[
-                ["card", "Card bancar (Visa / Mastercard)"],
-                ["apple_google_pay", "Apple Pay / Google Pay"],
-                ["instant_transfer", "Transfer bancar instant / SEPA"],
-              ].map(([val, lbl]) => (
+                { val: "card", lbl: "Card bancar (Visa / Mastercard)", Icon: CreditCardIcon },
+                { val: "apple_google_pay", lbl: "Apple Pay / Google Pay", Icon: DevicePhoneMobileIcon },
+                { val: "instant_transfer", lbl: "Transfer bancar instant / SEPA", Icon: BuildingLibraryIcon },
+              ].map(({ val, lbl, Icon }) => (
                 <button
                   key={val}
                   type="button"
                   onClick={() => setMethod(val as typeof method)}
-                  className={`min-h-[44px] rounded border px-3 py-2 text-left text-xs font-semibold ${
+                  className={`flex min-h-[44px] items-center gap-2 rounded border px-3 py-2 text-left text-xs font-semibold ${
                     method === val ? "border-asphalt bg-asphalt text-white" : "border-line bg-chalk text-asphalt"
                   }`}
                 >
-                  {lbl}
+                  <Icon className={`h-4 w-4 shrink-0 ${method === val ? "text-signal" : "text-sign"}`} aria-hidden="true" />
+                  <span>{lbl}</span>
                 </button>
               ))}
             </div>

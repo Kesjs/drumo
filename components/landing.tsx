@@ -3,7 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, Car, Bike, Truck, Bus, Caravan, ArrowUpRight, Play, Pause } from "lucide-react";
+import { Car, Bike, Truck, Bus, Caravan } from "lucide-react";
+import {
+  ChevronDownIcon,
+  ArrowUpRightIcon,
+  PlayIcon,
+  PauseIcon,
+  CreditCardIcon,
+  DevicePhoneMobileIcon,
+  BuildingLibraryIcon,
+  EnvelopeIcon,
+} from "@heroicons/react/24/outline";
 import {
   DashboardMock,
   SignupStepMock,
@@ -173,7 +183,7 @@ export function Categories() {
                   className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
                 >
                   Vezi capitolele categoriei B
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                  <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </div>
             </div>
@@ -212,7 +222,7 @@ export function Categories() {
                 className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
                 Categoria A1 · A2 · A
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -249,7 +259,7 @@ export function Categories() {
                 className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
                 Categoria C · CE
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -287,7 +297,7 @@ export function Categories() {
                 className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
                 Vezi categoria AM
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -324,7 +334,7 @@ export function Categories() {
                 className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
                 Vezi categoria BE
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -361,7 +371,7 @@ export function Categories() {
                 className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
                 Vezi categoria D
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -433,7 +443,7 @@ export function Journey() {
                 onClick={() => setAuto((v) => !v)}
                 className="inline-flex min-h-[36px] items-center gap-1.5 rounded border border-line bg-chalk px-2.5 py-1 font-mono text-xs text-asphalt hover:border-asphalt"
               >
-                {auto ? <Pause className="h-3.5 w-3.5 text-sign" /> : <Play className="h-3.5 w-3.5 text-sign" />}
+                {auto ? <PauseIcon className="h-3.5 w-3.5 text-sign" /> : <PlayIcon className="h-3.5 w-3.5 text-sign" />}
                 {auto ? "Redare automată" : " Alege un pas"}
               </button>
             )}
@@ -571,13 +581,32 @@ export function Payment() {
               </div>
             </Reveal>
           ))}
-          <p className="text-sm text-mute">
-            Metode de plată: card bancar, Apple Pay, Google Pay, transfer instant (RON și EUR).{" "}
-            <Link href="/rambursari" className="font-semibold text-sign underline underline-offset-4">
-              Vezi politica de rambursare
-            </Link>
-            .
-          </p>
+          <div className="space-y-2.5">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-asphalt">
+              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
+                <CreditCardIcon className="h-4 w-4 text-sign" aria-hidden="true" />
+                Card bancar (Visa / Mastercard)
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
+                <DevicePhoneMobileIcon className="h-4 w-4 text-sign" aria-hidden="true" />
+                Apple Pay &amp; Google Pay
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
+                <BuildingLibraryIcon className="h-4 w-4 text-sign" aria-hidden="true" />
+                Transfer instant (RON &amp; EUR)
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
+                <EnvelopeIcon className="h-4 w-4 text-sign" aria-hidden="true" />
+                Chitanță pe e-mail
+              </span>
+            </div>
+            <p className="text-sm text-mute">
+              <Link href="/rambursari" className="font-semibold text-sign underline underline-offset-4">
+                Vezi politica de rambursare
+              </Link>
+              .
+            </p>
+          </div>
         </div>
         <Reveal delay={0.08}>
           <PayMock />
@@ -755,7 +784,7 @@ export function Faq() {
           <details key={q} className="group border-t border-line py-4 last:border-b">
             <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold">
               <span>{q}</span>
-              <ChevronDown className="h-5 w-5 shrink-0 text-mute transition-transform group-open:rotate-180" />
+              <ChevronDownIcon className="h-5 w-5 shrink-0 text-mute transition-transform group-open:rotate-180" />
             </summary>
             <p className="mt-2 max-w-[65ch] text-mute">{a}</p>
           </details>

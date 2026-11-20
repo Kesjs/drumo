@@ -1,11 +1,21 @@
 "use client";
 import { ReactNode } from "react";
-import { QrCode, Volume2, Camera, ShieldCheck, CheckCircle2, CreditCard, Lock, FileCheck2 } from "lucide-react";
+import {
+  QrCodeIcon,
+  SpeakerWaveIcon,
+  CameraIcon,
+  ShieldCheckIcon,
+  CheckCircleIcon,
+  CreditCardIcon,
+  LockClosedIcon,
+  DocumentCheckIcon,
+  DevicePhoneMobileIcon,
+  BuildingLibraryIcon,
+  EnvelopeIcon,
+} from "@heroicons/react/24/outline";
 
 export function Frame({
   children,
-  title = "drumo.ro/tablou-de-bord",
-  hideHeader = false,
   className = "",
 }: {
   children: ReactNode;
@@ -18,15 +28,6 @@ export function Frame({
       data-impeccable-ignore="hard-offset-shadow"
       className={`overflow-hidden rounded-lg border-2 border-asphalt bg-white shadow-[8px_8px_0_#f2b705] ${className}`}
     >
-      {!hideHeader && (
-        <div className="flex items-center gap-2 border-b-2 border-asphalt bg-chalk px-3 py-2">
-          <span className="inline-flex h-5 items-center rounded-sm bg-asphalt px-1.5 font-cond text-xs font-bold text-signal">
-            DR
-          </span>
-          <span className="truncate font-mono text-xs text-asphalt">{title}</span>
-          <span className="ml-auto font-mono text-xs text-mute">exemplu</span>
-        </div>
-      )}
       {children}
     </div>
   );
@@ -85,7 +86,7 @@ export function DashboardMock() {
               </p>
             </div>
             <span className="inline-flex shrink-0 items-center gap-1.5 rounded bg-chalk px-2.5 py-1 text-xs font-semibold text-asphalt">
-              <Volume2 className="h-3.5 w-3.5 text-sign" aria-hidden="true" />
+              <SpeakerWaveIcon className="h-3.5 w-3.5 text-sign" aria-hidden="true" />
               Ascultă lecția
             </span>
           </div>
@@ -151,10 +152,13 @@ export function SignupStepMock() {
               <dd className="font-mono font-semibold text-asphalt">RON sau EUR</dd>
             </div>
           </dl>
-          <div className="mt-3 flex items-center gap-1.5 border-t border-line pt-2.5 text-ok">
-            <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
-            <span className="font-semibold">Cont creat instantaneu</span>
-          </div>
+            <div className="flex items-center justify-between">
+              <dt className="text-mute">Cont creat</dt>
+              <dd className="inline-flex items-center gap-1 font-semibold text-ok">
+                <CheckCircleIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                Instantaneu
+              </dd>
+            </div>
         </div>
       </div>
     </Frame>
@@ -175,7 +179,7 @@ export function KycStepMock() {
           <div className="absolute inset-0 bg-gradient-to-t from-asphalt/90 via-asphalt/35 to-transparent" />
           <div className="absolute left-3 top-3">
             <span className="inline-flex items-center gap-1 rounded bg-asphalt/85 px-2 py-0.5 font-mono text-xs text-signal">
-              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+              <ShieldCheckIcon className="h-3.5 w-3.5" aria-hidden="true" />
               Criptat AES-256 · GDPR
             </span>
           </div>
@@ -189,14 +193,14 @@ export function KycStepMock() {
           <div className="mt-2.5 space-y-2">
             <div className="flex items-center justify-between border-b border-line pb-2">
               <span className="flex items-center gap-1.5 font-semibold text-asphalt">
-                <FileCheck2 className="h-4 w-4 text-sign" aria-hidden="true" />
+                <DocumentCheckIcon className="h-4 w-4 text-sign" aria-hidden="true" />
                 Act de identitate (CI / Pașaport)
               </span>
               <span className="font-mono text-ok">Încărcat</span>
             </div>
             <div className="flex items-center justify-between border-b border-line pb-2">
               <span className="flex items-center gap-1.5 font-semibold text-asphalt">
-                <Camera className="h-4 w-4 text-sign" aria-hidden="true" />
+                <CameraIcon className="h-4 w-4 text-sign" aria-hidden="true" />
                 Selfie de confirmare
               </span>
               <span className="font-mono text-ok">Validat</span>
@@ -212,38 +216,53 @@ export function KycStepMock() {
 }
 
 export function PayMock() {
+  const methods = [
+    { label: "Card (Visa / Mastercard)", Icon: CreditCardIcon },
+    { label: "Apple Pay", Icon: DevicePhoneMobileIcon },
+    { label: "Google Pay", Icon: DevicePhoneMobileIcon },
+    { label: "Transfer instant", Icon: BuildingLibraryIcon },
+    { label: "Chitanță e-mail", Icon: EnvelopeIcon },
+  ];
   return (
-    <Frame title="drumo.ro/plata">
-      <div className="p-4 text-sm">
+    <Frame>
+      <div className="p-5 text-sm">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="font-cond text-lg font-bold">Taxa categoriei alese</p>
+            <p className="font-cond text-xl font-bold">Taxa categoriei alese</p>
             <p className="text-xs text-mute">Fără abonament · Plată integrală sau în 2–3 tranșe.</p>
           </div>
-          <span className="inline-flex items-center gap-1 rounded bg-chalk px-2 py-1 font-mono text-xs font-semibold text-asphalt">
-            <CreditCard className="h-3.5 w-3.5 text-sign" aria-hidden="true" />
+          <span className="inline-flex items-center gap-1.5 rounded border border-line bg-chalk px-2.5 py-1 font-mono text-xs font-semibold text-asphalt">
+            <CreditCardIcon className="h-4 w-4 text-sign" aria-hidden="true" />
             RON / EUR
           </span>
         </div>
-        <div className="mt-3 grid grid-cols-1 gap-2 border-y border-line py-3 text-xs sm:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-3 border-y border-line py-3.5 text-xs sm:grid-cols-2">
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
+            <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
             <div>
               <p className="font-semibold text-asphalt">Tranșa 1 · Cursuri și teste</p>
               <p className="text-mute">Deblocate imediat după prima plată</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <Lock className="mt-0.5 h-4 w-4 shrink-0 text-sign" aria-hidden="true" />
+            <LockClosedIcon className="mt-0.5 h-4 w-4 shrink-0 text-sign" aria-hidden="true" />
             <div>
               <p className="font-semibold text-asphalt">Sold final · Sala de examen</p>
               <p className="text-mute">Deblocat la achitarea integrală</p>
             </div>
           </div>
         </div>
-        <p className="mt-2.5 font-mono text-xs text-mute">
-          Card bancar · Apple Pay · Google Pay · Transfer instant · Chitanță pe e-mail
-        </p>
+        <div className="mt-3.5 flex flex-wrap items-center gap-2">
+          {methods.map(({ label, Icon }) => (
+            <span
+              key={label}
+              className="inline-flex items-center gap-1.5 rounded border border-line bg-chalk px-2.5 py-1 text-xs font-medium text-asphalt"
+            >
+              <Icon className="h-3.5 w-3.5 shrink-0 text-sign" aria-hidden="true" />
+              {label}
+            </span>
+          ))}
+        </div>
       </div>
     </Frame>
   );
@@ -430,7 +449,7 @@ export function CertMock() {
             Trimis automat pe e-mail în maximum 3 zile de la examen.
           </p>
           <div className="grid h-16 w-16 place-items-center rounded border border-asphalt/30 bg-chalk text-asphalt">
-            <QrCode className="h-10 w-10" aria-hidden="true" />
+            <QrCodeIcon className="h-10 w-10" aria-hidden="true" />
           </div>
         </div>
       </div>

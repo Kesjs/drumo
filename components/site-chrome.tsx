@@ -120,7 +120,7 @@ export function PublicHeader({ loggedIn = false }: { loggedIn?: boolean }) {
 export function PublicFooter() {
   return (
     <footer className="border-t-2 border-asphalt bg-chalk py-12 text-sm text-mute">
-      <div className="mx-auto grid max-w-6xl gap-8 px-5 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="space-y-2">
           <p className="font-cond text-xl font-bold text-asphalt">Drumo</p>
           <p>{LEGAL_ENTITY.companyPlaceholder}</p>
@@ -135,32 +135,32 @@ export function PublicFooter() {
 
         <div className="space-y-2">
           <p className="font-semibold text-asphalt">Platformă</p>
-          <ul className="space-y-1.5">
-            <li><Link className="hover:text-asphalt hover:underline" href="/categorii">Categorii de permis</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/cum-functioneaza">Cum funcționează</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/cursuri">Cursuri pe capitole</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/examen">Examen online</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/verificare">Verificare atestat</Link></li>
+          <ul className="space-y-0.5">
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/categorii">Categorii de permis</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/cum-functioneaza">Cum funcționează</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/cursuri">Cursuri pe capitole</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/examen">Examen online</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/verificare">Verificare atestat</Link></li>
           </ul>
         </div>
 
         <div className="space-y-2">
           <p className="font-semibold text-asphalt">Informații</p>
-          <ul className="space-y-1.5">
-            <li><Link className="hover:text-asphalt hover:underline" href="/despre-noi">Despre noi</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/intrebari-frecvente">Întrebări frecvente</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/contact">Contact</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/credite-imagini">Credite imagini</Link></li>
+          <ul className="space-y-0.5">
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/despre-noi">Despre noi</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/intrebari-frecvente">Întrebări frecvente</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/contact">Contact</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/credite-imagini">Credite imagini</Link></li>
           </ul>
         </div>
 
         <div className="space-y-2">
           <p className="font-semibold text-asphalt">Documente legale</p>
-          <ul className="space-y-1.5">
-            <li><Link className="hover:text-asphalt hover:underline" href="/termeni">Termeni și condiții</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/confidentialitate">Confidențialitate (GDPR)</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/cookie-uri">Cookie-uri</Link></li>
-            <li><Link className="hover:text-asphalt hover:underline" href="/rambursari">Politica de rambursare</Link></li>
+          <ul className="space-y-0.5">
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/termeni">Termeni și condiții</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/confidentialitate">Confidențialitate (GDPR)</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/cookie-uri">Cookie-uri</Link></li>
+            <li><Link className="inline-flex min-h-[36px] items-center hover:text-asphalt hover:underline" href="/rambursari">Politica de rambursare</Link></li>
           </ul>
         </div>
       </div>

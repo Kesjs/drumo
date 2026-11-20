@@ -26,7 +26,7 @@ export default async function CookiesPage() {
             </thead>
             <tbody className="divide-y divide-line">
               <tr>
-                <td className="px-4 py-3 font-mono text-asphalt">ep_session / sb-*</td>
+                <td className="px-4 py-3 font-mono text-asphalt">drumo_session / sb-*</td>
                 <td className="px-4 py-3">Menținerea sesiunii autentificate și protecția rutelor protejate.</td>
                 <td className="px-4 py-3">Până la 14 zile / sesiune</td>
               </tr>

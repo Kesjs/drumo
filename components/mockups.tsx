@@ -279,19 +279,19 @@ export function ChapterMock() {
           <span className="ml-auto rounded border border-line px-2 py-1 text-mute">Ascultă lecția</span>
         </div>
         <p className="mb-2 font-semibold">Ce obligație îți impune acest indicator?</p>
-        <div className="grid grid-cols-[120px_1fr] gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[120px_1fr]">
           <SignSlot
             src="/media/cedeaza-helesteului.webp"
             alt="Indicatorul Cedează trecerea pe strada Heleșteului din București"
-            className="aspect-square"
+            className="aspect-[16/10] sm:aspect-square"
           />
-          <div className="space-y-1.5 text-xs">
+          <div className="divide-y divide-line border-y border-line text-xs">
             {[
               "Să oprești întotdeauna",
               "Să acorzi prioritate vehiculelor din intersecție",
               "Să circuli cu prioritate",
             ].map((a, i) => (
-              <div key={a} className={`rounded border px-2 py-1.5 ${i === 1 ? "border-ok bg-ok/10 font-semibold" : "border-line"}`}>
+              <div key={a} className={`px-2 py-2 ${i === 1 ? "bg-ok/10 font-semibold text-asphalt" : "text-mute"}`}>
                 {a}
               </div>
             ))}
@@ -410,15 +410,17 @@ export function ExamMock() {
           <span className="rounded bg-ok/15 px-2 py-0.5 font-semibold text-ok">Cameră activă</span>
           <span className="font-mono text-2xl font-medium tabular-nums">18</span>
         </div>
-        <div className="grid grid-cols-[120px_1fr] gap-3 p-4">
-          <SignSlot src="/media/stop-panoramio.webp" alt="Indicatorul Oprire (Stop) la marginea unui drum din România" className="aspect-square" />
+        <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-[120px_1fr]">
+          <SignSlot src="/media/stop-panoramio.webp" alt="Indicatorul Oprire (Stop) la marginea unui drum din România" className="aspect-[16/10] sm:aspect-square" />
           <div className="space-y-1.5 text-xs">
             <p className="font-semibold">Cum procedezi la această intersecție?</p>
-            {["Oprești și acorzi prioritate", "Continui fără să oprești", "Claxonezi și treci"].map((a) => (
-              <div key={a} className="rounded border border-line px-2 py-1.5">
-                {a}
-              </div>
-            ))}
+            <div className="divide-y divide-line border-y border-line">
+              {["Oprești și acorzi prioritate", "Continui fără să oprești", "Claxonezi și treci"].map((a) => (
+                <div key={a} className="px-2 py-2 text-asphalt">
+                  {a}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <p className="mx-4 mb-4 border-t border-line pt-2.5 text-xs text-mute">

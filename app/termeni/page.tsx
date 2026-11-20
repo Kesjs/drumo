@@ -43,6 +43,24 @@ export default async function TermsPage() {
             atestatului pentru verificare sau anularea sesiunii.
           </p>
         </section>
+
+        <section className="space-y-2">
+          <h2 className="font-cond text-2xl font-bold text-asphalt">4. Eliberarea atestatului și verificare QR</h2>
+          <p>
+            După promovarea examenului și în absența alertelor de integritate, <strong>atestatul de reușită Drumo</strong>{" "}
+            (PDF cu număr unic și cod QR) este programat pentru trimitere automată pe e-mail în cel mult 3 zile (72 de ore).
+            Autenticitatea poate fi verificată oricând pe pagina publică de verificare.
+          </p>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="font-cond text-2xl font-bold text-asphalt">5. Drept de retragere și rambursări</h2>
+          <p>
+            Condițiile de rambursare în termen de 14 zile calendaristice (pentru acces neutilizat) sunt detaliate în
+            Politica de rambursare, afișată înainte de fiecare plată. Pentru asistență ne poți contacta la{" "}
+            <span className="font-mono text-asphalt">{LEGAL_ENTITY.contactEmail}</span>.
+          </p>
+        </section>
       </main>
       <PublicFooter />
     </>

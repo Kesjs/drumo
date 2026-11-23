@@ -48,6 +48,17 @@
   }
 }
 
+.road-flow {
+  stroke-dasharray: 22 18;
+  animation: road-flow 1.4s linear infinite;
+}
+
+@keyframes road-flow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }

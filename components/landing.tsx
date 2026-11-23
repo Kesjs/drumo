@@ -1,25 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { Car, Bike, Truck, Bus, Caravan } from "lucide-react";
 import {
   ChevronDownIcon,
   ArrowUpRightIcon,
   PlayIcon,
   PauseIcon,
+  CheckIcon,
   CreditCardIcon,
   DevicePhoneMobileIcon,
   BuildingLibraryIcon,
   EnvelopeIcon,
   PhoneIcon,
   MapPinIcon,
+  ShieldCheckIcon,
+  GlobeEuropeAfricaIcon,
+  QrCodeIcon,
 } from "@heroicons/react/24/outline";
 import { ContactForm } from "./contact-form";
 import { LEGAL_ENTITY } from "@/lib/config";
 import {
-  DashboardMock,
   SignupStepMock,
   KycStepMock,
   PayMock,
@@ -28,13 +38,18 @@ import {
   GlobalEvalMock,
   ExamMock,
   CertMock,
-  SignSlot,
 } from "./mockups";
 
 const CTA_HREF = "/inscriere";
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const btn =
-  "inline-flex min-h-[44px] items-center justify-center rounded border-2 border-asphalt px-6 py-3 font-semibold transition-all duration-200 active:translate-y-px";
+  "inline-flex min-h-[48px] items-center justify-center rounded px-6 py-3 font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0";
+const btnPrimary = `${btn} bg-signal text-asphalt shadow-card hover:bg-signal-deep`;
+const btnGhostDark = `${btn} border border-chalk/50 text-chalk hover:bg-chalk/10`;
+const btnGhostLight = `${btn} border border-asphalt text-asphalt hover:bg-asphalt hover:text-chalk`;
+const card = "rounded border border-line bg-white shadow-card";
+
+/* ---------- primitives ---------- */
 
 function Reveal({
   children,
@@ -49,341 +64,540 @@ function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 1, y: 12 }}
+      initial={reduce ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.42, delay, ease: EASE_OUT }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay, ease: EASE_OUT }}
     >
       {children}
     </motion.div>
   );
 }
 
+function Pic({
+  src,
+  alt,
+  className = "",
+  eager = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  eager?: boolean;
+}) {
+  const avif = src.replace(/\.webp$/, ".avif");
+  return (
+    <picture className="block h-full w-full">
+      <source srcSet={avif} type="image/avif" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        className={`h-full w-full object-cover ${className}`}
+      />
+    </picture>
+  );
+}
+
+/** Photo that drifts slowly against the scroll. The frame clips it. */
+function Parallax({
+  src,
+  alt,
+  className = "",
+  children,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  children?: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  return (
+    <div ref={ref} className={`relative overflow-hidden bg-asphalt ${className}`}>
+      <motion.div style={reduce ? undefined : { y }} className="absolute inset-x-0 -top-[10%] h-[120%]">
+        <Pic src={src} alt={alt} />
+      </motion.div>
+      {children}
+    </div>
+  );
+}
+
+function DashLine({ color = "#18202b" }: { color?: string }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="h-1 w-full"
+      style={{ backgroundImage: `repeating-linear-gradient(90deg, ${color} 0 22px, transparent 22px 40px)` }}
+      animate={reduce ? undefined : { backgroundPositionX: ["0px", "-40px"] }}
+      transition={reduce ? undefined : { duration: 1.4, ease: "linear", repeat: Infinity }}
+    />
+  );
+}
+
+/* ---------- hero ---------- */
+
+const ROAD = "M-40 190 C 220 110, 480 230, 780 150 S 1260 70, 1480 130";
+
+function HeroRoad() {
+  const reduce = useReducedMotion();
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 1440 240"
+      preserveAspectRatio="xMidYMax slice"
+      className="pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full sm:h-56"
+    >
+      <path d={ROAD} fill="none" stroke="#f5f6f3" strokeOpacity="0.55" strokeWidth="78" />
+      <path id="hero-road-path" d={ROAD} fill="none" stroke="#0f151d" strokeWidth="72" />
+      <path d={ROAD} fill="none" stroke="#f2b705" strokeWidth="3" className="road-flow" />
+      <g transform={reduce ? "translate(260 150)" : undefined}>
+        <g transform="translate(-26 -13)">
+          <rect x="6" y="-2" width="12" height="4" rx="1" fill="#0f151d" />
+          <rect x="32" y="-2" width="12" height="4" rx="1" fill="#0f151d" />
+          <rect x="6" y="24" width="12" height="4" rx="1" fill="#0f151d" />
+          <rect x="32" y="24" width="12" height="4" rx="1" fill="#0f151d" />
+          <rect width="52" height="26" rx="4" fill="#f2b705" />
+          <rect x="30" y="4" width="12" height="18" rx="2" fill="#18202b" />
+          <rect x="8" y="5" width="9" height="16" rx="2" fill="#18202b" fillOpacity="0.6" />
+        </g>
+        {!reduce && (
+          <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#hero-road-path" />
+          </animateMotion>
+        )}
+      </g>
+    </svg>
+  );
+}
+
 export function Hero() {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const a = (d: number) =>
     reduce
       ? {}
       : {
-          initial: { opacity: 0, y: 18 },
+          initial: { opacity: 0, y: 24 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.55, delay: d, ease: EASE_OUT },
+          transition: { duration: 0.7, delay: d, ease: EASE_OUT },
         };
+
   return (
-    <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-16 pt-10 lg:grid-cols-[1fr_1.08fr] lg:py-14">
-      <div>
+    <section ref={ref} className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink text-chalk">
+      <motion.div
+        aria-hidden="true"
+        style={reduce ? undefined : { y: bgY, scale: bgScale }}
+        className="absolute inset-0 -z-10"
+      >
+        <Pic
+          src="/media/transfagarasan.webp"
+          alt=""
+          eager
+        />
+      </motion.div>
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/65 to-ink/20" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/85 via-transparent to-ink/50" />
+
+      <motion.div
+        style={reduce ? undefined : { y: textY }}
+        className="mx-auto w-full max-w-6xl px-5 pb-48 pt-32 sm:pb-56"
+      >
         <motion.h1
-          {...a(0)}
-          className="font-cond text-4xl font-bold leading-[1.04] tracking-[-0.02em] sm:text-5xl lg:text-6xl"
+          {...a(0.05)}
+          className="max-w-[16ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl lg:text-7xl"
         >
-          Pregătirea și testul teoretic auto, într-un singur loc.
+          Înveți regulile drumului. Dai testul online. Primești atestatul.
         </motion.h1>
-        <motion.p {...a(0.1)} className="mt-4 max-w-[52ch] text-lg text-mute">
-          Plătești taxa categoriei tale, înveți capitol cu capitol, te evaluezi pe măsură ce înaintezi și dai testul când
-          ești pregătit. Atestatul ajunge pe e-mail în maximum 3 zile.
+        <motion.p {...a(0.18)} className="mt-6 max-w-[54ch] text-lg text-chalk/85 sm:text-xl">
+          Cursuri pe capitole cu fotografii reale din România, o evaluare care se adaptează la greșelile tale și un test
+          supravegheat, din confortul casei. O singură taxă, fără abonament.
         </motion.p>
-        <motion.div {...a(0.18)} className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href={CTA_HREF}
-            className={`${btn} bg-signal text-asphalt hover:-translate-y-0.5 hover:bg-[#e0a900]`}
-          >
+        <motion.div {...a(0.3)} className="mt-8 flex flex-wrap gap-3">
+          <Link href={CTA_HREF} className={btnPrimary}>
             Începe înscrierea
           </Link>
-          <a href="#parcurs" className={`${btn} bg-transparent text-asphalt hover:-translate-y-0.5 hover:bg-surface`}>
-            Vezi parcursul
+          <a href="#cum-functioneaza" className={btnGhostDark}>
+            Vezi cum funcționează
           </a>
         </motion.div>
-        <motion.p {...a(0.26)} className="mt-4 text-sm text-mute">
-          Fără abonament. Plătești o singură taxă, în funcție de categorie.
-        </motion.p>
-      </div>
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 20, scale: 0.985 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.65, delay: 0.16, ease: EASE_OUT }}
-      >
-        <DashboardMock />
+        <motion.ul
+          {...a(0.42)}
+          className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-chalk/20 pt-5 text-sm text-chalk/80"
+        >
+          <li className="flex items-center gap-2">
+            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            Fără abonament
+          </li>
+          <li className="flex items-center gap-2">
+            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            Plată integrală sau în tranșe
+          </li>
+          <li className="flex items-center gap-2">
+            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            Atestat pe e-mail în maximum 3 zile
+          </li>
+        </motion.ul>
       </motion.div>
+
+      <HeroRoad />
     </section>
   );
 }
 
+/* ---------- trust ---------- */
+
 export function Trust() {
   const items = [
-    "Plată securizată prin Stripe",
-    "Date personale conform GDPR",
-    "Servere în Uniunea Europeană",
-    "Atestat cu cod QR verificabil",
+    { Icon: CreditCardIcon, t: "Plată securizată prin Stripe" },
+    { Icon: ShieldCheckIcon, t: "Date personale conform GDPR" },
+    { Icon: GlobeEuropeAfricaIcon, t: "Servere în Uniunea Europeană" },
+    { Icon: QrCodeIcon, t: "Atestat cu cod QR verificabil" },
   ];
   return (
-    <div className="bg-asphalt text-chalk">
-      <ul className="mx-auto grid max-w-6xl gap-4 px-5 py-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((t) => (
-          <li key={t} className="border-l-4 border-signal pl-3">
-            {t}
-          </li>
+    <div className="border-b border-line bg-white">
+      <ul className="mx-auto grid max-w-6xl gap-5 px-5 py-6 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        {items.map(({ Icon, t }, i) => (
+          <Reveal key={t} delay={i * 0.06}>
+            <li className="flex items-center gap-3 text-asphalt">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-signal/20 text-asphalt">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              {t}
+            </li>
+          </Reveal>
         ))}
       </ul>
     </div>
   );
 }
 
-const bentoCard =
-  "flex h-full flex-col justify-between overflow-hidden rounded-lg border-2 border-asphalt bg-white transition-all duration-300 ease-out group-hover:-translate-y-1";
+/* ---------- about ---------- */
 
-export function Categories() {
+export function About() {
+  const principles = [
+    ["Fără costuri ascunse", "O singură taxă pe categorie, plătită integral sau în tranșe. O vezi înainte de plată."],
+    [
+      "Pregătire reală",
+      "Evaluarea adaptivă revine la ce ai greșit, iar examenul se deblochează doar după evaluarea globală.",
+    ],
+    [
+      "Onestitate juridică",
+      "Atestatul Drumo confirmă pregătirea pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial.",
+    ],
+    ["Date protejate", "Actele de identitate sunt stocate criptat și șterse automat după 30 de zile."],
+  ];
   return (
-    <section id="categorii" className="mx-auto max-w-6xl px-5 py-20">
-      <Reveal>
-        <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-          Alegi categoria. Restul se adaptează.
-        </h2>
-        <p className="mt-3 max-w-[60ch] text-mute">
-          Capitolele, întrebările și taxa depind de categoria de permis. Suma exactă o vezi la înscriere, înainte să
-          plătești.
-        </p>
-      </Reveal>
-
-      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-12">
-        {/* Featured tile: Category B (7 cols, 2 rows) */}
-        <Reveal className="group md:col-span-7 md:row-span-2">
-          <div className={bentoCard}>
-            <div className="relative aspect-[16/9] w-full overflow-hidden border-b-2 border-asphalt bg-asphalt">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/media/autostrada-sibiu.webp"
-                alt="Autostrada A1 lângă Sibiu cu panou rutier de distanțe"
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-asphalt/85 via-asphalt/20 to-transparent" />
-              <div className="absolute left-4 top-4 flex flex-wrap items-center gap-2">
-                <span className="rounded bg-signal px-2.5 py-1 font-mono text-xs font-bold text-asphalt">
-                  CEA MAI ALEASĂ
-                </span>
-                <span className="rounded bg-asphalt/85 px-2.5 py-1 font-mono text-xs text-chalk">
-                  26 întrebări · min. 22 corecte · 18+ ani
-                </span>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-chalk">
-                <div>
-                  <p className="font-mono text-xs text-signal">AUTOTURISME ≤ 3.500 KG</p>
-                  <p className="font-cond text-3xl font-bold sm:text-4xl">Categoria B · B1</p>
-                </div>
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded border border-chalk/30 bg-asphalt/80 text-signal transition-colors duration-200 group-hover:border-signal group-hover:bg-signal group-hover:text-asphalt">
-                  <Car className="h-6 w-6" aria-hidden="true" />
-                </span>
-              </div>
+    <section id="despre-noi" className="bg-chalk py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <Reveal>
+          <Parallax
+            src="/media/bucuresti-ploaie.webp"
+            alt="Bulevard din București după ploaie, cu lucrări și limitare de viteză"
+            className="aspect-[4/5] rounded shadow-lift"
+          >
+            <div className="absolute bottom-4 left-4 right-4 rounded bg-white p-4 text-sm text-asphalt shadow-card sm:right-auto sm:max-w-[16rem]">
+              Toate fotografiile din cursuri sunt reale, făcute pe drumurile din România.
             </div>
-            <div className="flex flex-1 flex-col justify-between p-6">
-              <p className="text-mute">
-                Autovehicule cu cel mult 8 locuri în afara conducătorului și masă totală maximă autorizată de până la
-                3.500 kg (inclusiv cvadricicluri B1 de la 16 ani).
-              </p>
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-                <span className="font-mono text-xs text-mute">6 capitole complete + simulare 26 întrebări</span>
-                <Link
-                  href="/categorii/b"
-                  className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-                >
-                  Vezi capitolele categoriei B
-                  <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-          </div>
+          </Parallax>
         </Reveal>
-
-        {/* Tile 2: Motorcycles A1 / A2 / A (5 cols) */}
-        <Reveal delay={0.05} className="group md:col-span-5">
-          <div className={bentoCard}>
-            <div className="grid grid-cols-[120px_1fr] border-b border-line sm:grid-cols-[140px_1fr]">
-              <div className="relative min-h-[135px] overflow-hidden border-r border-line bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/media/transfagarasan.webp"
-                  alt="Serpentinele drumului Transfăgărășan"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-              </div>
-              <div className="p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-xs font-semibold text-sign">20 ÎNTREBĂRI · MIN. 17</span>
-                  <Bike className="h-5 w-5 text-asphalt transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+        <div>
+          <Reveal>
+            <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
+              Făcut pentru cei care vor să înțeleagă regulile, nu doar să le memoreze.
+            </h2>
+            <p className="mt-5 max-w-[60ch] text-lg text-mute">
+              Drumo este o platformă de pregătire teoretică și evaluare supravegheată pentru legislația rutieră din
+              România. Lecțiile pornesc de la Codul rutier (OUG 195/2002 și HG 1391/2006) și de la situații reale de pe
+              drum, nu din desene generice.
+            </p>
+          </Reveal>
+          <dl className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+            {principles.map(([t, d], i) => (
+              <Reveal key={t} delay={i * 0.07}>
+                <div className="border-l-2 border-signal pl-4">
+                  <dt className="font-semibold text-asphalt">{t}</dt>
+                  <dd className="mt-1 text-sm text-mute">{d}</dd>
                 </div>
-                <p className="mt-1 font-cond text-2xl font-bold">A1 · A2 · A</p>
-                <p className="mt-1 text-xs text-mute">
-                  Motociclete ușoare (125 cm³), medii (≤ 35 kW) și fără limită de putere, cu reguli dedicate pentru două
-                  roți.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center justify-between px-4 py-2.5">
-              <span className="font-mono text-xs text-mute">Vârsta min. 16 – 24 ani</span>
-              <Link
-                href="/categorii/a"
-                className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-              >
-                Categoria A1 · A2 · A
-                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Tile 3: Trucks C / CE (5 cols) */}
-        <Reveal delay={0.1} className="group md:col-span-5">
-          <div className={bentoCard}>
-            <div className="grid grid-cols-[120px_1fr] border-b border-line sm:grid-cols-[140px_1fr]">
-              <div className="relative min-h-[135px] overflow-hidden border-r border-line bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/media/nadlac-frontiera.webp"
-                  alt="Panouri de semnalizare și benzi dedicate pentru camioane la punctul rutier Nădlac"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-              </div>
-              <div className="p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-xs font-semibold text-sign">TRANSPORT MARFĂ &gt; 3,5 T</span>
-                  <Truck className="h-5 w-5 text-asphalt transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
-                </div>
-                <p className="mt-1 font-cond text-2xl font-bold">C · CE</p>
-                <p className="mt-1 text-xs text-mute">
-                  Camioane și ansambluri articulate: mase maxime, timpi de conducere, tahograf și limite diferențiate.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center justify-between px-4 py-2.5">
-              <span className="font-mono text-xs text-mute">26 întrebări · 21+ ani</span>
-              <Link
-                href="/categorii/c"
-                className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-              >
-                Categoria C · CE
-                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Bottom row of Bento Grid: AM (4 cols), BE (4 cols), D (4 cols) */}
-        <Reveal delay={0.14} className="group md:col-span-4">
-          <div className={bentoCard}>
-            <div>
-              <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/media/calea-victoriei.webp"
-                  alt="Trafic urban și indicator de trecere pentru pietoni pe Calea Victoriei din București"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-                <span className="absolute left-3 top-3 rounded bg-asphalt/85 px-2 py-0.5 font-mono text-xs text-signal">
-                  DE LA 16 ANI
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <p className="font-cond text-2xl font-bold">Categoria AM</p>
-                  <Bike className="h-5 w-5 text-mute transition-colors group-hover:text-asphalt" aria-hidden="true" />
-                </div>
-                <p className="mt-1.5 text-sm text-mute">
-                  Mopede și scutere ușoare (max. 45 km/h, ≤ 50 cm³ sau 4 kW). Chestionar de 20 de întrebări.
-                </p>
-              </div>
-            </div>
-            <div className="border-t border-line px-5 py-2.5">
-              <Link
-                href="/categorii/am"
-                className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-              >
-                Vezi categoria AM
-                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.18} className="group md:col-span-4">
-          <div className={bentoCard}>
-            <div>
-              <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/media/dn7-brezoi.webp"
-                  alt="Drumul național DN7 (Valea Oltului) lângă Brezoi cu marcaje și indicatoare"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-                <span className="absolute left-3 top-3 rounded bg-asphalt/85 px-2 py-0.5 font-mono text-xs text-chalk">
-                  REMORCĂ 750–3.500 KG
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <p className="font-cond text-2xl font-bold">Categoria BE</p>
-                  <Caravan className="h-5 w-5 text-mute transition-colors group-hover:text-asphalt" aria-hidden="true" />
-                </div>
-                <p className="mt-1.5 text-sm text-mute">
-                  Autoturism categoria B cu remorcă grea: cuplare, repartizarea sarcinii și distanțe de oprire.
-                </p>
-              </div>
-            </div>
-            <div className="border-t border-line px-5 py-2.5">
-              <Link
-                href="/categorii/be"
-                className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-              >
-                Vezi categoria BE
-                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.22} className="group md:col-span-4">
-          <div className={bentoCard}>
-            <div>
-              <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/media/marcaje-apold.webp"
-                  alt="Marcaje rutiere de bandă dedicată autobuzelor și trecere de pietoni în Apold"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-                <span className="absolute left-3 top-3 rounded bg-asphalt/85 px-2 py-0.5 font-mono text-xs text-chalk">
-                  TRANSPORT PERSOANE
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <p className="font-cond text-2xl font-bold">Categoria D</p>
-                  <Bus className="h-5 w-5 text-mute transition-colors group-hover:text-asphalt" aria-hidden="true" />
-                </div>
-                <p className="mt-1.5 text-sm text-mute">
-                  Autobuze și microbuze cu peste 8+1 locuri: prioritatea la ieșirea din alveole și siguranța pasagerilor.
-                </p>
-              </div>
-            </div>
-            <div className="border-t border-line px-5 py-2.5">
-              <Link
-                href="/categorii/d"
-                className="inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-              >
-                Vezi categoria D
-                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </Reveal>
+              </Reveal>
+            ))}
+          </dl>
+          <Reveal delay={0.2}>
+            <Link
+              href="/despre-noi"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+            >
+              Despre Drumo, pe larg
+              <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
 }
+
+/* ---------- categories ---------- */
+
+const tileBase =
+  "group flex h-full flex-col overflow-hidden rounded border border-line bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift";
+
+function CatTile({
+  img,
+  alt,
+  tag,
+  title,
+  text,
+  meta,
+  href,
+  cta,
+  Icon,
+  delay,
+}: {
+  img: string;
+  alt: string;
+  tag: string;
+  title: string;
+  text: string;
+  meta?: string;
+  href: string;
+  cta: string;
+  Icon: typeof Car;
+  delay: number;
+}) {
+  return (
+    <Reveal delay={delay} className="md:col-span-4">
+      <Link href={href} className={tileBase}>
+        <Parallax src={img} alt={alt} className="aspect-[16/10]">
+          <div className="absolute inset-0 bg-gradient-to-t from-asphalt/70 via-transparent to-transparent" />
+          <span className="absolute left-3 top-3 rounded-sm bg-signal px-2 py-1 text-xs font-semibold text-asphalt">
+            {tag}
+          </span>
+        </Parallax>
+        <div className="flex flex-1 flex-col p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="font-cond text-2xl font-bold">{title}</h3>
+            <Icon className="h-6 w-6 text-asphalt/70 transition-colors group-hover:text-signal-deep" aria-hidden="true" />
+          </div>
+          <p className="mt-2 flex-1 text-sm text-mute">{text}</p>
+          <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-3 text-sm">
+            <span className="text-mute">{meta}</span>
+            <span className="inline-flex items-center gap-1 font-semibold text-sign group-hover:text-asphalt">
+              {cta}
+              <ArrowUpRightIcon
+                className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </span>
+          </div>
+        </div>
+      </Link>
+    </Reveal>
+  );
+}
+
+export function Categories() {
+  return (
+    <section id="categorii" className="bg-white py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            Alegi categoria. Restul se adaptează.
+          </h2>
+          <p className="mt-3 max-w-[60ch] text-lg text-mute">
+            Capitolele, întrebările și taxa depind de categoria de permis. Suma exactă o vezi la înscriere, înainte să
+            plătești.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-12">
+          <Reveal className="md:col-span-12">
+            <Link href="/categorii/b" className={`${tileBase} md:flex-row`}>
+              <Parallax
+                src="/media/autostrada-sibiu.webp"
+                alt="Autostrada A1 lângă Sibiu cu panou rutier de distanțe"
+                className="aspect-[16/9] md:aspect-auto md:min-h-[22rem] md:w-3/5"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-asphalt/60 via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 rounded-sm bg-signal px-2.5 py-1 text-xs font-semibold text-asphalt">
+                  Cea mai aleasă
+                </span>
+              </Parallax>
+              <div className="flex flex-1 flex-col justify-center p-6 md:p-10">
+                <div className="flex items-center gap-3">
+                  <Car className="h-7 w-7 text-signal-deep" aria-hidden="true" />
+                  <p className="text-sm font-semibold text-mute">Autoturisme până la 3.500 kg</p>
+                </div>
+                <h3 className="mt-2 font-cond text-4xl font-bold sm:text-5xl">Categoria B · B1</h3>
+                <p className="mt-4 text-mute">
+                  Autovehicule cu cel mult 8 locuri în afara conducătorului și masă totală maximă autorizată de până la
+                  3.500 kg (inclusiv cvadricicluri B1 de la 16 ani).
+                </p>
+                <ul className="mt-5 space-y-2 text-sm text-asphalt">
+                  <li className="flex items-center gap-2">
+                    <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
+                    26 de întrebări, minimum 22 corecte, de la 18 ani
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />6 capitole complete și simulare de 26
+                    de întrebări
+                  </li>
+                </ul>
+                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-sign group-hover:text-asphalt">
+                  Vezi capitolele categoriei B
+                  <ArrowUpRightIcon
+                    className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
+
+          <CatTile
+            delay={0}
+            img="/media/transfagarasan.webp"
+            alt="Serpentinele drumului Transfăgărășan"
+            tag="De la 16 ani"
+            title="Categoria A1 · A2 · A"
+            text="Motociclete ușoare (125 cm³), medii (≤ 35 kW) și fără limită de putere, cu reguli dedicate pentru două roți."
+            meta="20 de întrebări, minimum 17"
+            href="/categorii/a"
+            cta="Vezi categoria"
+            Icon={Bike}
+          />
+          <CatTile
+            delay={0.06}
+            img="/media/nadlac-frontiera.webp"
+            alt="Panouri de semnalizare și benzi dedicate pentru camioane la punctul rutier Nădlac"
+            tag="Transport marfă"
+            title="Categoria C · CE"
+            text="Camioane și ansambluri articulate: mase maxime, timpi de conducere, tahograf și limite diferențiate."
+            meta="26 de întrebări · 21+ ani"
+            href="/categorii/c"
+            cta="Vezi categoria"
+            Icon={Truck}
+          />
+          <CatTile
+            delay={0.12}
+            img="/media/calea-victoriei.webp"
+            alt="Trafic urban și indicator de trecere pentru pietoni pe Calea Victoriei din București"
+            tag="De la 16 ani"
+            title="Categoria AM"
+            text="Mopede și scutere ușoare (max. 45 km/h, ≤ 50 cm³ sau 4 kW). Chestionar de 20 de întrebări."
+            href="/categorii/am"
+            cta="Vezi categoria"
+            Icon={Bike}
+          />
+          <CatTile
+            delay={0.06}
+            img="/media/dn7-brezoi.webp"
+            alt="Drumul național DN7 (Valea Oltului) lângă Brezoi cu marcaje și indicatoare"
+            tag="Remorcă 750–3.500 kg"
+            title="Categoria BE"
+            text="Autoturism categoria B cu remorcă grea: cuplare, repartizarea sarcinii și distanțe de oprire."
+            href="/categorii/be"
+            cta="Vezi categoria"
+            Icon={Caravan}
+          />
+          <CatTile
+            delay={0.12}
+            img="/media/marcaje-apold.webp"
+            alt="Marcaje rutiere de bandă dedicată autobuzelor și trecere de pietoni în Apold"
+            tag="Transport persoane"
+            title="Categoria D"
+            text="Autobuze și microbuze cu peste 8+1 locuri: prioritatea la ieșirea din alveole și siguranța pasagerilor."
+            href="/categorii/d"
+            cta="Vezi categoria"
+            Icon={Bus}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- how it works (3 phases) ---------- */
+
+const phases = [
+  {
+    t: "Alegi categoria și te înscrii",
+    d: "Spui ce categorie vrei, îți confirmi identitatea cu un act și un selfie și plătești taxa, integral sau în tranșe. Cursurile se deschid de la prima plată.",
+    img: "/media/chisineu-cris.webp",
+    alt: "Panou rutier de presemnalizare a direcțiilor spre Oradea și Arad",
+  },
+  {
+    t: "Înveți și te evaluezi",
+    d: "Capitole cu text, fotografii reale și audio, urmate de un test. Evaluarea adaptivă revine la ce ai greșit, iar evaluarea globală îți spune sincer dacă ești pregătit.",
+    img: "/media/copii-fagaras.webp",
+    alt: "Indicatorul de avertizare Copii în Făgăraș",
+  },
+  {
+    t: "Dai testul și primești atestatul",
+    d: "Când taxa este achitată integral și evaluarea e trecută, deschizi sala de examen. Rezultatul apare imediat, iar atestatul ajunge pe e-mail în maximum 3 zile.",
+    img: "/media/drum-dn7a.webp",
+    alt: "Drumul DN7A de-a lungul unei văi împădurite din județul Vâlcea",
+  },
+];
+
+export function HowItWorks() {
+  const ref = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  return (
+    <section id="cum-functioneaza" className="bg-asphalt py-24 text-chalk">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <Reveal>
+            <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
+              Cum funcționează, în trei etape.
+            </h2>
+            <p className="mt-5 max-w-[44ch] text-lg text-chalk/75">
+              Un singur traseu, de la înscriere până la atestat. Fiecare etapă se deblochează pe rând, ca să ajungi la
+              examen cu adevărat pregătit.
+            </p>
+            <a href="#parcurs" className={`${btnPrimary} mt-8`}>
+              Vezi cei 7 pași în detaliu
+            </a>
+          </Reveal>
+        </div>
+
+        <ol ref={ref} className="relative space-y-16 pl-14 sm:pl-16">
+          <span aria-hidden="true" className="absolute bottom-2 left-[19px] top-2 w-0.5 bg-chalk/15 sm:left-[23px]" />
+          <motion.span
+            aria-hidden="true"
+            style={reduce ? { scaleY: 1 } : { scaleY }}
+            className="absolute bottom-2 left-[19px] top-2 w-0.5 origin-top bg-signal sm:left-[23px]"
+          />
+          {phases.map((p, i) => (
+            <li key={p.t} className="relative">
+              <span className="absolute -left-14 top-0 grid h-10 w-10 place-items-center rounded bg-signal font-cond text-xl font-bold text-asphalt sm:-left-16 sm:h-12 sm:w-12 sm:text-2xl">
+                {i + 1}
+              </span>
+              <Reveal>
+                <h3 className="font-cond text-3xl font-bold sm:text-4xl">{p.t}</h3>
+                <p className="mt-3 max-w-[56ch] text-chalk/75">{p.d}</p>
+                <Parallax src={p.img} alt={p.alt} className="mt-6 aspect-[16/9] rounded shadow-lift" />
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- detailed journey (7 steps) ---------- */
 
 const steps = [
   { t: "Înscriere", d: "Nume, contact, țara și categoria de permis.", v: <SignupStepMock /> },
@@ -418,9 +632,7 @@ export function Journey() {
 
   useEffect(() => {
     if (reduce || !auto) return;
-    const id = window.setInterval(() => {
-      setI((prev) => (prev + 1) % steps.length);
-    }, 5200);
+    const id = window.setInterval(() => setI((prev) => (prev + 1) % steps.length), 5200);
     return () => window.clearInterval(id);
   }, [auto, reduce]);
 
@@ -430,14 +642,10 @@ export function Journey() {
   };
 
   return (
-    <section
-      id="parcurs"
-      className="border-y border-line bg-white py-20"
-      onMouseEnter={() => setAuto(false)}
-    >
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1fr_1.12fr]">
+    <section id="parcurs" className="bg-chalk py-24">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
         <div>
-          <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
               Șapte pași, de la înscriere la atestat
             </h2>
@@ -445,76 +653,71 @@ export function Journey() {
               <button
                 type="button"
                 onClick={() => setAuto((v) => !v)}
-                className="inline-flex min-h-[36px] items-center gap-1.5 rounded border border-line bg-chalk px-2.5 py-1 font-mono text-xs text-asphalt hover:border-asphalt"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded border border-line bg-white px-3 text-sm font-medium text-mute hover:border-asphalt hover:text-asphalt"
               >
-                {auto ? <PauseIcon className="h-3.5 w-3.5 text-sign" /> : <PlayIcon className="h-3.5 w-3.5 text-sign" />}
-                {auto ? "Redare automată" : " Alege un pas"}
+                {auto ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
+                {auto ? "Redare automată" : "Alege un pas"}
               </button>
             )}
           </div>
+
           <LayoutGroup id="journey-steps">
-            <ol className="mt-8">
+            <ol className="mt-8 space-y-2">
               {steps.map((s, k) => {
                 const active = i === k;
                 return (
-                  <motion.li
-                    key={s.t}
-                    onViewportEnter={() => {
-                      if (!auto) setI(k);
-                    }}
-                    viewport={{ margin: "-45% 0px -45% 0px" }}
-                    className="relative border-l-4 border-line py-5 pl-6"
-                  >
+                  <li key={s.t} className="relative">
                     {active && (
                       <motion.span
                         layoutId="journey-active-rail"
-                        className="absolute -left-[4px] bottom-0 top-0 w-1 bg-signal"
                         transition={{ duration: 0.32, ease: EASE_OUT }}
+                        className="absolute inset-y-0 left-0 w-1 rounded-sm bg-signal"
                       />
                     )}
                     <button
                       type="button"
-                      className="group flex min-h-[44px] w-full items-center justify-between text-left"
                       onClick={() => selectStep(k)}
                       aria-current={active ? "step" : undefined}
+                      className={`flex w-full items-start justify-between gap-3 rounded py-3 pl-5 pr-3 text-left transition-colors ${
+                        active ? "bg-white shadow-card" : "hover:bg-white/60"
+                      }`}
                     >
                       <div>
-                        <span className={`font-mono text-xs ${active ? "font-bold text-sign" : "text-mute"}`}>
+                        <span className="text-xs font-medium text-mute">
                           Pasul {k + 1} din {steps.length}
                         </span>
                         <h3
                           className={`font-cond text-2xl font-bold transition-colors ${
-                            active ? "text-asphalt" : "text-asphalt/75 group-hover:text-asphalt"
+                            active ? "text-asphalt" : "text-asphalt/70"
                           }`}
                         >
                           {s.t}
                         </h3>
+                        <p className={`mt-1 text-sm text-mute transition-all ${active ? "block" : "hidden sm:block"}`}>
+                          {s.d}
+                        </p>
                       </div>
                       <span
-                        className={`ml-3 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded font-mono text-xs transition-colors ${
-                          active
-                            ? "border border-asphalt bg-signal font-bold text-asphalt"
-                            : "border border-line bg-chalk text-mute group-hover:border-asphalt"
+                        className={`mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-sm font-cond text-sm font-bold transition-colors ${
+                          active ? "bg-signal text-asphalt" : "bg-line text-mute"
                         }`}
                       >
                         {k + 1}
                       </span>
                     </button>
-                    <p className={`mt-1 max-w-[46ch] text-sm transition-colors duration-200 ${active ? "text-asphalt" : "text-mute"}`}>
-                      {s.d}
-                    </p>
-                    <div className="mt-5 lg:hidden">{s.v}</div>
-                  </motion.li>
+                    {active ? <div className="mt-3 lg:hidden">{s.v}</div> : null}
+                  </li>
                 );
               })}
             </ol>
           </LayoutGroup>
         </div>
-        <div className="relative hidden lg:block">
-          <div className="sticky top-28 space-y-3">
-            <div className="flex items-center justify-between rounded border border-line bg-chalk px-3 py-2 text-xs">
-              <span className="font-mono font-semibold text-sign">
-                PASUL {i + 1} / {steps.length} · {steps[i].t.toUpperCase()}
+
+        <div className="hidden lg:block">
+          <div className="sticky top-28">
+            <div className="mb-3 flex items-center justify-between text-sm text-mute">
+              <span>
+                Pasul {i + 1} din {steps.length}: {steps[i].t}
               </span>
               <div className="flex items-center gap-1.5">
                 {steps.map((s, idx) => (
@@ -523,8 +726,8 @@ export function Journey() {
                     type="button"
                     aria-label={`Pasul ${idx + 1}: ${s.t}`}
                     onClick={() => selectStep(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      idx === i ? "w-6 bg-asphalt" : "w-2.5 bg-line hover:bg-mute"
+                    className={`h-2 rounded-sm transition-all duration-300 ${
+                      idx === i ? "w-6 bg-asphalt" : "w-2 bg-line hover:bg-mute"
                     }`}
                   />
                 ))}
@@ -533,9 +736,9 @@ export function Journey() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={i}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.985, filter: "blur(3px)" }}
-                animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.99, filter: "blur(2px)" }}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.985 }}
+                animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.99 }}
                 transition={{ duration: 0.34, ease: EASE_OUT }}
               >
                 {steps[i].v}
@@ -548,77 +751,73 @@ export function Journey() {
   );
 }
 
+/* ---------- payment ---------- */
+
 export function Payment() {
   const opts = [
-    [
-      "Plătești tot acum",
-      "Cursurile și examenul sunt deblocate imediat. Faci totul în ritmul tău.",
-      "Cursuri + examen",
-    ],
+    ["Plătești tot acum", "Cursurile și examenul sunt deblocate imediat. Faci totul în ritmul tău.", "Cursuri și examen"],
     [
       "Plătești în tranșe",
       "Prima parte deblochează cursurile. Examenul se deblochează când taxa categoriei este achitată integral.",
       "Cursuri acum, examen după",
     ],
   ];
+  const methods = [
+    [CreditCardIcon, "Card bancar (Visa / Mastercard)"],
+    [DevicePhoneMobileIcon, "Apple Pay și Google Pay"],
+    [BuildingLibraryIcon, "Transfer instant (RON și EUR)"],
+    [EnvelopeIcon, "Chitanță pe e-mail"],
+  ] as const;
   return (
-    <section id="plata" className="mx-auto max-w-6xl px-5 py-20">
-      <Reveal>
-        <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-          O singură taxă, plătită cum îți convine
-        </h2>
-        <p className="mt-3 max-w-[60ch] text-mute">
-          Fără abonament și fără pachete. Taxa depinde de categorie și o vezi înainte de plată. Primești chitanță pe
-          e-mail după fiecare plată.
-        </p>
-      </Reveal>
-      <div className="mt-10 grid items-start gap-8 lg:grid-cols-2">
-        <div className="space-y-4">
-          {opts.map(([t, d, tag], k) => (
-            <Reveal key={t} delay={k * 0.06}>
-              <div className="rounded-lg border-2 border-asphalt bg-white p-6">
-                <p className="font-cond text-2xl font-bold">{t}</p>
-                <p className="mt-2 text-mute">{d}</p>
-                <p className="mt-3 inline-block rounded border border-asphalt/30 bg-signal/25 px-2.5 py-0.5 text-sm font-semibold text-asphalt">
-                  {tag}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-          <div className="space-y-2.5">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-asphalt">
-              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
-                <CreditCardIcon className="h-4 w-4 text-sign" aria-hidden="true" />
-                Card bancar (Visa / Mastercard)
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
-                <DevicePhoneMobileIcon className="h-4 w-4 text-sign" aria-hidden="true" />
-                Apple Pay &amp; Google Pay
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
-                <BuildingLibraryIcon className="h-4 w-4 text-sign" aria-hidden="true" />
-                Transfer instant (RON &amp; EUR)
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-2.5 py-1">
-                <EnvelopeIcon className="h-4 w-4 text-sign" aria-hidden="true" />
-                Chitanță pe e-mail
-              </span>
-            </div>
-            <p className="text-sm text-mute">
-              <Link href="/rambursari" className="font-semibold text-sign underline underline-offset-4">
-                Vezi politica de rambursare
-              </Link>
-              .
-            </p>
-          </div>
-        </div>
-        <Reveal delay={0.08}>
-          <PayMock />
+    <section id="plata" className="bg-white py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            O singură taxă, plătită cum îți convine
+          </h2>
+          <p className="mt-3 max-w-[60ch] text-lg text-mute">
+            Fără abonament și fără pachete. Taxa depinde de categorie și o vezi înainte de plată. Primești chitanță pe
+            e-mail după fiecare plată.
+          </p>
         </Reveal>
+        <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_1fr]">
+          <div className="space-y-4">
+            {opts.map(([t, d, tag], k) => (
+              <Reveal key={t} delay={k * 0.07}>
+                <div className={`${card} p-6 transition-shadow hover:shadow-lift`}>
+                  <p className="font-cond text-2xl font-bold">{t}</p>
+                  <p className="mt-2 text-mute">{d}</p>
+                  <p className="mt-4 inline-block rounded-sm bg-signal/25 px-2.5 py-1 text-sm font-semibold">{tag}</p>
+                </div>
+              </Reveal>
+            ))}
+            <Reveal delay={0.14}>
+              <ul className="grid gap-3 rounded border border-line bg-chalk p-5 text-sm sm:grid-cols-2">
+                {methods.map(([Icon, label]) => (
+                  <li key={label} className="flex items-center gap-2.5">
+                    <Icon className="h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
+                    {label}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-sm text-mute">
+                <Link href="/rambursari" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
+                  Vezi politica de rambursare
+                </Link>
+                .
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.08}>
+            <PayMock />
+          </Reveal>
+        </div>
       </div>
     </section>
   );
 }
+
+/* ---------- exam ---------- */
 
 export function Exam() {
   const f = [
@@ -630,27 +829,32 @@ export function Exam() {
     ["Rezultat imediat", "Scor, Admis / Respins, alerte și explicații."],
   ];
   return (
-    <section id="examen" className="border-y border-line bg-white py-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-2">
+    <section id="examen" className="bg-ink py-24 text-chalk">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1fr_1fr] lg:gap-16">
         <Reveal>
           <ExamMock />
         </Reveal>
         <div>
           <Reveal>
-            <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
               Un examen în condiții reale
             </h2>
-            <p className="mt-3 text-mute">
+            <p className="mt-4 max-w-[56ch] text-lg text-chalk/75">
               Testul se deblochează când taxa este plătită integral, identitatea este aprobată și evaluarea globală
               arată că ești pregătit. Tu alegi momentul.
             </p>
           </Reveal>
           <dl className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-            {f.map(([t, d]) => (
-              <div key={t} className="border-t-2 border-asphalt pt-3">
-                <dt className="font-semibold">{t}</dt>
-                <dd className="text-sm text-mute">{d}</dd>
-              </div>
+            {f.map(([t, d], i) => (
+              <Reveal key={t} delay={i * 0.05}>
+                <div className="flex gap-3">
+                  <CheckIcon className="mt-1 h-5 w-5 shrink-0 text-signal" aria-hidden="true" />
+                  <div>
+                    <dt className="font-semibold">{t}</dt>
+                    <dd className="mt-0.5 text-sm text-chalk/70">{d}</dd>
+                  </div>
+                </div>
+              </Reveal>
             ))}
           </dl>
         </div>
@@ -659,88 +863,111 @@ export function Exam() {
   );
 }
 
+/* ---------- real signs ---------- */
+
 const FEATURED_SIGNS = [
   {
     src: "/media/stop-axente-sever.webp",
     alt: "Indicatorul Oprire (Stop) în Axente Sever",
     title: "Oprire (STOP) · Axente Sever",
+    span: "md:col-span-7",
   },
   {
     src: "/media/oprire-interzisa-bistrita.webp",
     alt: "Indicatorul Oprirea interzisă pe o stradă din Bistrița",
     title: "Oprirea interzisă · Bistrița",
+    span: "md:col-span-5",
   },
   {
     src: "/media/sens-giratoriu-timisoara.webp",
     alt: "Sens giratoriu în Piața Ionel I. C. Brătianu din Timișoara",
     title: "Sens giratoriu · Timișoara",
+    span: "md:col-span-5",
   },
   {
     src: "/media/lucrari-transfagarasan.webp",
     alt: "Panou galben de avertizare Pericol de accidente pentru lucrări pe Transfăgărășan",
     title: "Lucrări temporare · Transfăgărășan",
+    span: "md:col-span-7",
   },
 ];
 
 export function Signs() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-20">
-      <Reveal>
-        <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-          Indicatoare reale, nu desene
-        </h2>
-        <p className="mt-3 max-w-[60ch] text-mute">
-          Lecțiile și întrebările folosesc fotografii reale ale indicatoarelor din România și situații de drum.{" "}
-          <Link href="/credite-imagini" className="font-semibold text-sign underline underline-offset-4">
-            Sursa și licența fiecărei imagini
-          </Link>{" "}
-          sunt publice.
-        </p>
-      </Reveal>
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-        {FEATURED_SIGNS.map((s, idx) => (
-          <Reveal key={s.src} delay={idx * 0.05} className="group">
-            <figure className="overflow-hidden rounded-lg border-2 border-asphalt bg-surface transition-transform duration-300 ease-out group-hover:-translate-y-1">
-              <div className="aspect-square overflow-hidden bg-asphalt">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                />
-              </div>
-              <figcaption className="border-t border-line bg-white px-3 py-2.5 text-xs font-semibold text-asphalt">
-                {s.title}
-              </figcaption>
-            </figure>
-          </Reveal>
-        ))}
+    <section className="bg-chalk py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            Indicatoare reale, nu desene
+          </h2>
+          <p className="mt-3 max-w-[62ch] text-lg text-mute">
+            Lecțiile și întrebările folosesc fotografii reale ale indicatoarelor din România și situații de drum.{" "}
+            <Link
+              href="/credite-imagini"
+              className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+            >
+              Sursa și licența fiecărei imagini
+            </Link>{" "}
+            sunt publice.
+          </p>
+        </Reveal>
+        <div className="mt-12 grid gap-5 md:grid-cols-12">
+          {FEATURED_SIGNS.map((s, idx) => (
+            <Reveal key={s.src} delay={(idx % 2) * 0.08} className={s.span}>
+              <figure>
+                <Parallax src={s.src} alt={s.alt} className="aspect-[16/10] rounded shadow-card">
+                  <div className="absolute inset-0 bg-gradient-to-t from-asphalt/70 via-transparent to-transparent" />
+                  <figcaption className="absolute bottom-3 left-4 right-4 text-sm font-semibold text-chalk">
+                    {s.title}
+                  </figcaption>
+                </Parallax>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
+/* ---------- certificate ---------- */
+
 export function Certificate() {
+  const facts = ["Număr unic de serie", "Cod QR pe document", "Verificare publică, fără cont", "Pe e-mail în maximum 3 zile"];
   return (
-    <section className="border-y border-line bg-white py-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-2">
+    <section className="bg-white py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
         <div>
           <Reveal>
-            <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
               Atestatul ajunge pe e-mail
             </h2>
-            <p className="mt-3 max-w-[56ch] text-mute">
+            <p className="mt-4 max-w-[56ch] text-lg text-mute">
               După examen, atestatul de reușită este trimis automat pe e-mail în maximum 3 zile. Are număr unic și cod
               QR, iar oricine poate verifica autenticitatea pe{" "}
-              <Link href="/verificare" className="font-semibold text-sign underline underline-offset-4">
+              <Link
+                href="/verificare"
+                className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+              >
                 pagina publică de verificare
               </Link>
               .
             </p>
-            <p className="mt-4 max-w-[56ch] rounded border border-asphalt bg-chalk p-4 text-sm text-asphalt">
-              Atestatul Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
-              înlocuiește examenul oficial organizat de autorități.
+          </Reveal>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            {facts.map((t, i) => (
+              <Reveal key={t} delay={i * 0.05}>
+                <li className="flex items-center gap-2.5 text-asphalt">
+                  <CheckIcon className="h-5 w-5 shrink-0 text-ok" aria-hidden="true" />
+                  {t}
+                </li>
+              </Reveal>
+            ))}
+          </ul>
+          <Reveal delay={0.2}>
+            <p className="mt-6 rounded border-l-4 border-signal bg-chalk p-4 text-sm text-mute">
+              Atestatul Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește
+              examenul oficial organizat de autorități.
             </p>
           </Reveal>
         </div>
@@ -751,6 +978,8 @@ export function Certificate() {
     </section>
   );
 }
+
+/* ---------- faq ---------- */
 
 const faq = [
   [
@@ -781,57 +1010,70 @@ const faq = [
 
 export function Faq() {
   return (
-    <section id="faq" className="mx-auto max-w-3xl px-5 py-20">
-      <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Întrebări frecvente</h2>
-      <div className="mt-8">
-        {faq.map(([q, a]) => (
-          <details key={q} className="group border-t border-line py-4 last:border-b">
-            <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold">
-              <span>{q}</span>
-              <ChevronDownIcon className="h-5 w-5 shrink-0 text-mute transition-transform group-open:rotate-180" />
-            </summary>
-            <p className="mt-2 max-w-[65ch] text-mute">{a}</p>
-          </details>
-        ))}
+    <section id="faq" className="bg-chalk py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Întrebări frecvente</h2>
+          <p className="mt-3 text-mute">
+            Nu găsești răspunsul?{" "}
+            <a href="#contact" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
+              Scrie-ne direct
+            </a>
+            .
+          </p>
+        </Reveal>
+        <div className="space-y-3">
+          {faq.map(([q, a], i) => (
+            <Reveal key={q} delay={i * 0.04}>
+              <details className={`group ${card} open:shadow-lift`}>
+                <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold [&::-webkit-details-marker]:hidden">
+                  <span>{q}</span>
+                  <ChevronDownIcon
+                    className="h-5 w-5 shrink-0 text-mute transition-transform duration-300 group-open:rotate-180"
+                    aria-hidden="true"
+                  />
+                </summary>
+                <p className="border-t border-line px-5 py-4 text-mute">{a}</p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
+/* ---------- contact ---------- */
+
 export function ContactSection() {
+  const rows = [
+    [EnvelopeIcon, "E-mail suport", LEGAL_ENTITY.contactEmail],
+    [PhoneIcon, "Telefon", LEGAL_ENTITY.phonePlaceholder],
+    [MapPinIcon, "Sediu", LEGAL_ENTITY.addressPlaceholder],
+  ] as const;
   return (
-    <section id="contact" className="border-t border-line bg-white py-20">
-      <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr]">
+    <section id="contact" className="bg-white py-24">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-2 lg:gap-16">
         <Reveal>
           <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
             Ai o întrebare? Scrie-ne direct.
           </h2>
-          <p className="mt-3 max-w-[50ch] text-mute">
+          <p className="mt-3 max-w-[56ch] text-lg text-mute">
             Echipa Drumo răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
             identității (KYC) sau atestatul QR.
           </p>
-          <dl className="mt-8 space-y-4 border-t border-line pt-6 text-sm">
-            <div className="flex items-start gap-3">
-              <EnvelopeIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
-              <div>
-                <dt className="font-semibold text-asphalt">E-mail suport</dt>
-                <dd className="font-mono text-mute">{LEGAL_ENTITY.contactEmail}</dd>
+          <dl className="mt-8 space-y-5">
+            {rows.map(([Icon, label, value]) => (
+              <div key={label} className="flex items-start gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded bg-signal/25">
+                  <Icon className="h-5 w-5 text-asphalt" aria-hidden="true" />
+                </span>
+                <div>
+                  <dt className="text-sm text-mute">{label}</dt>
+                  <dd className="font-semibold">{value}</dd>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
-              <div>
-                <dt className="font-semibold text-asphalt">Telefon</dt>
-                <dd className="font-mono text-mute">{LEGAL_ENTITY.phonePlaceholder}</dd>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
-              <div>
-                <dt className="font-semibold text-asphalt">Sediu</dt>
-                <dd className="text-mute">{LEGAL_ENTITY.addressPlaceholder}</dd>
-              </div>
-            </div>
+            ))}
           </dl>
         </Reveal>
         <Reveal delay={0.08}>
@@ -842,21 +1084,34 @@ export function ContactSection() {
   );
 }
 
+/* ---------- final call to action ---------- */
+
 export function FinalCta() {
   return (
-    <section id="inscriere" className="bg-asphalt py-20 text-chalk">
-      <div className="mx-auto max-w-3xl px-5 text-center">
+    <section id="inscriere" className="relative overflow-hidden bg-signal py-24 text-asphalt">
+      <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-6xl">
+          <h2 className="max-w-[18ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl">
             Alege categoria și începe azi.
           </h2>
-          <p className="mx-auto mt-4 max-w-[48ch] text-chalk/80">
+          <p className="mt-4 max-w-[48ch] text-lg text-asphalt/80">
             Înscrierea durează câteva minute. Vezi taxa înainte să plătești.
           </p>
-          <Link href={CTA_HREF} className={`${btn} mt-8 border-signal bg-signal text-asphalt hover:bg-[#e0a900]`}>
-            Începe înscrierea
-          </Link>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href={CTA_HREF}
+              className={`${btn} bg-asphalt text-chalk shadow-lift hover:bg-ink`}
+            >
+              Începe înscrierea
+            </Link>
+            <a href="#categorii" className={btnGhostLight}>
+              Vezi categoriile
+            </a>
+          </div>
         </Reveal>
+      </div>
+      <div className="absolute inset-x-0 bottom-0">
+        <DashLine />
       </div>
     </section>
   );

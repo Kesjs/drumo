@@ -25,8 +25,7 @@ export function Frame({
 }) {
   return (
     <div
-      data-impeccable-ignore="hard-offset-shadow"
-      className={`overflow-hidden rounded-lg border-2 border-asphalt bg-white shadow-[8px_8px_0_#f2b705] ${className}`}
+      className={`overflow-hidden rounded border border-line bg-white shadow-lift ${className}`}
     >
       {children}
     </div>

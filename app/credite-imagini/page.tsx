@@ -16,8 +16,12 @@ export default async function ImageCreditsPage() {
           Credite imagini și licențe publice
         </h1>
         <p className="mt-4 max-w-[65ch] text-mute">
-          Toate fotografiile rutiere de pe Drumo sunt găzduite local (WebP și AVIF), provin exclusiv din surse cu
+          Toate fotografiile rutiere de pe PermisStart sunt găzduite local (WebP și AVIF), provin exclusiv din surse cu
           licență verificată și respectă obligațiile de atribuire.
+        </p>
+        <p className="mt-3 max-w-[65ch] text-sm text-mute">
+          Imaginea de fundal din partea de sus a primei pagini este o imagine generată cu inteligență artificială, nu
+          o fotografie reală.
         </p>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

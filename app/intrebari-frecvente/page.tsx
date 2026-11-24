@@ -8,16 +8,16 @@ export const dynamic = "force-dynamic";
 
 const ALL_FAQ = [
   {
-    q: "De ce să mă pregătesc și să dau examenul pe Drumo?",
-    a: "Drumo transformă pregătirea teoretică într-un parcurs clar: lecții pe capitole cu fotografii reale ale indicatoarelor din România, audio integral, repetiție spațiată pe capitolele slabe și un examen supravegheat în condiții identice cu sala oficială. Ajungi la proba autorităților pregătit să promovezi din prima încercare.",
+    q: "De ce să mă pregătesc și să dau examenul pe PermisStart?",
+    a: "PermisStart transformă pregătirea teoretică într-un parcurs clar: lecții pe capitole cu fotografii reale ale indicatoarelor din România, audio integral, repetiție spațiată pe capitolele slabe și un examen supravegheat în condiții identice cu sala oficială. Ajungi la proba autorităților pregătit să promovezi din prima încercare.",
   },
   {
-    q: "Ce reprezintă atestatul de reușită Drumo și cum se verifică?",
-    a: "Atestatul de reușită Drumo (PDF cu serie unică și cod QR verificabil public pe drumo.ro/verificare) confirmă parcurgerea pregătirii și promovarea testului supravegheat pe platformă. Îl poți prezenta instructorului sau angajatorului ca dovadă a pregătirii tale. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități, decât dacă și când va exista un agrement oficial în acest sens.",
+    q: "Ce reprezintă atestatul de reușită PermisStart și cum se verifică?",
+    a: "Atestatul de reușită PermisStart (PDF cu serie unică și cod QR verificabil public pe permisstart.ro/verificare) confirmă parcurgerea pregătirii și promovarea testului supravegheat pe platformă. Îl poți prezenta instructorului sau angajatorului ca dovadă a pregătirii tale. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități, decât dacă și când va exista un agrement oficial în acest sens.",
   },
   {
     q: "De ce nu există un tabel public de prețuri sau abonamente?",
-    a: "Drumo nu este un abonament recurent. Fiecare candidat achită o singură taxă stabilită în funcție de categoria de permis aleasă (AM, A1, A2, A, B1, B, BE, C, CE, D). Suma exactă în RON sau EUR apare la înscriere, înainte de orice plată.",
+    a: "PermisStart nu este un abonament recurent. Fiecare candidat achită o singură taxă stabilită în funcție de categoria de permis aleasă (AM, A1, A2, A, B1, B, BE, C, CE, D). Suma exactă în RON sau EUR apare la înscriere, înainte de orice plată.",
   },
   {
     q: "Cum funcționează plata în tranșe?",
@@ -29,7 +29,7 @@ const ALL_FAQ = [
   },
   {
     q: "În cât timp primesc atestatul după ce sunt admis?",
-    a: "Atestatul de reușită Drumo (PDF cu număr unic și cod QR verificabil public) este programat spre trimitere automată pe e-mail în cel mult 3 zile (72 de ore) de la finalizarea examenului. Dacă există alerte de integritate, administratorul poate reține temporar trimiterea pentru verificare.",
+    a: "Atestatul de reușită PermisStart (PDF cu număr unic și cod QR verificabil public) este programat spre trimitere automată pe e-mail în cel mult 3 zile (72 de ore) de la finalizarea examenului. Dacă există alerte de integritate, administratorul poate reține temporar trimiterea pentru verificare.",
   },
   {
     q: "Ce faceți cu fotografia actului de identitate și selfie-ul?",

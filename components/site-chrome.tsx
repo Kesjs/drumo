@@ -41,8 +41,9 @@ export function PublicHeader({
 
   // Overlay mode (home): transparent over the hero, solid once the page scrolls.
   const solid = !overlay || scrolled || open;
-  const tone = "text-asphalt";
-  const navTone = "text-mute hover:text-asphalt";
+  // Transparent au-dessus de la photo du hero : texte clair. Une fois le header plein : texte sombre.
+  const tone = solid ? "text-asphalt" : "text-white";
+  const navTone = solid ? "text-mute hover:text-asphalt" : "text-white/90 hover:text-white";
 
   return (
     <motion.header
@@ -60,7 +61,7 @@ export function PublicHeader({
           solid ? "h-16" : "h-20"
         }`}
       >
-        <Link href="/" aria-label="PermisStart, prima pagină" className="text-asphalt">
+        <Link href="/" aria-label="PermisStart, prima pagină" className={`transition-colors ${tone}`}>
           <Logo className="h-10 sm:h-11" />
         </Link>
 
@@ -76,6 +77,7 @@ export function PublicHeader({
           ))}
         </nav>
 
+        <div className="flex items-center gap-3">
         <div className="hidden items-center gap-3 md:flex">
           {loggedIn ? (
             <Link href="/tablou-de-bord" className={ctaBtn}>
@@ -107,6 +109,7 @@ export function PublicHeader({
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
+        </div>
       </div>
 
       {open ? (

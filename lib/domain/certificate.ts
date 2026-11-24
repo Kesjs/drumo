@@ -1,7 +1,7 @@
 // Atestat: label rules, public code, and the 3-day send queue.
 
 export const MAX_SEND_DELAY_HOURS = 72;
-const FORBIDDEN = [/permis\s+de\s+conducere/i, /\bpermis\b(?!\s*Drumo)/i, /driving\s+licen[cs]e/i];
+const FORBIDDEN = [/permis\s+de\s+conducere/i, /\bpermis\b(?!\s*PermisStart)/i, /driving\s+licen[cs]e/i];
 
 export interface LabelConfig {
   label: string;           // app_config.certificate_label
@@ -13,9 +13,9 @@ export interface LabelConfig {
  * read as a driving licence is refused and the safe default is used.
  */
 export function certificateLabel(cfg: LabelConfig): string {
-  const SAFE = "atestat de reușită Drumo";
+  const SAFE = "atestat de reușită PermisStart";
   if (cfg.accredited) return cfg.label;
-  const stripped = cfg.label.replace(/Drumo/g, "");
+  const stripped = cfg.label.replace(/PermisStart/g, "");
   return FORBIDDEN.some((re) => re.test(stripped)) ? SAFE : cfg.label;
 }
 

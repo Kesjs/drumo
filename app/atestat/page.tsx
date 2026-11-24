@@ -30,7 +30,7 @@ export default async function CertificatePage() {
     >
       <div className="max-w-3xl space-y-6">
         <div>
-          <h1 className="font-cond text-3xl font-bold md:text-4xl">Atestat de reușită Drumo</h1>
+          <h1 className="font-cond text-3xl font-bold md:text-4xl">Atestat de reușită PermisStart</h1>
           <p className="mt-1 text-sm text-mute">
             După promovarea examenului, atestatul PDF este programat pentru trimitere automată pe e-mail în maximum 3
             zile.
@@ -38,7 +38,7 @@ export default async function CertificatePage() {
         </div>
 
         <NoticeBox tone="info" title="Mențiune legală">
-          Atestatul de reușită Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
+          Atestatul de reușită PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
           înlocuiește examenul oficial organizat de autorități.
         </NoticeBox>
 

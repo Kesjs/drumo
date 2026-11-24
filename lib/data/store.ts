@@ -236,7 +236,7 @@ function createInitialLocalDb(): LocalDb {
 
   return {
     app_config: {
-      certificate_label: "atestat de reușită Drumo",
+      certificate_label: "atestat de reușită PermisStart",
       accredited: false,
       certificate_send_delay_hours: 48,
       kyc_retention_days: 30,
@@ -249,7 +249,7 @@ function createInitialLocalDb(): LocalDb {
         profile: {
           id: adminId,
           first_name: "Administrator",
-          last_name: "Drumo",
+          last_name: "PermisStart",
           email: "admin@drumo.ro",
           phone: null,
           country: "RO",
@@ -356,7 +356,7 @@ function createInitialLocalDb(): LocalDb {
         holder_name: "Andrei Popescu",
         score: 24,
         total: 26,
-        label_snapshot: "atestat de reușită Drumo",
+        label_snapshot: "atestat de reușită PermisStart",
         issued_at: now,
         scheduled_send_at: new Date(Date.now() + 48 * 3_600_000).toISOString(),
         status: "sent",

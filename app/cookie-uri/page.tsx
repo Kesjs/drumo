@@ -12,7 +12,7 @@ export default async function CookiesPage() {
       <main className="mx-auto max-w-3xl px-5 py-16 space-y-6 text-sm leading-relaxed text-mute">
         <h1 className="font-cond text-4xl font-bold text-asphalt">Politica de cookie-uri</h1>
         <p>
-          Drumo folosește exclusiv cookie-uri strict necesare pentru funcționarea sesiunii autentificate și
+          PermisStart folosește exclusiv cookie-uri strict necesare pentru funcționarea sesiunii autentificate și
           securitatea plăților. Nu folosim cookie-uri de urmărire publicitară.
         </p>
         <div className="overflow-hidden rounded-lg border border-line bg-surface">

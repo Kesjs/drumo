@@ -10,11 +10,11 @@ web
 
 Candidates preparing the theory part of a driving licence in Romania (and EU residents choosing Romania's framework), mostly on a phone, often in short sessions (commute, evening). Job: learn the rules chapter by chapter, know honestly whether they are ready, then sit a supervised online theory test and receive proof of success.
 
-Secondary: Drumo staff (admins, KYC reviewers) operating candidates, payments, question bank, fraud reports and the certificate send queue.
+Secondary: PermisStart staff (admins, KYC reviewers) operating candidates, payments, question bank, fraud reports and the certificate send queue.
 
 ## Product Purpose
 
-Drumo combines training and a supervised online theory test. A candidate pays one fee that depends on the licence category (AM, A1, A2, A, B1, B, BE, C, CE, D…), either in full or in instalments, learns through detailed chapters (real images, recorded audio), is assessed adaptively, and unlocks the exam once readiness is reached and the fee is fully paid. Success produces an "atestat de reușită Drumo" emailed within 3 days, with a unique number and a public QR verification page.
+PermisStart combines training and a supervised online theory test. A candidate pays one fee that depends on the licence category (AM, A1, A2, A, B1, B, BE, C, CE, D…), either in full or in instalments, learns through detailed chapters (real images, recorded audio), is assessed adaptively, and unlocks the exam once readiness is reached and the fee is fully paid. Success produces an "atestat de reușită PermisStart" emailed within 3 days, with a unique number and a public QR verification page.
 
 Success = candidates who pass are genuinely prepared; zero confusion between the atestat and an official driving licence.
 
@@ -35,12 +35,12 @@ One fee per category, no subscription, no packages. Courses unlock at the first 
 - Stack (fixed by the owner): Next.js App Router + TypeScript + Tailwind + shadcn/ui + Framer Motion, Supabase (auth, Postgres, encrypted storage, strict RLS), Stripe, Vercel.
 - Locks (courses, exam) are enforced server-side via RLS and verified Stripe webhooks, never only in the UI.
 - Category fee, minimum first instalment, thresholds are configured in the `categories` table; prices are shown only during signup, never in a public price grid.
-- Legal: the document is named "atestat de reușită Drumo". Never "permis" / "permis de conducere", never implies it replaces the official exam. A config flag changes the label if an accreditation ever exists.
+- Legal: the document is named "atestat de reușită PermisStart". Never "permis" / "permis de conducere", never implies it replaces the official exam. A config flag changes the label if an accreditation ever exists.
 - Undecided: company legal identity (name, CUI, address) for the footer and legal pages; final category fees.
 
 ## Brand Commitments
 
-- Name: Drumo (provisional).
+- Name: PermisStart (provisional).
 - Voice: calm, natural Romanian, administrative but human. Correct diacritics (ș, ț with comma below).
 - Owner-pinned identity: "administratif moderne". Asphalt #18202b, chalk #f5f6f3, ONE signal-yellow accent #f2b705, sign blue #0b4ea2 in touches. IBM Plex Sans, Sans Condensed, Mono.
 - Forbidden: purple gradients, gratuitous glassmorphism, emoji as icons, identical card grids, generic 3D illustrations, lorem ipsum.

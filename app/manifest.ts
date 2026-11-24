@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Drumo — Pregătire și test teoretic auto",
-    short_name: "Drumo",
+    name: "PermisStart — Pregătire și test teoretic auto",
+    short_name: "PermisStart",
     description:
       "Platformă de pregătire și testare teoretică auto pentru România. Fără abonament, taxă unică pe categorie.",
     start_url: "/tablou-de-bord",

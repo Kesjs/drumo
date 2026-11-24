@@ -59,6 +59,20 @@
   }
 }
 
+.marquee {
+  animation: marquee 55s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }

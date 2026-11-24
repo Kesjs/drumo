@@ -23,7 +23,7 @@ function getResendClient(): Resend | null {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
-const FROM = process.env.EMAIL_FROM || "Drumo <noreply@drumo.ro>";
+const FROM = process.env.EMAIL_FROM || "PermisStart <noreply@permisstart.ro>";
 
 async function deliverEmail(params: {
   to: string;
@@ -64,14 +64,14 @@ function wrapHtml(title: string, bodyHtml: string) {
 <body style="margin:0;padding:24px;background:#f5f6f3;font-family:'IBM Plex Sans',Arial,sans-serif;color:#18202b;">
   <div style="max-width:600px;margin:0 auto;background:#ffffff;border:2px solid #18202b;border-radius:8px;overflow:hidden;">
     <div style="background:#18202b;color:#ffffff;padding:18px 24px;border-bottom:4px solid #f2b705;">
-      <strong style="font-size:18px;letter-spacing:0.02em;">Drumo</strong>
+      <strong style="font-size:18px;letter-spacing:0.02em;">PermisStart</strong>
     </div>
     <div style="padding:24px;line-height:1.6;font-size:15px;">
       ${bodyHtml}
       <hr style="border:none;border-top:1px solid #d9dcd6;margin:24px 0 16px;" />
       <p style="font-size:12px;color:#4a5461;margin:0;">
-        Drumo · Pregătire și testare teoretică online.<br />
-        Atestatul de reușită Drumo nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități.
+        PermisStart · Pregătire și testare teoretică online.<br />
+        Atestatul de reușită PermisStart nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități.
       </p>
     </div>
   </div>
@@ -94,7 +94,7 @@ export async function sendPaymentReceiptEmail(input: {
   const paidStr = formatMoney(input.amountMinor, input.currency);
   const totalPaidStr = formatMoney(input.totalPaidMinor, input.currency);
   const totalDueStr = formatMoney(input.totalDueMinor, input.currency);
-  const subject = `Chitanță plată Drumo — ${paidStr} (Categoria ${input.categoryCode})`;
+  const subject = `Chitanță plată PermisStart — ${paidStr} (Categoria ${input.categoryCode})`;
   const text = `Bună, ${input.holderName}. Confirmăm plata de ${paidStr} (tranșa ${input.installmentNo}) pentru categoria ${input.categoryCode}. Total achitat: ${totalPaidStr} din ${totalDueStr}. Cursuri: ${input.coursesUnlocked ? "deblocate" : "blocate"}. Examen: ${input.feeFullyPaid ? "taxa achitată integral" : "se deblochează după achitarea integrală și evaluarea globală"}.`;
 
   const html = wrapHtml(
@@ -134,7 +134,7 @@ export async function sendCertificateEmail(input: {
      <p>Cod unic de verificare: <strong style="font-family:monospace;">${input.publicCode}</strong></p>
      <p><a href="${verifyUrl}" style="display:inline-block;background:#f2b705;color:#18202b;border:2px solid #18202b;padding:10px 18px;border-radius:4px;text-decoration:none;font-weight:600;">Verifică autenticitatea online</a></p>
      <p style="margin-top:16px;padding:12px;background:#f5f6f3;border:1px solid #d9dcd6;font-size:13px;">
-       Atestatul de reușită Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități.
+       Atestatul de reușită PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autorități.
      </p>`,
   );
 

@@ -20,13 +20,13 @@ export function isResendConfigured(): boolean {
 }
 
 export const LEGAL_ENTITY = {
-  brandName: "Drumo",
-  companyPlaceholder: "SC Drumo Educație Rutieră S.R.L.",
+  brandName: "PermisStart",
+  companyPlaceholder: "SC PermisStart Educație Rutieră S.R.L.",
   cuiPlaceholder: "RO49821740",
   regComPlaceholder: "J40/14820/2026",
   addressPlaceholder: "Calea Victoriei nr. 155, Sector 1, București, România",
-  contactEmail: "contact@drumo.ro",
-  dpoEmail: "datepersonale@drumo.ro",
+  contactEmail: "contact@permisstart.ro",
+  dpoEmail: "datepersonale@permisstart.ro",
   phonePlaceholder: "+40 31 630 42 10",
 } as const;
 
@@ -59,3 +59,9 @@ export const EU_COUNTRIES = [
   { code: "SE", name: "Suedia" },
   { code: "HU", name: "Ungaria" },
 ] as const;
+
+// WhatsApp: număr în format internațional, fără „+” și fără spații (ex. 40722123456).
+export const WHATSAPP = {
+  number: "40765717786",
+  message: "Bună! Am o întrebare despre PermisStart.",
+} as const;

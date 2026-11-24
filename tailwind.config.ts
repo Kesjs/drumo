@@ -5,6 +5,8 @@ export default {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      // Coins plus doux : moins « formulaire administratif ». Ne touche pas aux couleurs.
+      borderRadius: { DEFAULT: "0.625rem" },
       colors: {
         asphalt: "#18202b",
         ink: "#0f151d",

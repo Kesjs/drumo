@@ -52,7 +52,7 @@ export function AdminShell({
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <Link href="/admin" className="font-cond text-xl font-bold tracking-tight">
-              <span className="rounded-sm bg-signal px-2 py-0.5 text-asphalt">Drumo</span>
+              <span className="rounded-sm bg-signal px-2 py-0.5 text-asphalt">PermisStart</span>
             </Link>
             <span className="rounded border border-chalk/30 px-2 py-0.5 font-mono text-xs text-signal">ADMIN</span>
           </div>

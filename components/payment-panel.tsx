@@ -99,7 +99,7 @@ export function PaymentPanel({
   async function handlePay(e: React.FormEvent) {
     e.preventDefault();
     if (!acceptedPolicy) {
-      setError("Confirmă că ai citit politica de rambursare și natura atestatului Drumo înainte de plată.");
+      setError("Confirmă că ai citit politica de rambursare și natura atestatului PermisStart înainte de plată.");
       return;
     }
     const parsedMajor = Number(amountMajor.replace(",", "."));
@@ -512,7 +512,7 @@ export function PaymentPanel({
               .
             </p>
             <p>
-              • Documentul eliberat la promovare este un <strong>atestat de reușită Drumo</strong>, nu permis de
+              • Documentul eliberat la promovare este un <strong>atestat de reușită PermisStart</strong>, nu permis de
               conducere oficial.
             </p>
             <label className="mt-2 flex cursor-pointer items-start gap-2.5 pt-1 font-medium">

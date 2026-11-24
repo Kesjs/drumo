@@ -114,7 +114,7 @@ export function DashboardMock() {
 
 export function SignupStepMock() {
   return (
-    <Frame title="drumo.ro/inscriere">
+    <Frame title="permisstart.ro/inscriere">
       <div className="grid grid-cols-1 sm:grid-cols-[1.15fr_1fr]">
         <div className="relative min-h-[210px] overflow-hidden border-b border-line bg-asphalt sm:border-b-0 sm:border-r">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -166,7 +166,7 @@ export function SignupStepMock() {
 
 export function KycStepMock() {
   return (
-    <Frame title="drumo.ro/verificare-identitate">
+    <Frame title="permisstart.ro/verificare-identitate">
       <div className="grid grid-cols-1 sm:grid-cols-[1.1fr_1fr]">
         <div className="relative min-h-[210px] overflow-hidden border-b border-line bg-asphalt sm:border-b-0 sm:border-r">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -269,7 +269,7 @@ export function PayMock() {
 
 export function ChapterMock() {
   return (
-    <Frame title="drumo.ro/capitole/prioritati">
+    <Frame title="permisstart.ro/capitole/prioritati">
       <div className="p-4 text-sm">
         <div className="mb-3 flex flex-wrap gap-2 text-xs">
           <span className="rounded bg-chalk px-2 py-1 text-mute">Rezumat</span>
@@ -306,7 +306,7 @@ export function ChapterMock() {
 
 export function AdaptiveMock() {
   return (
-    <Frame title="drumo.ro/evaluare-adaptiva">
+    <Frame title="permisstart.ro/evaluare-adaptiva">
       <div className="grid grid-cols-1 text-sm sm:grid-cols-[1.05fr_1fr]">
         <div className="relative min-h-[220px] overflow-hidden border-b border-line bg-asphalt sm:border-b-0 sm:border-r">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -355,7 +355,7 @@ export function AdaptiveMock() {
 
 export function GlobalEvalMock() {
   return (
-    <Frame title="drumo.ro/evaluare-globala">
+    <Frame title="permisstart.ro/evaluare-globala">
       <div className="grid grid-cols-1 text-sm sm:grid-cols-[1.05fr_1fr]">
         <div className="relative min-h-[220px] overflow-hidden border-b border-line bg-asphalt sm:border-b-0 sm:border-r">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -402,7 +402,7 @@ export function GlobalEvalMock() {
 
 export function ExamMock() {
   return (
-    <Frame title="drumo.ro/examen/sala">
+    <Frame title="permisstart.ro/examen/sala">
       <div className="text-sm">
         <div className="flex items-center justify-between border-b border-line px-4 py-2 text-xs">
           <span>Întrebarea 7 din 26</span>
@@ -438,7 +438,7 @@ export function CertMock() {
         <div className="flex items-center justify-between gap-3 border-b-2 border-asphalt bg-asphalt px-5 py-3.5 text-chalk">
           <div className="flex items-center gap-2.5">
             <span className="inline-flex h-7 items-center rounded-sm bg-signal px-2 font-cond text-sm font-bold tracking-tight text-asphalt">
-              Drumo
+              PermisStart
             </span>
             <div>
               <p className="font-mono text-xs uppercase tracking-wider text-signal">Document verificabil QR</p>
@@ -495,7 +495,7 @@ export function CertMock() {
               </svg>
               <div className="space-y-1 text-xs leading-snug text-mute">
                 <p className="font-semibold text-asphalt">Semnătură electronică &amp; registru public</p>
-                <p>Atestat de reușită Drumo · Nu este permis de conducere oficial.</p>
+                <p>Atestat de reușită PermisStart · Nu este permis de conducere oficial.</p>
               </div>
             </div>
 
@@ -503,7 +503,7 @@ export function CertMock() {
               <div className="inline-flex h-16 w-16 items-center justify-center rounded border border-asphalt bg-white p-1.5 text-asphalt">
                 <QrCodeIcon className="h-12 w-12" aria-hidden="true" />
               </div>
-              <p className="mt-1 font-mono text-xs text-mute">drumo.ro/verificare</p>
+              <p className="mt-1 font-mono text-xs text-mute">permisstart.ro/verificare</p>
             </div>
           </div>
         </div>

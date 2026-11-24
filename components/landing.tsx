@@ -5,7 +5,9 @@ import Link from "next/link";
 import {
   AnimatePresence,
   LayoutGroup,
+  animate,
   motion,
+  useInView,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -26,7 +28,14 @@ import {
   ShieldCheckIcon,
   GlobeEuropeAfricaIcon,
   QrCodeIcon,
+  ClockIcon,
+  ChartBarIcon,
+  VideoCameraIcon,
+  DocumentCheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/solid";
 import { ContactForm } from "./contact-form";
 import { LEGAL_ENTITY } from "@/lib/config";
 import {
@@ -40,105 +49,9 @@ import {
   CertMock,
 } from "./mockups";
 
-const CTA_HREF = "/inscriere";
-const EASE_OUT = [0.16, 1, 0.3, 1] as const;
-const btn =
-  "inline-flex min-h-[48px] items-center justify-center rounded px-6 py-3 font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0";
-const btnPrimary = `${btn} bg-signal text-asphalt shadow-card hover:bg-signal-deep`;
-const btnGhostDark = `${btn} border border-chalk/50 text-chalk hover:bg-chalk/10`;
-const btnGhostLight = `${btn} border border-asphalt text-asphalt hover:bg-asphalt hover:text-chalk`;
-const card = "rounded border border-line bg-white shadow-card";
-
-/* ---------- primitives ---------- */
-
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.55, delay, ease: EASE_OUT }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function Pic({
-  src,
-  alt,
-  className = "",
-  eager = false,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  eager?: boolean;
-}) {
-  const avif = src.replace(/\.webp$/, ".avif");
-  return (
-    <picture className="block h-full w-full">
-      <source srcSet={avif} type="image/avif" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        loading={eager ? "eager" : "lazy"}
-        decoding="async"
-        className={`h-full w-full object-cover ${className}`}
-      />
-    </picture>
-  );
-}
-
-/** Photo that drifts slowly against the scroll. The frame clips it. */
-function Parallax({
-  src,
-  alt,
-  className = "",
-  children,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  children?: React.ReactNode;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-  return (
-    <div ref={ref} className={`relative overflow-hidden bg-asphalt ${className}`}>
-      <motion.div style={reduce ? undefined : { y }} className="absolute inset-x-0 -top-[10%] h-[120%]">
-        <Pic src={src} alt={alt} />
-      </motion.div>
-      {children}
-    </div>
-  );
-}
-
-function DashLine({ color = "#18202b" }: { color?: string }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      aria-hidden="true"
-      className="h-1 w-full"
-      style={{ backgroundImage: `repeating-linear-gradient(90deg, ${color} 0 22px, transparent 22px 40px)` }}
-      animate={reduce ? undefined : { backgroundPositionX: ["0px", "-40px"] }}
-      transition={reduce ? undefined : { duration: 1.4, ease: "linear", repeat: Infinity }}
-    />
-  );
-}
+import { Reveal, Pic, Parallax, DashLine, SplitWords, Magnetic, Tilt } from "./motion-kit";
+import { EASE_OUT, CTA_HREF, btn, btnPrimary, btnGhostLight, card } from "@/lib/ui";
+import { TESTIMONIALS } from "@/lib/testimonials";
 
 /* ---------- hero ---------- */
 
@@ -193,63 +106,100 @@ export function Hero() {
         };
 
   return (
-    <section ref={ref} className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink text-chalk">
+    <section ref={ref} className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-chalk text-asphalt">
       <motion.div
         aria-hidden="true"
         style={reduce ? undefined : { y: bgY, scale: bgScale }}
         className="absolute inset-0 -z-10"
       >
-        <Pic
-          src="/media/transfagarasan.webp"
-          alt=""
-          eager
-        />
+        <Pic src="/media/hero-permisstart.webp" alt="" eager className="object-[62%_45%]" />
       </motion.div>
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/65 to-ink/20" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/85 via-transparent to-ink/50" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-chalk/80 lg:bg-transparent lg:bg-gradient-to-r lg:from-chalk/95 lg:via-chalk/70 lg:to-transparent" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-chalk via-transparent to-transparent" />
 
       <motion.div
         style={reduce ? undefined : { y: textY }}
         className="mx-auto w-full max-w-6xl px-5 pb-48 pt-32 sm:pb-56"
       >
-        <motion.h1
-          {...a(0.05)}
-          className="max-w-[16ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl lg:text-7xl"
+        <motion.p
+          {...a(0)}
+          className="mb-5 inline-flex items-center gap-2 rounded-sm bg-white/90 px-3 py-1.5 text-sm font-semibold text-asphalt shadow-card"
         >
-          Înveți regulile drumului. Dai testul online. Primești atestatul.
-        </motion.h1>
-        <motion.p {...a(0.18)} className="mt-6 max-w-[54ch] text-lg text-chalk/85 sm:text-xl">
+          <span className="h-2 w-2 rounded-sm bg-signal" aria-hidden="true" />
+          Examen auto online, în limba română
+        </motion.p>
+        <h1 className="max-w-[16ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl lg:text-7xl">
+          <SplitWords text="Înveți regulile drumului. Dai testul online. Primești atestatul." />
+        </h1>
+        <motion.p {...a(0.18)} className="mt-6 max-w-[54ch] text-lg text-asphalt/80 sm:text-xl">
           Cursuri pe capitole cu fotografii reale din România, o evaluare care se adaptează la greșelile tale și un test
           supravegheat, din confortul casei. O singură taxă, fără abonament.
         </motion.p>
         <motion.div {...a(0.3)} className="mt-8 flex flex-wrap gap-3">
-          <Link href={CTA_HREF} className={btnPrimary}>
-            Începe înscrierea
-          </Link>
-          <a href="#cum-functioneaza" className={btnGhostDark}>
+          <Magnetic>
+            <Link href={CTA_HREF} className={btnPrimary}>
+              Începe înscrierea
+            </Link>
+          </Magnetic>
+          <a href="#cum-functioneaza" className={btnGhostLight}>
             Vezi cum funcționează
           </a>
         </motion.div>
         <motion.ul
           {...a(0.42)}
-          className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-chalk/20 pt-5 text-sm text-chalk/80"
+          className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-asphalt/20 pt-5 text-sm text-asphalt/80"
         >
           <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
             Fără abonament
           </li>
           <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
             Plată integrală sau în tranșe
           </li>
           <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-signal" aria-hidden="true" />
+            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
             Atestat pe e-mail în maximum 3 zile
           </li>
         </motion.ul>
       </motion.div>
 
       <HeroRoad />
+    </section>
+  );
+}
+
+/* ---------- marquee of real signs ---------- */
+
+const MARQUEE = [
+  ["/media/stop-axente-sever.webp", "Oprire (STOP)"],
+  ["/media/cedeaza-popa-tatu.webp", "Cedează trecerea"],
+  ["/media/oprire-interzisa-bistrita.webp", "Oprirea interzisă"],
+  ["/media/sens-giratoriu-timisoara.webp", "Sens giratoriu"],
+  ["/media/copii-fagaras.webp", "Atenție, copii"],
+  ["/media/lucrari-transfagarasan.webp", "Lucrări temporare"],
+  ["/media/chisineu-cris.webp", "Direcții pe drum"],
+  ["/media/marcaje-apold.webp", "Marcaje rutiere"],
+] as const;
+
+export function SignsMarquee() {
+  const items = [...MARQUEE, ...MARQUEE];
+  return (
+    <section aria-label="Indicatoare reale din România" className="overflow-hidden bg-asphalt py-6">
+      <div className="marquee flex w-max">
+        {items.map(([src, t], i) => (
+          <figure
+            key={`${src}-${i}`}
+            aria-hidden={i >= MARQUEE.length}
+            className="relative mr-4 h-28 w-44 shrink-0 overflow-hidden rounded"
+          >
+            <Pic src={src} alt={i < MARQUEE.length ? t : ""} />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-asphalt/85 to-transparent p-2 text-xs font-semibold text-chalk">
+              {t}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </section>
   );
 }
@@ -283,6 +233,12 @@ export function Trust() {
 
 /* ---------- about ---------- */
 
+// Imagine pentru secțiunea „Cine suntem”. Înlocuiește cu fotografia ta (persoană cu telefonul / atestatul).
+const ABOUT_IMAGE = {
+  src: "/media/calea-victoriei.webp",
+  alt: "Trafic urban și indicator de trecere pentru pietoni pe Calea Victoriei din București",
+};
+
 export function About() {
   const principles = [
     ["Fără costuri ascunse", "O singură taxă pe categorie, plătită integral sau în tranșe. O vezi înainte de plată."],
@@ -292,7 +248,7 @@ export function About() {
     ],
     [
       "Onestitate juridică",
-      "Atestatul Drumo confirmă pregătirea pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial.",
+      "Atestatul PermisStart confirmă pregătirea pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial.",
     ],
     ["Date protejate", "Actele de identitate sunt stocate criptat și șterse automat după 30 de zile."],
   ];
@@ -301,8 +257,8 @@ export function About() {
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
           <Parallax
-            src="/media/bucuresti-ploaie.webp"
-            alt="Bulevard din București după ploaie, cu lucrări și limitare de viteză"
+            src={ABOUT_IMAGE.src}
+            alt={ABOUT_IMAGE.alt}
             className="aspect-[4/5] rounded shadow-lift"
           >
             <div className="absolute bottom-4 left-4 right-4 rounded bg-white p-4 text-sm text-asphalt shadow-card sm:right-auto sm:max-w-[16rem]">
@@ -316,7 +272,7 @@ export function About() {
               Făcut pentru cei care vor să înțeleagă regulile, nu doar să le memoreze.
             </h2>
             <p className="mt-5 max-w-[60ch] text-lg text-mute">
-              Drumo este o platformă de pregătire teoretică și evaluare supravegheată pentru legislația rutieră din
+              PermisStart este o platformă de pregătire teoretică și evaluare supravegheată pentru legislația rutieră din
               România. Lecțiile pornesc de la Codul rutier (OUG 195/2002 și HG 1391/2006) și de la situații reale de pe
               drum, nu din desene generice.
             </p>
@@ -336,7 +292,7 @@ export function About() {
               href="/despre-noi"
               className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
             >
-              Despre Drumo, pe larg
+              Despre PermisStart, pe larg
               <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </Reveal>
@@ -346,181 +302,100 @@ export function About() {
   );
 }
 
-/* ---------- categories ---------- */
+/* ---------- benefits ---------- */
 
-const tileBase =
-  "group flex h-full flex-col overflow-hidden rounded border border-line bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift";
-
-function CatTile({
-  img,
-  alt,
-  tag,
-  title,
-  text,
-  meta,
-  href,
-  cta,
-  Icon,
-  delay,
-}: {
-  img: string;
-  alt: string;
-  tag: string;
-  title: string;
-  text: string;
-  meta?: string;
-  href: string;
-  cta: string;
-  Icon: typeof Car;
-  delay: number;
-}) {
+export function Benefits() {
+  const items = [
+    { Icon: ClockIcon, t: "În ritmul tău", d: "Înveți și dai testul când vrei, de acasă, de pe telefon sau calculator." },
+    { Icon: ChartBarIcon, t: "Evaluare adaptivă", d: "Întrebările revin exact pe temele la care greșești, nu la întâmplare." },
+    { Icon: VideoCameraIcon, t: "Examen supravegheat", d: "Cameră activă, cronometru pe întrebare și raport complet la final." },
+    { Icon: DocumentCheckIcon, t: "Atestat verificabil", d: "Serie unică și cod QR, pe care oricine le poate verifica public." },
+  ];
   return (
-    <Reveal delay={delay} className="md:col-span-4">
-      <Link href={href} className={tileBase}>
-        <Parallax src={img} alt={alt} className="aspect-[16/10]">
-          <div className="absolute inset-0 bg-gradient-to-t from-asphalt/70 via-transparent to-transparent" />
-          <span className="absolute left-3 top-3 rounded-sm bg-signal px-2 py-1 text-xs font-semibold text-asphalt">
-            {tag}
-          </span>
-        </Parallax>
-        <div className="flex flex-1 flex-col p-5">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="font-cond text-2xl font-bold">{title}</h3>
-            <Icon className="h-6 w-6 text-asphalt/70 transition-colors group-hover:text-signal-deep" aria-hidden="true" />
-          </div>
-          <p className="mt-2 flex-1 text-sm text-mute">{text}</p>
-          <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-3 text-sm">
-            <span className="text-mute">{meta}</span>
-            <span className="inline-flex items-center gap-1 font-semibold text-sign group-hover:text-asphalt">
-              {cta}
-              <ArrowUpRightIcon
-                className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
-            </span>
-          </div>
-        </div>
-      </Link>
-    </Reveal>
+    <section id="avantaje" className="bg-white py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">De ce PermisStart</h2>
+          <p className="mt-3 max-w-[58ch] text-lg text-mute">
+            Tot ce ai nevoie ca să ajungi pregătit la examen, fără drumuri, fără cozi și fără abonament.
+          </p>
+        </Reveal>
+        <ul className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map(({ Icon, t, d }, i) => (
+            <li key={t}>
+              <Reveal delay={i * 0.07} className="group">
+                <span className="grid h-16 w-16 place-items-center rounded border border-line bg-chalk transition-all duration-300 group-hover:-translate-y-1 group-hover:border-signal group-hover:bg-signal/20 group-hover:shadow-card">
+                  <Icon className="h-8 w-8 text-asphalt" aria-hidden="true" />
+                </span>
+                <h3 className="mt-5 font-cond text-2xl font-bold">{t}</h3>
+                <p className="mt-2 text-mute">{d}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
+/* ---------- categories (short version, full list on /categorii) ---------- */
+
+const BRIEF = [
+  { codes: "AM", t: "Mopede și scutere ușoare", href: "/categorii/am", Icon: Bike },
+  { codes: "A1 · A2 · A", t: "Motociclete", href: "/categorii/a", Icon: Bike },
+  { codes: "B · B1", t: "Autoturisme", href: "/categorii/b", Icon: Car },
+  { codes: "BE", t: "Autoturism cu remorcă", href: "/categorii/be", Icon: Caravan },
+  { codes: "C · CE", t: "Camioane", href: "/categorii/c", Icon: Truck },
+  { codes: "D", t: "Autobuze și microbuze", href: "/categorii/d", Icon: Bus },
+];
+
 export function Categories() {
   return (
-    <section id="categorii" className="bg-white py-24">
-      <div className="mx-auto max-w-6xl px-5">
-        <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-            Alegi categoria. Restul se adaptează.
-          </h2>
-          <p className="mt-3 max-w-[60ch] text-lg text-mute">
-            Capitolele, întrebările și taxa depind de categoria de permis. Suma exactă o vezi la înscriere, înainte să
-            plătești.
-          </p>
-        </Reveal>
-
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-12">
-          <Reveal className="md:col-span-12">
-            <Link href="/categorii/b" className={`${tileBase} md:flex-row`}>
-              <Parallax
-                src="/media/autostrada-sibiu.webp"
-                alt="Autostrada A1 lângă Sibiu cu panou rutier de distanțe"
-                className="aspect-[16/9] md:aspect-auto md:min-h-[22rem] md:w-3/5"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-asphalt/60 via-transparent to-transparent" />
-                <span className="absolute left-4 top-4 rounded-sm bg-signal px-2.5 py-1 text-xs font-semibold text-asphalt">
-                  Cea mai aleasă
-                </span>
-              </Parallax>
-              <div className="flex flex-1 flex-col justify-center p-6 md:p-10">
-                <div className="flex items-center gap-3">
-                  <Car className="h-7 w-7 text-signal-deep" aria-hidden="true" />
-                  <p className="text-sm font-semibold text-mute">Autoturisme până la 3.500 kg</p>
-                </div>
-                <h3 className="mt-2 font-cond text-4xl font-bold sm:text-5xl">Categoria B · B1</h3>
-                <p className="mt-4 text-mute">
-                  Autovehicule cu cel mult 8 locuri în afara conducătorului și masă totală maximă autorizată de până la
-                  3.500 kg (inclusiv cvadricicluri B1 de la 16 ani).
-                </p>
-                <ul className="mt-5 space-y-2 text-sm text-asphalt">
-                  <li className="flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
-                    26 de întrebări, minimum 22 corecte, de la 18 ani
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />6 capitole complete și simulare de 26
-                    de întrebări
-                  </li>
-                </ul>
-                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-sign group-hover:text-asphalt">
-                  Vezi capitolele categoriei B
-                  <ArrowUpRightIcon
-                    className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </span>
-              </div>
+    <section id="categorii" className="bg-chalk py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <Reveal>
+            <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
+              Toate categoriile, într-un singur loc.
+            </h2>
+            <p className="mt-4 max-w-[52ch] text-lg text-mute">
+              Capitolele, întrebările de examen și taxa depind de categorie. Alege-o pe a ta și vezi totul, înainte să
+              plătești ceva.
+            </p>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <Parallax
+              src="/media/autostrada-sibiu.webp"
+              alt="Autostrada A1 lângă Sibiu cu panou rutier de distanțe"
+              className="mt-8 aspect-[4/3] rounded shadow-lift"
+            />
+          </Reveal>
+          <Reveal delay={0.12}>
+            <Link href="/categorii" className={`${btnPrimary} mt-8`}>
+              Vezi toate categoriile
             </Link>
           </Reveal>
-
-          <CatTile
-            delay={0}
-            img="/media/transfagarasan.webp"
-            alt="Serpentinele drumului Transfăgărășan"
-            tag="De la 16 ani"
-            title="Categoria A1 · A2 · A"
-            text="Motociclete ușoare (125 cm³), medii (≤ 35 kW) și fără limită de putere, cu reguli dedicate pentru două roți."
-            meta="20 de întrebări, minimum 17"
-            href="/categorii/a"
-            cta="Vezi categoria"
-            Icon={Bike}
-          />
-          <CatTile
-            delay={0.06}
-            img="/media/nadlac-frontiera.webp"
-            alt="Panouri de semnalizare și benzi dedicate pentru camioane la punctul rutier Nădlac"
-            tag="Transport marfă"
-            title="Categoria C · CE"
-            text="Camioane și ansambluri articulate: mase maxime, timpi de conducere, tahograf și limite diferențiate."
-            meta="26 de întrebări · 21+ ani"
-            href="/categorii/c"
-            cta="Vezi categoria"
-            Icon={Truck}
-          />
-          <CatTile
-            delay={0.12}
-            img="/media/calea-victoriei.webp"
-            alt="Trafic urban și indicator de trecere pentru pietoni pe Calea Victoriei din București"
-            tag="De la 16 ani"
-            title="Categoria AM"
-            text="Mopede și scutere ușoare (max. 45 km/h, ≤ 50 cm³ sau 4 kW). Chestionar de 20 de întrebări."
-            href="/categorii/am"
-            cta="Vezi categoria"
-            Icon={Bike}
-          />
-          <CatTile
-            delay={0.06}
-            img="/media/dn7-brezoi.webp"
-            alt="Drumul național DN7 (Valea Oltului) lângă Brezoi cu marcaje și indicatoare"
-            tag="Remorcă 750–3.500 kg"
-            title="Categoria BE"
-            text="Autoturism categoria B cu remorcă grea: cuplare, repartizarea sarcinii și distanțe de oprire."
-            href="/categorii/be"
-            cta="Vezi categoria"
-            Icon={Caravan}
-          />
-          <CatTile
-            delay={0.12}
-            img="/media/marcaje-apold.webp"
-            alt="Marcaje rutiere de bandă dedicată autobuzelor și trecere de pietoni în Apold"
-            tag="Transport persoane"
-            title="Categoria D"
-            text="Autobuze și microbuze cu peste 8+1 locuri: prioritatea la ieșirea din alveole și siguranța pasagerilor."
-            href="/categorii/d"
-            cta="Vezi categoria"
-            Icon={Bus}
-          />
         </div>
+        <ul className="divide-y divide-line border-y border-line">
+          {BRIEF.map(({ codes, t, href, Icon }, i) => (
+            <li key={codes}>
+              <Reveal delay={i * 0.05}>
+                <Link
+                  href={href}
+                  className="group flex items-center gap-4 px-2 py-5 transition-colors hover:bg-white sm:px-4"
+                >
+                  <span className="w-32 shrink-0 font-cond text-3xl font-bold text-asphalt">{codes}</span>
+                  <span className="flex-1 text-mute group-hover:text-asphalt">{t}</span>
+                  <Icon className="hidden h-6 w-6 text-asphalt/50 sm:block" aria-hidden="true" />
+                  <ArrowUpRightIcon
+                    className="h-5 w-5 text-sign transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -784,11 +659,13 @@ export function Payment() {
           <div className="space-y-4">
             {opts.map(([t, d, tag], k) => (
               <Reveal key={t} delay={k * 0.07}>
-                <div className={`${card} p-6 transition-shadow hover:shadow-lift`}>
-                  <p className="font-cond text-2xl font-bold">{t}</p>
-                  <p className="mt-2 text-mute">{d}</p>
-                  <p className="mt-4 inline-block rounded-sm bg-signal/25 px-2.5 py-1 text-sm font-semibold">{tag}</p>
-                </div>
+                <Tilt>
+                  <div className={`${card} p-6 transition-shadow hover:shadow-lift`}>
+                    <p className="font-cond text-2xl font-bold">{t}</p>
+                    <p className="mt-2 text-mute">{d}</p>
+                    <p className="mt-4 inline-block rounded-sm bg-signal/25 px-2.5 py-1 text-sm font-semibold">{tag}</p>
+                  </div>
+                </Tilt>
               </Reveal>
             ))}
             <Reveal delay={0.14}>
@@ -914,6 +791,7 @@ export function Signs() {
         <div className="mt-12 grid gap-5 md:grid-cols-12">
           {FEATURED_SIGNS.map((s, idx) => (
             <Reveal key={s.src} delay={(idx % 2) * 0.08} className={s.span}>
+              <Tilt max={3}>
               <figure>
                 <Parallax src={s.src} alt={s.alt} className="aspect-[16/10] rounded shadow-card">
                   <div className="absolute inset-0 bg-gradient-to-t from-asphalt/70 via-transparent to-transparent" />
@@ -922,6 +800,7 @@ export function Signs() {
                   </figcaption>
                 </Parallax>
               </figure>
+              </Tilt>
             </Reveal>
           ))}
         </div>
@@ -966,7 +845,7 @@ export function Certificate() {
           </ul>
           <Reveal delay={0.2}>
             <p className="mt-6 rounded border-l-4 border-signal bg-chalk p-4 text-sm text-mute">
-              Atestatul Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește
+              Atestatul PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește
               examenul oficial organizat de autorități.
             </p>
           </Reveal>
@@ -983,12 +862,12 @@ export function Certificate() {
 
 const faq = [
   [
-    "De ce să mă pregătesc și să dau examenul pe Drumo?",
-    "Drumo îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
+    "De ce să mă pregătesc și să dau examenul pe PermisStart?",
+    "PermisStart îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
   ],
   [
-    "La ce îmi folosește atestatul de reușită Drumo?",
-    "Atestatul de reușită Drumo (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe Drumo și nu înlocuiește permisul de conducere eliberat de autorități.",
+    "La ce îmi folosește atestatul de reușită PermisStart?",
+    "Atestatul de reușită PermisStart (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe PermisStart și nu înlocuiește permisul de conducere eliberat de autorități.",
   ],
   [
     "Pot plăti în tranșe?",
@@ -1004,7 +883,7 @@ const faq = [
   ],
   [
     "De ce cereți act de identitate și selfie?",
-    "Pentru ca atestatul tău Drumo să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
+    "Pentru ca atestatul tău PermisStart să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
   ],
 ];
 
@@ -1059,7 +938,7 @@ export function ContactSection() {
             Ai o întrebare? Scrie-ne direct.
           </h2>
           <p className="mt-3 max-w-[56ch] text-lg text-mute">
-            Echipa Drumo răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
+            Echipa PermisStart răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
             identității (KYC) sau atestatul QR.
           </p>
           <dl className="mt-8 space-y-5">
@@ -1098,12 +977,11 @@ export function FinalCta() {
             Înscrierea durează câteva minute. Vezi taxa înainte să plătești.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={CTA_HREF}
-              className={`${btn} bg-asphalt text-chalk shadow-lift hover:bg-ink`}
-            >
-              Începe înscrierea
-            </Link>
+            <Magnetic>
+              <Link href={CTA_HREF} className={`${btn} bg-asphalt text-chalk shadow-lift hover:bg-ink`}>
+                Începe înscrierea
+              </Link>
+            </Magnetic>
             <a href="#categorii" className={btnGhostLight}>
               Vezi categoriile
             </a>
@@ -1112,6 +990,155 @@ export function FinalCta() {
       </div>
       <div className="absolute inset-x-0 bottom-0">
         <DashLine />
+      </div>
+    </section>
+  );
+}
+
+
+/* ---------- stats band (real product facts only) ---------- */
+
+function CountUp({ to }: { to: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const reduce = useReducedMotion();
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (reduce) {
+      setN(to);
+      return;
+    }
+    if (!inView) return;
+    const c = animate(0, to, { duration: 1.4, ease: EASE_OUT, onUpdate: (v) => setN(Math.round(v)) });
+    return () => c.stop();
+  }, [inView, reduce, to]);
+  return <span ref={ref}>{n}</span>;
+}
+
+export function StatsBand() {
+  const facts = [
+    { n: 10, l: "categorii de permis acoperite" },
+    { n: 7, l: "pași, de la înscriere la atestat" },
+    { n: 3, l: "zile, cel mult, până primești atestatul" },
+    { n: 26, l: "întrebări la examenul pentru categoria B" },
+  ];
+  return (
+    <section className="relative isolate overflow-hidden text-chalk">
+      <div className="absolute inset-0 -z-10">
+        <Parallax src="/media/dn7-brezoi.webp" alt="" className="h-full" />
+      </div>
+      <div className="absolute inset-0 -z-10 bg-asphalt/85" />
+      <div className="mx-auto max-w-6xl px-5 py-20">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">PermisStart, concret</h2>
+        </Reveal>
+        <dl className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map((f, i) => (
+            <Reveal key={f.l} delay={i * 0.08}>
+              <div className="border-t border-chalk/25 pt-5">
+                <dt className="font-cond text-6xl font-bold text-signal sm:text-7xl">
+                  <CountUp to={f.n} />
+                </dt>
+                <dd className="mt-2 max-w-[22ch] text-chalk/80">{f.l}</dd>
+              </div>
+            </Reveal>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- testimonials (hidden until real ones exist in lib/testimonials.ts) ---------- */
+
+export function Testimonials() {
+  const items = TESTIMONIALS;
+  const [i, setI] = useState(0);
+  const [hover, setHover] = useState(false);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (reduce || hover || items.length < 2) return;
+    const id = window.setInterval(() => setI((p) => (p + 1) % items.length), 7000);
+    return () => window.clearInterval(id);
+  }, [reduce, hover, items.length]);
+
+  if (items.length === 0) return null;
+  const t = items[i % items.length];
+  const go = (d: number) => setI((p) => (p + d + items.length) % items.length);
+
+  return (
+    <section id="marturii" className="bg-asphalt py-24 text-chalk">
+      <div className="mx-auto max-w-5xl px-5">
+        <Reveal>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Ce spun candidații</h2>
+        </Reveal>
+        <div
+          className="mt-10"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          aria-live="polite"
+        >
+          <AnimatePresence mode="wait">
+            <motion.figure
+              key={i}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: EASE_OUT }}
+              className="grid items-center gap-8 md:grid-cols-[14rem_1fr]"
+            >
+              {t.photo ? (
+                <div className="aspect-square w-40 overflow-hidden rounded md:w-full">
+                  <Pic src={t.photo} alt={`Fotografie ${t.name}`} />
+                </div>
+              ) : (
+                <div className="hidden md:block" />
+              )}
+              <div>
+                <blockquote className="font-cond text-2xl leading-snug sm:text-3xl">{t.quote}</blockquote>
+                <figcaption className="mt-6">
+                  <p className="text-lg font-semibold">{t.name}</p>
+                  {t.role ? <p className="text-chalk/70">{t.role}</p> : null}
+                  {t.rating ? (
+                    <p className="mt-2 flex gap-1" aria-label={`${t.rating} din 5 stele`}>
+                      {Array.from({ length: 5 }).map((_, k) => (
+                        <StarIcon
+                          key={k}
+                          className={`h-5 w-5 ${k < (t.rating ?? 0) ? "text-signal" : "text-chalk/25"}`}
+                          aria-hidden="true"
+                        />
+                      ))}
+                    </p>
+                  ) : null}
+                </figcaption>
+              </div>
+            </motion.figure>
+          </AnimatePresence>
+          {items.length > 1 ? (
+            <div className="mt-8 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Mărturia anterioară"
+                className="grid h-11 w-11 place-items-center rounded border border-chalk/40 hover:bg-chalk/10"
+              >
+                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Mărturia următoare"
+                className="grid h-11 w-11 place-items-center rounded border border-chalk/40 hover:bg-chalk/10"
+              >
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <span className="ml-2 text-sm text-chalk/60">
+                {i + 1} / {items.length}
+              </span>
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   );

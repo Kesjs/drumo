@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { LEGAL_ENTITY } from "@/lib/config";
+import { Logo } from "./logo";
+import { FloatingActions } from "./floating-actions";
 
 const PUBLIC_NAV = [
   { href: "/categorii", label: "Categorii" },
@@ -39,8 +41,8 @@ export function PublicHeader({
 
   // Overlay mode (home): transparent over the hero, solid once the page scrolls.
   const solid = !overlay || scrolled || open;
-  const tone = solid ? "text-asphalt" : "text-chalk";
-  const navTone = solid ? "text-mute hover:text-asphalt" : "text-chalk/80 hover:text-chalk";
+  const tone = "text-asphalt";
+  const navTone = "text-mute hover:text-asphalt";
 
   return (
     <motion.header
@@ -58,8 +60,8 @@ export function PublicHeader({
           solid ? "h-16" : "h-20"
         }`}
       >
-        <Link href="/" className="font-cond text-2xl font-bold tracking-tight">
-          <span className="rounded-sm bg-signal px-2 py-0.5 text-asphalt">Drumo</span>
+        <Link href="/" aria-label="PermisStart, prima pagină" className="text-asphalt">
+          <Logo className="h-10 sm:h-11" />
         </Link>
 
         <nav aria-label="Navigare principală" className="hidden items-center gap-5 text-sm xl:flex">
@@ -100,7 +102,7 @@ export function PublicHeader({
           aria-expanded={open}
           aria-label={open ? "Închide meniul" : "Deschide meniul"}
           className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded border xl:hidden ${
-            solid ? "border-line bg-surface text-asphalt" : "border-chalk/40 bg-asphalt/40 text-chalk"
+            "border-line bg-surface text-asphalt"
           }`}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -191,14 +193,16 @@ export function PublicFooter() {
         };
 
   return (
+    <>
     <footer className="bg-ink text-sm text-chalk/70">
       <RoadLine />
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <motion.div {...col(0)} className="space-y-2">
-          <p className="font-cond text-3xl font-bold text-chalk">
-            <span className="rounded-sm bg-signal px-2 py-0.5 text-asphalt">Drumo</span>
-          </p>
-          <p className="pt-2">{LEGAL_ENTITY.companyPlaceholder}</p>
+          <Link href="/" aria-label="PermisStart, prima pagină" className="inline-block text-chalk">
+            <Logo className="h-12" tagline={false} />
+          </Link>
+          <p className="pt-2 text-chalk">Examen auto online, în limba română.</p>
+          <p>{LEGAL_ENTITY.companyPlaceholder}</p>
           <p>
             {LEGAL_ENTITY.cuiPlaceholder} · {LEGAL_ENTITY.regComPlaceholder}
           </p>
@@ -241,9 +245,11 @@ export function PublicFooter() {
       </div>
 
       <div className="mx-auto max-w-6xl border-t border-chalk/15 px-5 py-6 text-xs text-chalk/60">
-        Atestatul de reușită Drumo confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
+        Atestatul de reușită PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
         înlocuiește examenul oficial organizat de autoritățile competente.
       </div>
     </footer>
+    <FloatingActions />
+    </>
   );
 }

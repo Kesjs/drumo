@@ -50,52 +50,18 @@ import {
 } from "./mockups";
 
 import { Reveal, Pic, Parallax, DashLine, SplitWords, Magnetic, Tilt } from "./motion-kit";
-import { EASE_OUT, CTA_HREF, btn, btnPrimary, btnGhostLight, card } from "@/lib/ui";
+import { EASE_OUT, CTA_HREF, btn, btnPrimary, btnGhostDark, btnGhostLight, card } from "@/lib/ui";
 import { TESTIMONIALS } from "@/lib/testimonials";
 
 /* ---------- hero ---------- */
-
-const ROAD = "M-40 190 C 220 110, 480 230, 780 150 S 1260 70, 1480 130";
-
-function HeroRoad() {
-  const reduce = useReducedMotion();
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 1440 240"
-      preserveAspectRatio="xMidYMax slice"
-      className="pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full sm:h-56"
-    >
-      <path d={ROAD} fill="none" stroke="#f5f6f3" strokeOpacity="0.55" strokeWidth="78" />
-      <path id="hero-road-path" d={ROAD} fill="none" stroke="#0f151d" strokeWidth="72" />
-      <path d={ROAD} fill="none" stroke="#f2b705" strokeWidth="3" className="road-flow" />
-      <g transform={reduce ? "translate(260 150)" : undefined}>
-        <g transform="translate(-26 -13)">
-          <rect x="6" y="-2" width="12" height="4" rx="1" fill="#0f151d" />
-          <rect x="32" y="-2" width="12" height="4" rx="1" fill="#0f151d" />
-          <rect x="6" y="24" width="12" height="4" rx="1" fill="#0f151d" />
-          <rect x="32" y="24" width="12" height="4" rx="1" fill="#0f151d" />
-          <rect width="52" height="26" rx="4" fill="#f2b705" />
-          <rect x="30" y="4" width="12" height="18" rx="2" fill="#18202b" />
-          <rect x="8" y="5" width="9" height="16" rx="2" fill="#18202b" fillOpacity="0.6" />
-        </g>
-        {!reduce && (
-          <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
-            <mpath href="#hero-road-path" />
-          </animateMotion>
-        )}
-      </g>
-    </svg>
-  );
-}
 
 export function Hero() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.15]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
   const a = (d: number) =>
     reduce
       ? {}
@@ -106,34 +72,38 @@ export function Hero() {
         };
 
   return (
-    <section ref={ref} className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-chalk text-asphalt">
+    <section ref={ref} className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-asphalt text-white">
+      {/* Photo plein cadre : couvre tout le hero, le texte est posé dessus. */}
       <motion.div
         aria-hidden="true"
         style={reduce ? undefined : { y: bgY, scale: bgScale }}
         className="absolute inset-0 -z-10"
       >
-        <Pic src="/media/hero-permisstart.webp" alt="" eager className="object-[62%_45%]" />
+        <Pic src="/media/autostrada-sibiu.webp" alt="" eager className="object-[50%_60%]" />
       </motion.div>
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-chalk/80 lg:bg-transparent lg:bg-gradient-to-r lg:from-chalk/95 lg:via-chalk/70 lg:to-transparent" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-chalk via-transparent to-transparent" />
+      {/* Voile sombre léger pour garder le texte lisible, la photo reste bien visible. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-asphalt/45" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-asphalt/85 via-asphalt/10 to-asphalt/40"
+      />
 
       <motion.div
         style={reduce ? undefined : { y: textY }}
-        className="mx-auto w-full max-w-6xl px-5 pb-48 pt-32 sm:pb-56"
+        className="mx-auto w-full max-w-6xl px-5 pb-20 pt-32 sm:pb-28"
       >
         <motion.p
           {...a(0)}
-          className="mb-5 inline-flex items-center gap-2 rounded-sm bg-white/90 px-3 py-1.5 text-sm font-semibold text-asphalt shadow-card"
+          className="mb-5 inline-flex items-center gap-2 rounded-sm bg-white/95 px-3 py-1.5 text-sm font-semibold text-asphalt shadow-card"
         >
           <span className="h-2 w-2 rounded-sm bg-signal" aria-hidden="true" />
           Examen auto online, în limba română
         </motion.p>
-        <h1 className="max-w-[16ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl lg:text-7xl">
-          <SplitWords text="Înveți regulile drumului. Dai testul online. Primești atestatul." />
+        <h1 className="max-w-[14ch] font-cond text-5xl font-bold leading-[1.04] tracking-[-0.02em] text-white sm:text-6xl lg:text-7xl">
+          <SplitWords text="Înveți. Dai testul. Primești atestatul." />
         </h1>
-        <motion.p {...a(0.18)} className="mt-6 max-w-[54ch] text-lg text-asphalt/80 sm:text-xl">
-          Cursuri pe capitole cu fotografii reale din România, o evaluare care se adaptează la greșelile tale și un test
-          supravegheat, din confortul casei. O singură taxă, fără abonament.
+        <motion.p {...a(0.18)} className="mt-5 max-w-[44ch] text-lg text-white/90 sm:text-xl">
+          Cursuri pe capitole, evaluare adaptivă și test supravegheat, de acasă. O singură taxă, fără abonament.
         </motion.p>
         <motion.div {...a(0.3)} className="mt-8 flex flex-wrap gap-3">
           <Magnetic>
@@ -141,30 +111,11 @@ export function Hero() {
               Începe înscrierea
             </Link>
           </Magnetic>
-          <a href="#cum-functioneaza" className={btnGhostLight}>
+          <a href="#cum-functioneaza" className={btnGhostDark}>
             Vezi cum funcționează
           </a>
         </motion.div>
-        <motion.ul
-          {...a(0.42)}
-          className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-asphalt/20 pt-5 text-sm text-asphalt/80"
-        >
-          <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
-            Fără abonament
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
-            Plată integrală sau în tranșe
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckIcon className="h-4 w-4 text-ok" aria-hidden="true" />
-            Atestat pe e-mail în maximum 3 zile
-          </li>
-        </motion.ul>
       </motion.div>
-
-      <HeroRoad />
     </section>
   );
 }

@@ -19,8 +19,8 @@ export default async function TermsPage() {
         <section className="space-y-2">
           <h2 className="font-cond text-2xl font-bold text-asphalt">1. Natura serviciului și statut legal</h2>
           <p>
-            Drumo oferă pregătire teoretică online pe capitole, evaluări adaptive și un test teoretic supravegheat.
-            La promovare se emite un <strong>atestat de reușită Drumo</strong>. Acest document confirmă rezultatul
+            PermisStart oferă pregătire teoretică online pe capitole, evaluări adaptive și un test teoretic supravegheat.
+            La promovare se emite un <strong>atestat de reușită PermisStart</strong>. Acest document confirmă rezultatul
             obținut pe platformă, nu este permis de conducere și nu înlocuiește examenul oficial organizat de
             autoritățile din România, în lipsa unui agrement oficial.
           </p>
@@ -47,7 +47,7 @@ export default async function TermsPage() {
         <section className="space-y-2">
           <h2 className="font-cond text-2xl font-bold text-asphalt">4. Eliberarea atestatului și verificare QR</h2>
           <p>
-            După promovarea examenului și în absența alertelor de integritate, <strong>atestatul de reușită Drumo</strong>{" "}
+            După promovarea examenului și în absența alertelor de integritate, <strong>atestatul de reușită PermisStart</strong>{" "}
             (PDF cu număr unic și cod QR) este programat pentru trimitere automată pe e-mail în cel mult 3 zile (72 de ore).
             Autenticitatea poate fi verificată oricând pe pagina publică de verificare.
           </p>

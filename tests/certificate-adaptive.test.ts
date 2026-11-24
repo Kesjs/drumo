@@ -7,11 +7,11 @@ const T0 = 1_700_000_000_000;
 
 describe("certificate label (legal rule)", () => {
   it("keeps the safe label", () => {
-    expect(certificateLabel({ label: "atestat de reușită Drumo", accredited: false })).toBe("atestat de reușită Drumo");
+    expect(certificateLabel({ label: "atestat de reușită PermisStart", accredited: false })).toBe("atestat de reușită PermisStart");
   });
   it("refuses any 'permis de conducere' wording while not accredited", () => {
-    expect(certificateLabel({ label: "Permis de conducere Drumo", accredited: false })).toBe("atestat de reușită Drumo");
-    expect(certificateLabel({ label: "Permis provizoriu", accredited: false })).toBe("atestat de reușită Drumo");
+    expect(certificateLabel({ label: "Permis de conducere PermisStart", accredited: false })).toBe("atestat de reușită PermisStart");
+    expect(certificateLabel({ label: "Permis provizoriu", accredited: false })).toBe("atestat de reușită PermisStart");
   });
   it("allows a new label once the accreditation flag is set", () => {
     expect(certificateLabel({ label: "Certificat agreat", accredited: true })).toBe("Certificat agreat");

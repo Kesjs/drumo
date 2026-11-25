@@ -1,13 +1,13 @@
 import { PublicHeader, PublicFooter } from "@/components/site-chrome";
 import {
   Hero,
-  Trust,
   Categories,
   Journey,
   StatsBand,
   Exam,
   Payment,
   Certificate,
+  Testimonials,
   Faq,
   FinalCta,
 } from "@/components/landing";
@@ -24,13 +24,13 @@ export default async function HomePage() {
       <PublicHeader loggedIn={Boolean(user)} overlay />
       <main>
         <Hero />
-        <Trust />
         <Categories />
         <Journey />
         <StatsBand />
         <Exam />
         <Payment />
         <Certificate />
+        <Testimonials />
         <Faq />
         <FinalCta />
       </main>

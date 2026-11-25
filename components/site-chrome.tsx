@@ -346,7 +346,6 @@ export function PublicFooter() {
             <li><Link className={linkCls} href="/despre-noi">Despre noi</Link></li>
             <li><Link className={linkCls} href="/intrebari-frecvente">Întrebări frecvente</Link></li>
             <li><Link className={linkCls} href="/contact">Contact</Link></li>
-            <li><Link className={linkCls} href="/credite-imagini">Credite imagini</Link></li>
           </ul>
         </motion.div>
 

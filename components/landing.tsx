@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   AnimatePresence,
-  LayoutGroup,
   animate,
   motion,
   useInView,
@@ -32,8 +31,6 @@ import {
   ChartBarIcon,
   VideoCameraIcon,
   DocumentCheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ContactForm } from "./contact-form";
@@ -94,21 +91,22 @@ export function Hero() {
       >
         <motion.div
           {...a(0)}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-asphalt/75 px-3.5 py-1.5 text-xs font-medium tracking-wide text-chalk backdrop-blur-sm"
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-asphalt/90 px-3.5 py-1.5 text-xs font-medium tracking-wide text-chalk"
         >
           <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
-          <span>Examen auto online · 100% în limba română</span>
+          <span>Pregătire auto și examen supravegheat · 100% online</span>
         </motion.div>
-        <h1 className="max-w-[20ch] font-cond text-4xl font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
-          <SplitWords text="Înveți. Dai testul. Primești atestatul." />
+        <h1 className="max-w-[22ch] font-cond text-4xl font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
+          <SplitWords text="Pregătește legislația rutieră și susține examenul teoretic de acasă." />
         </h1>
-        <motion.p {...a(0.18)} className="mt-4 max-w-[46ch] text-base text-white/90 sm:text-lg">
-          Cursuri pe capitole, evaluare adaptivă și test supravegheat, de acasă. O singură taxă, fără abonament.
+        <motion.p {...a(0.18)} className="mt-4 max-w-[54ch] text-base text-white/90 sm:text-lg">
+          Cursuri complete cu fotografii reale din România, audio, evaluare adaptivă și test supravegheat. O singură taxă
+          per categorie, fără abonament — cu atestat verificabil prin QR.
         </motion.p>
         <motion.div {...a(0.3)} className="mt-7 flex flex-wrap gap-3">
           <Magnetic>
             <Link href={CTA_HREF} className={btnPrimary}>
-              Începe înscrierea
+              Alege categoria și înscrie-te
             </Link>
           </Magnetic>
           <a href="#parcurs" className={btnGhostDark}>
@@ -323,7 +321,7 @@ export function Categories() {
           </Reveal>
           <Reveal delay={0.12}>
             <Link href="/categorii" className={`${btnPrimary} mt-8`}>
-              Vezi toate categoriile
+              Vezi taxele pe categorii
             </Link>
           </Reveal>
         </div>
@@ -429,23 +427,55 @@ export function HowItWorks() {
 
 const steps = [
   {
-    t: "Înscriere și verificare identitate",
-    d: "Îți alegi categoria, încarci actul și un selfie securizat (KYC), iar prima plată deblochează accesul la pregătire.",
+    short: "Înscriere și KYC",
+    t: "Alegi categoria, verifici identitatea și deblochezi cursurile",
+    d: "Selectezi categoria dorită, încarci actul de identitate și un selfie securizat, iar prima plată (integrală sau în tranșe) deschide imediat toate lecțiile.",
+    points: [
+      "Prețul exact în RON sau EUR este vizibil dinainte de plată",
+      "Documentele KYC sunt criptate și șterse automat la 30 de zile",
+      "Acces instantaneu la capitole încă de la prima tranșă",
+    ],
+    ctaLabel: "Începe înscrierea",
+    ctaHref: "/inscriere",
     v: <SignupStepMock />,
   },
   {
-    t: "Cursuri pe capitole și audio",
-    d: "Rezumat clar, lecție detaliată cu indicatoare reale din România, citire audio și test de capitol cu explicații juridice.",
+    short: "Cursuri și audio",
+    t: "Înveți pe capitole cu fotografii reale și audio integral",
+    d: "Fiecare capitol conține rezumat clar, lecție ilustrată cu situații reale din trafic, citire audio („Ascultă lecția”) și test explicat pe articole de lege.",
+    points: [
+      "Redare audio completă pentru studiu de pe telefon sau desktop",
+      "Fotografii autentice de pe drumurile naționale și orașe din România",
+      "Explicații juridice la fiecare întrebare greșită sau corectă",
+    ],
+    ctaLabel: "Explorează capitolele",
+    ctaHref: "/cursuri",
     v: <ChapterMock />,
   },
   {
-    t: "Evaluare adaptivă și prag de pregătire",
-    d: "Motorul insistă pe capitolele unde ai greșit, apoi evaluarea globală îți arată exact dacă ești pregătit pentru examen.",
+    short: "Evaluare adaptivă",
+    t: "Repeți exact capitolele unde greșești și îți măsori nivelul",
+    d: "Motorul adaptiv revine pe temele slabe până când le stăpânești, iar evaluarea globală îți arată transparent dacă ai atins pragul necesar pentru examen.",
+    points: [
+      "Fără grile repetate la întâmplare fără progres real",
+      "Procent de pregătire afișat transparent în tabloul de bord",
+      "Poți exersa oricât înainte să intri în sala de examen",
+    ],
+    ctaLabel: "Vezi cum funcționează",
+    ctaHref: "/cum-functioneaza",
     v: <AdaptiveMock />,
   },
   {
-    t: "Examen supravegheat și atestat QR",
-    d: "Susții testul când ești pregătit, cu cronometru strict și cameră activă. Atestatul ajunge pe e-mail în cel mult 3 zile.",
+    short: "Examen și atestat QR",
+    t: "Susții examenul supravegheat și primești atestatul pe e-mail",
+    d: "Când soldul e achitat integral și evaluarea e trecută, intri când dorești în examen: cronometru pe întrebare, cameră activă și rezultat afișat imediat.",
+    points: [
+      "20 sau 26 de întrebări aleatorii cu 60 secunde pe întrebare",
+      "Scor afișat pe loc, cu analiza răspunsurilor la final",
+      "Atestat de reușită PDF cu cod QR verificabil în max. 3 zile",
+    ],
+    ctaLabel: "Vezi regulile examenului",
+    ctaHref: "/examen",
     v: <ExamMock />,
   },
 ];
@@ -457,7 +487,7 @@ export function Journey() {
 
   useEffect(() => {
     if (reduce || !auto) return;
-    const id = window.setInterval(() => setI((prev) => (prev + 1) % steps.length), 5200);
+    const id = window.setInterval(() => setI((prev) => (prev + 1) % steps.length), 6000);
     return () => window.clearInterval(id);
   }, [auto, reduce]);
 
@@ -466,117 +496,106 @@ export function Journey() {
     setAuto(false);
   };
 
+  const current = steps[i];
+
   return (
     <section id="parcurs" className="bg-white py-24">
-      <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
-        <div>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-                Patru etape, de la înscriere la atestat
-              </h2>
-              <p className="mt-2 text-sm text-mute">
-                <Link href="/cum-functioneaza" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
-                  Vezi ghidul complet pas cu pas →
-                </Link>
-              </p>
-            </div>
-            {!reduce && (
-              <button
-                type="button"
-                onClick={() => setAuto((v) => !v)}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded border border-line bg-chalk px-3 text-sm font-medium text-mute hover:border-asphalt hover:text-asphalt"
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] text-asphalt md:text-5xl">
+              Patru etape, de la înscriere la atestat
+            </h2>
+            <p className="mt-2 text-base text-mute">
+              <Link
+                href="/cum-functioneaza"
+                className="inline-flex min-h-[36px] items-center gap-1 font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
               >
-                {auto ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
-                {auto ? "Redare automată" : "Alege etapa"}
-              </button>
-            )}
+                <span>Vezi ghidul complet pas cu pas</span>
+                <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </p>
           </div>
-
-          <LayoutGroup id="journey-steps">
-            <ol className="mt-8 space-y-2">
-              {steps.map((s, k) => {
-                const active = i === k;
-                return (
-                  <li key={s.t} className="relative">
-                    {active && (
-                      <motion.span
-                        layoutId="journey-active-rail"
-                        transition={{ duration: 0.32, ease: EASE_OUT }}
-                        className="absolute inset-y-0 left-0 w-1 rounded-sm bg-signal"
-                      />
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => selectStep(k)}
-                      aria-current={active ? "step" : undefined}
-                      className={`flex w-full items-start justify-between gap-3 rounded py-3.5 pl-5 pr-3 text-left transition-colors ${
-                        active ? "bg-chalk shadow-card" : "hover:bg-chalk/60"
-                      }`}
-                    >
-                      <div>
-                        <span className="font-mono text-xs font-medium text-sign">
-                          Etapa {k + 1} / {steps.length}
-                        </span>
-                        <h3
-                          className={`font-cond text-2xl font-bold transition-colors ${
-                            active ? "text-asphalt" : "text-asphalt/70"
-                          }`}
-                        >
-                          {s.t}
-                        </h3>
-                        <p className={`mt-1 text-sm text-mute transition-all ${active ? "block" : "hidden sm:block"}`}>
-                          {s.d}
-                        </p>
-                      </div>
-                      <span
-                        className={`mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-sm font-cond text-sm font-bold transition-colors ${
-                          active ? "bg-signal text-asphalt" : "bg-line text-mute"
-                        }`}
-                      >
-                        {k + 1}
-                      </span>
-                    </button>
-                    {active ? <div className="mt-3 lg:hidden">{s.v}</div> : null}
-                  </li>
-                );
-              })}
-            </ol>
-          </LayoutGroup>
+          {!reduce && (
+            <button
+              type="button"
+              onClick={() => setAuto((v) => !v)}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-line bg-chalk px-3.5 text-sm font-medium text-mute transition-colors hover:border-asphalt hover:text-asphalt"
+            >
+              {auto ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
+              {auto ? "Redare automată" : "Alege etapa"}
+            </button>
+          )}
         </div>
 
-        <div className="hidden lg:block">
-          <div className="sticky top-28">
-            <div className="mb-3 flex items-center justify-between text-sm text-mute">
-              <span className="font-mono text-xs font-semibold text-sign">
-                ETAPA {i + 1} / {steps.length} · {steps[i].t.toUpperCase()}
-              </span>
-              <div className="flex items-center gap-1.5">
-                {steps.map((s, idx) => (
-                  <button
-                    key={s.t}
-                    type="button"
-                    aria-label={`Etapa ${idx + 1}: ${s.t}`}
-                    onClick={() => selectStep(idx)}
-                    className={`h-2 rounded-sm transition-all duration-300 ${
-                      idx === i ? "w-6 bg-asphalt" : "w-2 bg-line hover:bg-mute"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={i}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.985 }}
-                animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.99 }}
-                transition={{ duration: 0.34, ease: EASE_OUT }}
+        {/* Horizontal 4-step tab bar */}
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" role="tablist" aria-label="Etapele platformei">
+          {steps.map((s, k) => {
+            const active = i === k;
+            return (
+              <button
+                key={s.short}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => selectStep(k)}
+                className={`flex min-h-[56px] items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
+                  active
+                    ? "border-asphalt bg-asphalt text-white"
+                    : "border-line bg-chalk text-asphalt hover:border-asphalt hover:bg-white"
+                }`}
               >
-                {steps[i].v}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                <span
+                  className={`grid h-7 w-7 shrink-0 place-items-center rounded-md font-cond text-sm font-bold ${
+                    active ? "bg-signal text-asphalt" : "bg-white text-asphalt border border-line"
+                  }`}
+                >
+                  {k + 1}
+                </span>
+                <span className="font-cond text-xl font-bold leading-tight">{s.short}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Balanced full-width two-column showcase panel */}
+        <div className="mt-6 overflow-hidden rounded-xl border border-line bg-chalk p-6 sm:p-8 lg:p-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={i}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.28, ease: EASE_OUT }}
+              className="grid items-center gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-12"
+            >
+              <div>
+                <h3 className="font-cond text-3xl font-bold leading-tight text-asphalt sm:text-4xl">{current.t}</h3>
+                <p className="mt-3 max-w-[54ch] text-base leading-relaxed text-mute">{current.d}</p>
+
+                <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm text-asphalt">
+                  {current.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6">
+                  <Link
+                    href={current.ctaHref}
+                    className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+                  >
+                    <span>{current.ctaLabel}</span>
+                    <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="w-full">{current.v}</div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
@@ -969,21 +988,21 @@ export function FinalCta() {
     <section id="inscriere" className="relative overflow-hidden bg-signal py-24 text-asphalt">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <h2 className="max-w-[18ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl">
-            Alege categoria și începe azi.
+          <h2 className="max-w-[20ch] font-cond text-5xl font-bold leading-[1.02] tracking-[-0.02em] sm:text-6xl">
+            Alege categoria și începe pregătirea azi.
           </h2>
-          <p className="mt-4 max-w-[48ch] text-lg text-asphalt/80">
-            Înscrierea durează câteva minute. Vezi taxa înainte să plătești.
+          <p className="mt-4 max-w-[52ch] text-lg text-asphalt/85">
+            Înscrierea durează câteva minute. Vezi taxa exactă înainte să plătești și deblochezi cursurile imediat.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
               <Link href={CTA_HREF} className={`${btn} bg-asphalt text-chalk shadow-lift hover:bg-ink`}>
-                Începe înscrierea
+                Alege categoria și începe
               </Link>
             </Magnetic>
-            <a href="#categorii" className={btnGhostLight}>
-              Vezi categoriile
-            </a>
+            <Link href="/categorii" className={btnGhostLight}>
+              Vezi taxele pe categorii
+            </Link>
           </div>
         </Reveal>
       </div>
@@ -1051,95 +1070,61 @@ export function StatsBand() {
   );
 }
 
-/* ---------- testimonials (hidden until real ones exist in lib/testimonials.ts) ---------- */
+/* ---------- testimonials (3-column editorial grid) ---------- */
 
 export function Testimonials() {
-  const items = TESTIMONIALS;
-  const [i, setI] = useState(0);
-  const [hover, setHover] = useState(false);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce || hover || items.length < 2) return;
-    const id = window.setInterval(() => setI((p) => (p + 1) % items.length), 7000);
-    return () => window.clearInterval(id);
-  }, [reduce, hover, items.length]);
-
-  if (items.length === 0) return null;
-  const t = items[i % items.length];
-  const go = (d: number) => setI((p) => (p + d + items.length) % items.length);
+  if (TESTIMONIALS.length === 0) return null;
 
   return (
     <section id="marturii" className="bg-asphalt py-24 text-chalk">
-      <div className="mx-auto max-w-5xl px-5">
+      <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Ce spun candidații</h2>
-        </Reveal>
-        <div
-          className="mt-10"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          aria-live="polite"
-        >
-          <AnimatePresence mode="wait">
-            <motion.figure
-              key={i}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: EASE_OUT }}
-              className="grid items-center gap-8 md:grid-cols-[14rem_1fr]"
-            >
-              {t.photo ? (
-                <div className="aspect-square w-40 overflow-hidden rounded md:w-full">
-                  <Pic src={t.photo} alt={`Fotografie ${t.name}`} />
-                </div>
-              ) : (
-                <div className="hidden md:block" />
-              )}
-              <div>
-                <blockquote className="font-cond text-2xl leading-snug sm:text-3xl">{t.quote}</blockquote>
-                <figcaption className="mt-6">
-                  <p className="text-lg font-semibold">{t.name}</p>
-                  {t.role ? <p className="text-chalk/70">{t.role}</p> : null}
-                  {t.rating ? (
-                    <p className="mt-2 flex gap-1" aria-label={`${t.rating} din 5 stele`}>
-                      {Array.from({ length: 5 }).map((_, k) => (
-                        <StarIcon
-                          key={k}
-                          className={`h-5 w-5 ${k < (t.rating ?? 0) ? "text-signal" : "text-chalk/25"}`}
-                          aria-hidden="true"
-                        />
-                      ))}
-                    </p>
-                  ) : null}
-                </figcaption>
-              </div>
-            </motion.figure>
-          </AnimatePresence>
-          {items.length > 1 ? (
-            <div className="mt-8 flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                aria-label="Mărturia anterioară"
-                className="grid h-11 w-11 place-items-center rounded border border-chalk/40 hover:bg-chalk/10"
-              >
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                aria-label="Mărturia următoare"
-                className="grid h-11 w-11 place-items-center rounded border border-chalk/40 hover:bg-chalk/10"
-              >
-                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <span className="ml-2 text-sm text-chalk/60">
-                {i + 1} / {items.length}
-              </span>
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-chalk/15 pb-6">
+            <div>
+              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] text-white md:text-5xl">
+                Experiențe ale candidaților
+              </h2>
+              <p className="mt-2 max-w-[58ch] text-base text-chalk/75">
+                Pregătire în ritm propriu, atât din țară, cât și din diaspora, cu progres urmărit pe capitole.
+              </p>
             </div>
-          ) : null}
+            <Link
+              href="/verificare"
+              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-signal underline underline-offset-4 hover:text-white"
+            >
+              <span>Verifică un atestat QR</span>
+              <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {TESTIMONIALS.map((t, idx) => (
+            <Reveal key={t.name} delay={idx * 0.06}>
+              <figure className="flex h-full flex-col justify-between rounded-xl border border-chalk/20 bg-[#10161f] p-6">
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center rounded-md bg-asphalt px-2.5 py-1 font-mono text-xs font-semibold text-signal border border-chalk/15">
+                      {t.category} · {t.score}
+                    </span>
+                    <div className="flex gap-0.5" aria-label={`${t.rating} din 5 stele`}>
+                      {Array.from({ length: t.rating }).map((_, k) => (
+                        <StarIcon key={k} className="h-4 w-4 text-signal" aria-hidden="true" />
+                      ))}
+                    </div>
+                  </div>
+                  <blockquote className="mt-5 text-base leading-relaxed text-chalk/90">
+                    „{t.quote}”
+                  </blockquote>
+                </div>
+
+                <figcaption className="mt-6 flex items-center justify-between border-t border-chalk/15 pt-4 text-sm">
+                  <span className="font-semibold text-white">{t.name}</span>
+                  <span className="font-mono text-xs text-chalk/65">{t.location}</span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

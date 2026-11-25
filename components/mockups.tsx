@@ -147,10 +147,9 @@ export function SignupStepMock() {
               <dd className="font-mono font-semibold text-asphalt">26 întrebări · min. 22</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-mute">Monedă plată</dt>
+              <dt className="text-mute">Plată în</dt>
               <dd className="font-mono font-semibold text-asphalt">RON sau EUR</dd>
             </div>
-          </dl>
             <div className="flex items-center justify-between">
               <dt className="text-mute">Cont creat</dt>
               <dd className="inline-flex items-center gap-1 font-semibold text-ok">
@@ -158,6 +157,7 @@ export function SignupStepMock() {
                 Instantaneu
               </dd>
             </div>
+          </dl>
         </div>
       </div>
     </Frame>

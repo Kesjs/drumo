@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  AnimatePresence,
   animate,
   motion,
   useInView,
@@ -97,11 +96,11 @@ export function Hero() {
           <span>Pregătire auto și examen supravegheat · 100% online</span>
         </motion.div>
         <h1 className="max-w-[22ch] font-cond text-4xl font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
-          <SplitWords text="Pregătește legislația rutieră și susține examenul teoretic de acasă." />
+          <SplitWords text="Învață codul rutier și susține examenul teoretic de acasă." />
         </h1>
         <motion.p {...a(0.18)} className="mt-4 max-w-[54ch] text-base text-white/90 sm:text-lg">
-          Cursuri complete cu fotografii reale din România, audio, evaluare adaptivă și test supravegheat. O singură taxă
-          per categorie, fără abonament — cu atestat verificabil prin QR.
+          Cursuri structurate pe capitole cu fotografii reale din România, lecții audio, evaluare adaptivă și examen
+          supravegheat. O singură taxă per categorie, fără abonament — cu atestat verificabil prin cod QR.
         </motion.p>
         <motion.div {...a(0.3)} className="mt-7 flex flex-wrap gap-3">
           <Magnetic>
@@ -496,8 +495,6 @@ export function Journey() {
     setAuto(false);
   };
 
-  const current = steps[i];
-
   return (
     <section id="parcurs" className="bg-white py-24">
       <div className="mx-auto max-w-6xl px-5">
@@ -523,7 +520,8 @@ export function Journey() {
               className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-line bg-chalk px-3.5 text-sm font-medium text-mute transition-colors hover:border-asphalt hover:text-asphalt"
             >
               {auto ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
-              {auto ? "Redare automată" : "Alege etapa"}
+              <span hidden={!auto}>Redare automată</span>
+              <span hidden={auto}>Alege etapa</span>
             </button>
           )}
         </div>
@@ -535,9 +533,11 @@ export function Journey() {
             return (
               <button
                 key={s.short}
+                id={`journey-tab-${k}`}
                 type="button"
                 role="tab"
                 aria-selected={active}
+                aria-controls={`journey-panel-${k}`}
                 onClick={() => selectStep(k)}
                 className={`flex min-h-[56px] items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
                   active
@@ -547,7 +547,7 @@ export function Journey() {
               >
                 <span
                   className={`grid h-7 w-7 shrink-0 place-items-center rounded-md font-cond text-sm font-bold ${
-                    active ? "bg-signal text-asphalt" : "bg-white text-asphalt border border-line"
+                    active ? "bg-signal text-asphalt" : "border border-line bg-white text-asphalt"
                   }`}
                 >
                   {k + 1}
@@ -558,44 +558,47 @@ export function Journey() {
           })}
         </div>
 
-        {/* Balanced full-width two-column showcase panel */}
+        {/* Keep all 4 panels mounted using hidden so browser translation mutations never break DOM unmount */}
         <div className="mt-6 overflow-hidden rounded-xl border border-line bg-chalk p-6 sm:p-8 lg:p-10">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={i}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.28, ease: EASE_OUT }}
-              className="grid items-center gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-12"
-            >
-              <div>
-                <h3 className="font-cond text-3xl font-bold leading-tight text-asphalt sm:text-4xl">{current.t}</h3>
-                <p className="mt-3 max-w-[54ch] text-base leading-relaxed text-mute">{current.d}</p>
+          {steps.map((step, idx) => {
+            const active = i === idx;
+            return (
+              <div
+                key={step.short}
+                id={`journey-panel-${idx}`}
+                role="tabpanel"
+                aria-labelledby={`journey-tab-${idx}`}
+                hidden={!active}
+                className={active ? "grid items-center gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-12" : "hidden"}
+              >
+                <div>
+                  <h3 className="font-cond text-3xl font-bold leading-tight text-asphalt sm:text-4xl">{step.t}</h3>
+                  <p className="mt-3 max-w-[54ch] text-base leading-relaxed text-mute">{step.d}</p>
 
-                <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm text-asphalt">
-                  {current.points.map((pt) => (
-                    <li key={pt} className="flex items-start gap-2.5">
-                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm text-asphalt">
+                    {step.points.map((pt) => (
+                      <li key={pt} className="flex items-start gap-2.5">
+                        <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="mt-6">
-                  <Link
-                    href={current.ctaHref}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
-                  >
-                    <span>{current.ctaLabel}</span>
-                    <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <div className="mt-6">
+                    <Link
+                      href={step.ctaHref}
+                      className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+                    >
+                      <span>{step.ctaLabel}</span>
+                      <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
 
-              <div className="w-full">{current.v}</div>
-            </motion.div>
-          </AnimatePresence>
+                <div className="w-full">{step.v}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

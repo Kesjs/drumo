@@ -93,25 +93,18 @@ export function DashLine({ color = "#18202b" }: { color?: string }) {
   );
 }
 
-/** Titlu care se dezvăluie cuvânt cu cuvânt. */
-export function SplitWords({ text, delay = 0.1 }: { text: string; delay?: number }) {
+/** Reveal headline smoothly without splitting sentences into isolated spans (preserves browser translation). */
+export function SplitWords({ text, delay = 0.08 }: { text: string; delay?: number }) {
   const reduce = useReducedMotion();
   return (
-    <>
-      {text.split(" ").map((w, i) => (
-        <span key={i} className="inline-block overflow-hidden pb-[0.14em] pt-[0.1em] align-bottom -mb-[0.14em] -mt-[0.1em]">
-          <motion.span
-            className="inline-block"
-            initial={reduce ? false : { y: "115%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.7, delay: delay + i * 0.06, ease: EASE_OUT }}
-          >
-            {w}
-          </motion.span>
-          {i < text.split(" ").length - 1 ? "\u00A0" : ""}
-        </span>
-      ))}
-    </>
+    <motion.span
+      className="inline-block"
+      initial={reduce ? false : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay, ease: EASE_OUT }}
+    >
+      {text}
+    </motion.span>
   );
 }
 

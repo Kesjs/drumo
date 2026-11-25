@@ -1,7 +1,6 @@
 "use client";
 import { ReactNode } from "react";
 import {
-  QrCodeIcon,
   SpeakerWaveIcon,
   CameraIcon,
   ShieldCheckIcon,
@@ -13,6 +12,7 @@ import {
   BuildingLibraryIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
+import { LogoMark } from "./logo";
 
 export function Frame({
   children,
@@ -25,7 +25,7 @@ export function Frame({
 }) {
   return (
     <div
-      className={`overflow-hidden rounded border border-line bg-white shadow-lift ${className}`}
+      className={`overflow-hidden rounded border border-line bg-white text-asphalt shadow-lift ${className}`}
     >
       {children}
     </div>
@@ -403,27 +403,43 @@ export function GlobalEvalMock() {
 export function ExamMock() {
   return (
     <Frame title="permistart.ro/examen/sala">
-      <div className="text-sm">
-        <div className="flex items-center justify-between border-b border-line px-4 py-2 text-xs">
-          <span>Întrebarea 7 din 26</span>
-          <span className="rounded bg-ok/15 px-2 py-0.5 font-semibold text-ok">Cameră activă</span>
-          <span className="font-mono text-2xl font-medium tabular-nums">18</span>
+      <div className="text-sm text-asphalt">
+        <div className="flex items-center justify-between border-b border-line bg-chalk px-4 py-2.5 text-xs">
+          <span className="font-mono font-semibold text-asphalt">Întrebarea 7 / 26</span>
+          <span className="inline-flex items-center gap-1.5 rounded bg-ok/15 px-2 py-0.5 font-semibold text-ok">
+            <span className="h-2 w-2 rounded-full bg-ok" aria-hidden="true" />
+            Cameră activă
+          </span>
+          <span className="font-mono text-xl font-bold tabular-nums text-asphalt">18s</span>
         </div>
-        <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-[120px_1fr]">
-          <SignSlot src="/media/stop-panoramio.webp" alt="Indicatorul Oprire (Stop) la marginea unui drum din România" className="aspect-[16/10] sm:aspect-square" />
-          <div className="space-y-1.5 text-xs">
-            <p className="font-semibold">Cum procedezi la această intersecție?</p>
+        <div className="h-1 w-full bg-line">
+          <div className="h-full w-[70%] bg-signal" />
+        </div>
+        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-[128px_1fr]">
+          <SignSlot
+            src="/media/stop-panoramio.webp"
+            alt="Indicatorul Oprire (Stop) la marginea unui drum din România"
+            className="aspect-[16/10] sm:aspect-square"
+          />
+          <div className="space-y-2 text-xs">
+            <p className="text-sm font-semibold text-asphalt">Cum procedezi la această intersecție?</p>
             <div className="divide-y divide-line border-y border-line">
-              {["Oprești și acorzi prioritate", "Continui fără să oprești", "Claxonezi și treci"].map((a) => (
-                <div key={a} className="px-2 py-2 text-asphalt">
-                  {a}
+              {["Oprești complet și acorzi prioritate", "Continui fără să oprești", "Claxonezi și treci"].map((a, idx) => (
+                <div
+                  key={a}
+                  className={`flex items-center gap-2 px-2.5 py-2 ${
+                    idx === 0 ? "bg-signal/15 font-semibold text-asphalt" : "text-mute"
+                  }`}
+                >
+                  <span className="font-mono text-xs font-bold text-sign">{String.fromCharCode(65 + idx)}.</span>
+                  <span>{a}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
         <p className="mx-4 mb-4 border-t border-line pt-2.5 text-xs text-mute">
-          Fără întoarcere la întrebarea anterioară. Ieșirea din pagină se înregistrează.
+          Fără întoarcere la întrebarea anterioară · Ieșirea din pagină se înregistrează automat.
         </p>
       </div>
     </Frame>
@@ -432,36 +448,41 @@ export function ExamMock() {
 
 export function CertMock() {
   return (
-    <Frame>
-      <div className="bg-[#fcfcf9] text-sm">
-        {/* Official paper certificate header */}
-        <div className="flex items-center justify-between gap-3 border-b-2 border-asphalt bg-asphalt px-5 py-3.5 text-chalk">
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex h-7 items-center rounded-sm bg-signal px-2 font-cond text-sm font-bold tracking-tight text-asphalt">
-              PermiStart
-            </span>
+    <div className="relative overflow-hidden rounded border-2 border-asphalt bg-[#faf8f2] p-2.5 text-asphalt shadow-[0_18px_40px_rgba(24,32,43,0.14)]">
+      {/* Subtle diagonal archival SPECIMEN watermark */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 grid select-none place-items-center -rotate-12 font-cond text-6xl font-bold tracking-[0.22em] text-asphalt/[0.04]"
+      >
+        SPECIMEN
+      </span>
+
+      <div className="relative border border-asphalt/30 bg-[#fcfbf7]">
+        {/* Header bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-asphalt bg-asphalt px-5 py-4 text-chalk">
+          <div className="flex items-center gap-3">
+            <LogoMark className="h-9 w-9 shrink-0" />
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-signal">Document verificabil QR</p>
-              <p className="font-cond text-lg font-bold leading-none text-chalk">ATESTAT DE REUȘITĂ</p>
+              <p className="font-mono text-xs tracking-wider text-signal">REGISTRU DIGITAL · COD QR</p>
+              <p className="font-cond text-xl font-bold leading-none text-chalk">ATESTAT DE REUȘITĂ</p>
             </div>
           </div>
           <div className="text-right">
-            <p className="font-mono text-xs text-chalk/70">SERIE UNICĂ</p>
-            <p className="font-mono text-xs font-bold tracking-wider text-signal">DR-0000-0000</p>
+            <p className="font-mono text-xs text-chalk/70">SERIE VERIFICABILĂ</p>
+            <p className="font-mono text-sm font-bold tracking-wider text-signal">DR-CC7W-J5F7</p>
           </div>
         </div>
 
-        {/* Paper body */}
-        <div className="px-5 py-5">
-          <p className="text-xs text-mute">Se confirmă prin prezentul document că</p>
-          <p className="mt-1 font-cond text-3xl font-bold tracking-tight text-asphalt">Andrei Popescu</p>
-          <p className="mt-1 text-xs leading-relaxed text-asphalt">
-            a finalizat pregătirea teoretică și a promovat examenul supravegheat pentru{" "}
-            <strong className="font-semibold">Categoria B — Autoturisme</strong>.
+        {/* Certificate document body */}
+        <div className="px-5 py-5 sm:px-6 sm:py-6">
+          <p className="font-mono text-xs uppercase tracking-wider text-mute">Se certifică faptul că</p>
+          <p className="mt-1 font-cond text-3xl font-bold tracking-tight text-asphalt sm:text-4xl">Andrei Popescu</p>
+          <p className="mt-1.5 max-w-[48ch] text-xs leading-relaxed text-asphalt/85 sm:text-sm">
+            a parcurs pregătirea teoretică pe capitole și a promovat examenul online supravegheat pentru{" "}
+            <strong className="font-semibold text-asphalt">Categoria B — Autoturisme</strong>.
           </p>
 
-          {/* Key verification metrics */}
-          <dl className="mt-4 grid grid-cols-3 divide-x divide-line border-y border-line py-3 text-xs">
+          <dl className="mt-5 grid grid-cols-3 divide-x divide-asphalt/15 border-y border-asphalt/20 py-3 text-xs">
             <div className="pr-3">
               <dt className="text-mute">Scor obținut</dt>
               <dd className="mt-0.5 font-mono text-base font-bold tabular-nums text-ok">24 / 26</dd>
@@ -471,44 +492,58 @@ export function CertMock() {
               <dd className="mt-0.5 font-mono text-sm font-bold text-asphalt">ADMIS</dd>
             </div>
             <div className="pl-3">
-              <dt className="text-mute">Emis la</dt>
+              <dt className="text-mute">Data emiterii</dt>
               <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-asphalt">19.11.2026</dd>
             </div>
           </dl>
 
-          {/* Footer: Seal + legal status + QR */}
-          <div className="mt-4 flex items-end justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <svg
-                viewBox="0 0 64 64"
-                className="h-14 w-14 shrink-0 text-sign"
-                aria-hidden="true"
-              >
-                <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
-                <circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" strokeWidth="1.25" />
-                <text x="32" y="29" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor" fontFamily="monospace">
-                  DRUMO
+          {/* Bottom validation strip: Seal + Signature + Real scannable QR */}
+          <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              {/* Official stamp/seal */}
+              <svg viewBox="0 0 72 72" className="h-16 w-16 shrink-0 text-sign" aria-hidden="true">
+                <circle cx="36" cy="36" r="32" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+                <circle cx="36" cy="36" r="25" fill="none" stroke="currentColor" strokeWidth="1.25" />
+                <text x="36" y="31" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor" fontFamily="monospace">
+                  PERMISTART
                 </text>
-                <text x="32" y="40" textAnchor="middle" fontSize="6.5" fontWeight="600" fill="currentColor" fontFamily="monospace">
+                <line x1="16" y1="36" x2="56" y2="36" stroke="currentColor" strokeWidth="1" />
+                <text x="36" y="46" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="currentColor" fontFamily="monospace">
                   VERIFICAT
                 </text>
               </svg>
-              <div className="space-y-1 text-xs leading-snug text-mute">
-                <p className="font-semibold text-asphalt">Semnătură electronică &amp; registru public</p>
-                <p>Atestat de reușită PermiStart · Nu este permis de conducere oficial.</p>
+              <div className="space-y-1 text-xs">
+                <p className="font-semibold text-asphalt">Emitere automată PDF · Semnătură digitală</p>
+                <p className="max-w-[30ch] text-mute">
+                  Document de pregătire PermiStart. Nu înlocuiește permisul de conducere oficial.
+                </p>
               </div>
             </div>
 
+            {/* Authentic scannable QR code pointing to https://permistart.ro/verificare/DR-CC7W-J5F7 */}
             <div className="shrink-0 text-center">
-              <div className="inline-flex h-16 w-16 items-center justify-center rounded border border-asphalt bg-white p-1.5 text-asphalt">
-                <QrCodeIcon className="h-12 w-12" aria-hidden="true" />
+              <div className="inline-block rounded border border-asphalt/30 bg-white p-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 35 35"
+                  shapeRendering="crispEdges"
+                  className="h-20 w-20"
+                  role="img"
+                  aria-label="Cod QR verificare atestat DR-CC7W-J5F7"
+                >
+                  <path fill="#ffffff" d="M0 0h35v35H0z" />
+                  <path
+                    stroke="#18202b"
+                    d="M1 1.5h7m5 0h1m1 0h2m2 0h3m2 0h1m2 0h7M1 2.5h1m5 0h1m2 0h1m1 0h2m2 0h1m1 0h1m2 0h5m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h4m1 0h4m1 0h2m2 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h5m2 0h2m1 0h1m2 0h1m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h7m2 0h2m1 0h1m2 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h4m1 0h1m2 0h5m2 0h1M1 9.5h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h4m2 0h1m1 0h1m2 0h2m1 0h1M1 10.5h1m1 0h1m1 0h1m2 0h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4m3 0h2M2 11.5h1m1 0h1m1 0h3m2 0h3m3 0h2m1 0h4m4 0h2m1 0h1m1 0h1M1 12.5h1m2 0h3m2 0h1m2 0h1m2 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h2m1 0h2M1 13.5h1m2 0h1m1 0h5m5 0h1m7 0h3m3 0h1m2 0h1M2 14.5h1m1 0h1m3 0h3m2 0h1m2 0h3m3 0h3m1 0h3m2 0h3M1 15.5h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h4m5 0h1m2 0h4m1 0h1m2 0h1M4 16.5h3m2 0h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h3M2 17.5h2m1 0h1m1 0h3m3 0h3m2 0h1m1 0h1m1 0h4m1 0h1m1 0h4M1 18.5h2m1 0h2m4 0h1m6 0h1m4 0h1m1 0h2m2 0h1m1 0h1m1 0h1M3 19.5h2m2 0h3m1 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m3 0h1m1 0h1M1 20.5h1m3 0h2m2 0h7m2 0h5m5 0h1m3 0h1M1 21.5h1m1 0h1m3 0h1m5 0h1m3 0h4m2 0h2m2 0h1m4 0h1M2 22.5h1m1 0h3m4 0h1m1 0h1m2 0h8m2 0h1m1 0h2m1 0h3M1 23.5h3m2 0h2m2 0h2m4 0h1m4 0h1m3 0h3m3 0h1m1 0h1M2 24.5h3m1 0h1m2 0h1m1 0h1m3 0h1m1 0h1m1 0h1m2 0h2m2 0h4m1 0h3M1 25.5h1m1 0h2m1 0h3m1 0h1m2 0h6m1 0h3m2 0h7m1 0h1M9 26.5h2m3 0h1m4 0h2m4 0h1m3 0h2m2 0h1M1 27.5h7m2 0h2m1 0h3m6 0h1m2 0h1m1 0h1m1 0h4M1 28.5h1m5 0h1m1 0h4m2 0h2m3 0h2m3 0h1m3 0h1m2 0h2M1 29.5h1m1 0h3m1 0h1m3 0h1m3 0h3m2 0h1m2 0h1m1 0h6m1 0h2M1 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h3m1 0h1m2 0h1m1 0h4M1 31.5h1m1 0h3m1 0h1m5 0h1m1 0h1m2 0h2m2 0h4m3 0h3m1 0h1M1 32.5h1m5 0h1m5 0h2m1 0h3m3 0h4m4 0h1M1 33.5h7m1 0h2m1 0h3m2 0h1m3 0h2m3 0h1m2 0h4"
+                  />
+                </svg>
               </div>
-              <p className="mt-1 font-mono text-xs text-mute">permistart.ro/verificare</p>
+              <p className="mt-1 font-mono text-xs text-mute">Scanează pentru verificare</p>
             </div>
           </div>
         </div>
       </div>
-    </Frame>
+    </div>
   );
 }
 

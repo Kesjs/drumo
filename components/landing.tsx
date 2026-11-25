@@ -292,12 +292,12 @@ export function Benefits() {
 /* ---------- categories (short version, full list on /categorii) ---------- */
 
 const BRIEF = [
-  { codes: "AM", t: "Mopede și scutere ușoare", href: "/categorii/am", Icon: Bike },
-  { codes: "A1 · A2 · A", t: "Motociclete", href: "/categorii/a", Icon: Bike },
-  { codes: "B · B1", t: "Autoturisme", href: "/categorii/b", Icon: Car },
-  { codes: "BE", t: "Autoturism cu remorcă", href: "/categorii/be", Icon: Caravan },
-  { codes: "C · CE", t: "Camioane", href: "/categorii/c", Icon: Truck },
-  { codes: "D", t: "Autobuze și microbuze", href: "/categorii/d", Icon: Bus },
+  { codes: "AM", t: "Mopede și scutere ușoare · 20 întrebări", href: "/categorii/am", Icon: Bike },
+  { codes: "A1 · A2 · A", t: "Motociclete, după putere · 20 întrebări", href: "/categorii/a", Icon: Bike },
+  { codes: "B · B1", t: "Autoturisme ≤ 3.500 kg · 26 întrebări", href: "/categorii/b", Icon: Car },
+  { codes: "BE", t: "Autoturism cu remorcă · 26 întrebări", href: "/categorii/be", Icon: Caravan },
+  { codes: "C · CE", t: "Camioane și ansambluri · 26 întrebări", href: "/categorii/c", Icon: Truck },
+  { codes: "D", t: "Autobuze și microbuze · 26 întrebări", href: "/categorii/d", Icon: Bus },
 ];
 
 export function Categories() {
@@ -310,14 +310,14 @@ export function Categories() {
               Toate categoriile, într-un singur loc.
             </h2>
             <p className="mt-4 max-w-[52ch] text-lg text-mute">
-              Capitolele, întrebările de examen și taxa depind de categorie. Alege-o pe a ta și vezi totul, înainte să
-              plătești ceva.
+              Capitolele, întrebările de examen și taxa unică depind de categorie. Alege-o pe a ta și vezi suma exactă
+              la înscriere, înainte să plătești.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
             <Parallax
-              src="/media/autostrada-sibiu.webp"
-              alt="Autostrada A1 lângă Sibiu cu panou rutier de distanțe"
+              src="/media/hero-permisstart.webp"
+              alt="Punct rutier cu autoturisme, vehicule grele și indicatoare de circulație din România"
               className="mt-8 aspect-[4/3] rounded shadow-lift"
             />
           </Reveal>
@@ -335,11 +335,13 @@ export function Categories() {
                   href={href}
                   className="group flex items-center gap-4 px-2 py-5 transition-colors hover:bg-white sm:px-4"
                 >
-                  <span className="w-32 shrink-0 font-cond text-3xl font-bold text-asphalt">{codes}</span>
-                  <span className="flex-1 text-mute group-hover:text-asphalt">{t}</span>
-                  <Icon className="hidden h-6 w-6 text-asphalt/50 sm:block" aria-hidden="true" />
+                  <span className="w-36 shrink-0 whitespace-nowrap font-cond text-2xl font-bold text-asphalt sm:w-40 sm:text-3xl">
+                    {codes}
+                  </span>
+                  <span className="flex-1 text-sm text-mute group-hover:text-asphalt sm:text-base">{t}</span>
+                  <Icon className="hidden h-6 w-6 shrink-0 text-asphalt/50 sm:block" aria-hidden="true" />
                   <ArrowUpRightIcon
-                    className="h-5 w-5 text-sign transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    className="h-5 w-5 shrink-0 text-sign transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
                 </Link>
@@ -423,30 +425,27 @@ export function HowItWorks() {
   );
 }
 
-/* ---------- detailed journey (7 steps) ---------- */
+/* ---------- condensed 4-stage product journey ---------- */
 
 const steps = [
-  { t: "Înscriere", d: "Nume, contact, țara și categoria de permis.", v: <SignupStepMock /> },
   {
-    t: "Verificare identitate",
-    d: "Fotografie a actului și un selfie rapid, ca să știm că tu dai examenul.",
-    v: <KycStepMock />,
+    t: "Înscriere și verificare identitate",
+    d: "Îți alegi categoria, încarci actul și un selfie securizat (KYC), iar prima plată deblochează accesul la pregătire.",
+    v: <SignupStepMock />,
   },
-  { t: "Plată", d: "Integral sau în tranșe. Cursurile se deblochează de la prima plată.", v: <PayMock /> },
   {
-    t: "Cursuri pe capitole",
-    d: "Rezumat, curs detaliat cu imagini reale și audio, apoi testul capitolului.",
+    t: "Cursuri pe capitole și audio",
+    d: "Rezumat clar, lecție detaliată cu indicatoare reale din România, citire audio și test de capitol cu explicații juridice.",
     v: <ChapterMock />,
   },
-  { t: "Evaluare adaptivă", d: "Întrebările următoare se aleg după greșelile tale.", v: <AdaptiveMock /> },
   {
-    t: "Evaluare globală",
-    d: "Toate capitolele la un loc. Îți arată dacă ești pregătit pentru examen.",
-    v: <GlobalEvalMock />,
+    t: "Evaluare adaptivă și prag de pregătire",
+    d: "Motorul insistă pe capitolele unde ai greșit, apoi evaluarea globală îți arată exact dacă ești pregătit pentru examen.",
+    v: <AdaptiveMock />,
   },
   {
-    t: "Examen și atestat",
-    d: "Dai testul când vrei, după plata integrală. Atestatul vine pe e-mail în maximum 3 zile.",
+    t: "Examen supravegheat și atestat QR",
+    d: "Susții testul când ești pregătit, cu cronometru strict și cameră activă. Atestatul ajunge pe e-mail în cel mult 3 zile.",
     v: <ExamMock />,
   },
 ];
@@ -468,21 +467,28 @@ export function Journey() {
   };
 
   return (
-    <section id="parcurs" className="bg-chalk py-24">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+    <section id="parcurs" className="bg-white py-24">
+      <div className="mx-auto grid max-w-6xl items-start gap-12 px-5 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
         <div>
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-              Șapte pași, de la înscriere la atestat
-            </h2>
+            <div>
+              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+                Patru etape, de la înscriere la atestat
+              </h2>
+              <p className="mt-2 text-sm text-mute">
+                <Link href="/cum-functioneaza" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
+                  Vezi ghidul complet pas cu pas →
+                </Link>
+              </p>
+            </div>
             {!reduce && (
               <button
                 type="button"
                 onClick={() => setAuto((v) => !v)}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded border border-line bg-white px-3 text-sm font-medium text-mute hover:border-asphalt hover:text-asphalt"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded border border-line bg-chalk px-3 text-sm font-medium text-mute hover:border-asphalt hover:text-asphalt"
               >
                 {auto ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
-                {auto ? "Redare automată" : "Alege un pas"}
+                {auto ? "Redare automată" : "Alege etapa"}
               </button>
             )}
           </div>
@@ -504,13 +510,13 @@ export function Journey() {
                       type="button"
                       onClick={() => selectStep(k)}
                       aria-current={active ? "step" : undefined}
-                      className={`flex w-full items-start justify-between gap-3 rounded py-3 pl-5 pr-3 text-left transition-colors ${
-                        active ? "bg-white shadow-card" : "hover:bg-white/60"
+                      className={`flex w-full items-start justify-between gap-3 rounded py-3.5 pl-5 pr-3 text-left transition-colors ${
+                        active ? "bg-chalk shadow-card" : "hover:bg-chalk/60"
                       }`}
                     >
                       <div>
-                        <span className="text-xs font-medium text-mute">
-                          Pasul {k + 1} din {steps.length}
+                        <span className="font-mono text-xs font-medium text-sign">
+                          Etapa {k + 1} / {steps.length}
                         </span>
                         <h3
                           className={`font-cond text-2xl font-bold transition-colors ${
@@ -542,15 +548,15 @@ export function Journey() {
         <div className="hidden lg:block">
           <div className="sticky top-28">
             <div className="mb-3 flex items-center justify-between text-sm text-mute">
-              <span>
-                Pasul {i + 1} din {steps.length}: {steps[i].t}
+              <span className="font-mono text-xs font-semibold text-sign">
+                ETAPA {i + 1} / {steps.length} · {steps[i].t.toUpperCase()}
               </span>
               <div className="flex items-center gap-1.5">
                 {steps.map((s, idx) => (
                   <button
                     key={s.t}
                     type="button"
-                    aria-label={`Pasul ${idx + 1}: ${s.t}`}
+                    aria-label={`Etapa ${idx + 1}: ${s.t}`}
                     onClick={() => selectStep(idx)}
                     className={`h-2 rounded-sm transition-all duration-300 ${
                       idx === i ? "w-6 bg-asphalt" : "w-2 bg-line hover:bg-mute"
@@ -577,69 +583,93 @@ export function Journey() {
   );
 }
 
-/* ---------- payment ---------- */
+/* ---------- payment (clean 2-column architectural comparison, no redundant widget) ---------- */
 
 export function Payment() {
-  const opts = [
-    ["Plătești tot acum", "Cursurile și examenul sunt deblocate imediat. Faci totul în ritmul tău.", "Cursuri și examen"],
-    [
-      "Plătești în tranșe",
-      "Prima parte deblochează cursurile. Examenul se deblochează când taxa categoriei este achitată integral.",
-      "Cursuri acum, examen după",
-    ],
+  const plans = [
+    {
+      title: "Plată integrală (100%)",
+      badge: "Cursuri + Examen deblocate imediat",
+      desc: "Achită o singură dată taxa categoriei alese și parcurge pregătirea și examenul în ritmul tău.",
+      points: [
+        "Acces instantaneu la toate capitolele, audio și teste",
+        "Eligibilitate financiară imediată pentru sala de examen",
+        "Chitanță fiscală automată trimisă pe e-mail",
+      ],
+    },
+    {
+      title: "Plată în 2–3 tranșe",
+      badge: "Începi cursurile cu prima tranșă",
+      desc: "Împarte taxa în tranșe flexibile fără dobândă. Examenul se activează imediat ce soldul este achitat integral.",
+      points: [
+        "Prima tranșă deblochează toate cursurile și evaluările adaptive",
+        "Achiți restul în 1–2 tranșe, direct din cont, când ești pregătit",
+        "Blocare transparentă a examenului până la plata 100%",
+      ],
+    },
   ];
   const methods = [
     [CreditCardIcon, "Card bancar (Visa / Mastercard)"],
-    [DevicePhoneMobileIcon, "Apple Pay și Google Pay"],
-    [BuildingLibraryIcon, "Transfer instant (RON și EUR)"],
-    [EnvelopeIcon, "Chitanță pe e-mail"],
+    [DevicePhoneMobileIcon, "Apple Pay & Google Pay"],
+    [BuildingLibraryIcon, "Transfer instant / SEPA (RON & EUR)"],
+    [EnvelopeIcon, "Chitanță automată pe e-mail"],
   ] as const;
+
   return (
-    <section id="plata" className="bg-white py-24">
+    <section id="plata" className="bg-chalk py-24">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-            O singură taxă, plătită cum îți convine
-          </h2>
-          <p className="mt-3 max-w-[60ch] text-lg text-mute">
-            Fără abonament și fără pachete. Taxa depinde de categorie și o vezi înainte de plată. Primești chitanță pe
-            e-mail după fiecare plată.
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+                O singură taxă, plătită cum îți convine
+              </h2>
+              <p className="mt-3 max-w-[60ch] text-lg text-mute">
+                Fără abonament lunar și fără pachete ascunse. Vezi suma exactă a categoriei tale la înscriere, înainte de
+                orice plată.
+              </p>
+            </div>
+            <Link
+              href="/rambursari"
+              className="text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
+            >
+              Vezi politica de rambursare (14 zile) →
+            </Link>
+          </div>
         </Reveal>
-        <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_1fr]">
-          <div className="space-y-4">
-            {opts.map(([t, d, tag], k) => (
-              <Reveal key={t} delay={k * 0.07}>
-                <Tilt>
-                  <div className={`${card} p-6 transition-shadow hover:shadow-lift`}>
-                    <p className="font-cond text-2xl font-bold">{t}</p>
-                    <p className="mt-2 text-mute">{d}</p>
-                    <p className="mt-4 inline-block rounded-sm bg-signal/25 px-2.5 py-1 text-sm font-semibold">{tag}</p>
-                  </div>
-                </Tilt>
-              </Reveal>
-            ))}
-            <Reveal delay={0.14}>
-              <ul className="grid gap-3 rounded border border-line bg-chalk p-5 text-sm sm:grid-cols-2">
-                {methods.map(([Icon, label]) => (
-                  <li key={label} className="flex items-center gap-2.5">
-                    <Icon className="h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
-                    {label}
+
+        <div className="mt-10 grid overflow-hidden rounded border-2 border-asphalt bg-white lg:grid-cols-2 lg:divide-x lg:divide-line">
+          {plans.map((p, k) => (
+            <Reveal key={p.title} delay={k * 0.07} className="p-6 sm:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-cond text-3xl font-bold text-asphalt">{p.title}</h3>
+                <span className="rounded-sm bg-signal/25 px-2.5 py-1 text-xs font-semibold text-asphalt">
+                  {p.badge}
+                </span>
+              </div>
+              <p className="mt-3 text-mute">{p.desc}</p>
+              <ul className="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-asphalt">
+                {p.points.map((pt) => (
+                  <li key={pt} className="flex items-start gap-2.5">
+                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-ok" aria-hidden="true" />
+                    <span>{pt}</span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 text-sm text-mute">
-                <Link href="/rambursari" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
-                  Vezi politica de rambursare
-                </Link>
-                .
-              </p>
             </Reveal>
-          </div>
-          <Reveal delay={0.08}>
-            <PayMock />
-          </Reveal>
+          ))}
         </div>
+
+        <Reveal delay={0.14}>
+          <ul className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded border border-line bg-white px-5 py-4 text-xs font-medium text-asphalt sm:text-sm">
+            {methods.map(([Icon, label]) => (
+              <li key={label} className="flex items-center gap-2">
+                <Icon className="h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
@@ -814,27 +844,19 @@ export function Certificate() {
 const faq = [
   [
     "De ce să mă pregătesc și să dau examenul pe PermiStart?",
-    "PermiStart îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
+    "PermiStart îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale.",
   ],
   [
     "La ce îmi folosește atestatul de reușită PermiStart?",
-    "Atestatul de reușită PermiStart (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe PermiStart și nu înlocuiește permisul de conducere eliberat de autorități.",
+    "Atestatul de reușită PermiStart (PDF cu serie unică și cod QR verificabil public) confirmă pe platformă că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în cel mult 3 zile și îl poți prezenta instructorului sau angajatorului ca dovadă a pregătirii tale. Nu înlocuiește permisul de conducere eliberat de autorități.",
   ],
   [
-    "Pot plăti în tranșe?",
-    "Da. Prima plată deblochează imediat toate cursurile pe capitole, lecțiile audio și evaluările adaptive. Restul taxei se achită în maximum 2–3 tranșe, înainte de a intra în sala de examen.",
-  ],
-  [
-    "Cât costă și există abonament?",
-    "Nu există abonament lunar sau costuri ascunse. Plătești o singură taxă pentru categoria aleasă, afișată clar la înscriere (în RON sau EUR), înainte de orice plată.",
-  ],
-  [
-    "Ce se întâmplă dacă nu trec din prima?",
-    "Primești pe loc scorul, analiza fiecărei întrebări și explicația juridică a răspunsului corect, iar motorul adaptiv îți pregătește un plan de recapitulare pe capitolele slabe. Condițiile pentru o nouă încercare sunt afișate transparent înainte de plată.",
+    "Pot plăti în tranșe și există abonament?",
+    "Nu există abonament lunar. Plătești o singură taxă pentru categoria aleasă, afișată clar înainte de plată. Prima tranșă deblochează imediat cursurile și testele, iar examenul final se deblochează după achitarea integrală.",
   ],
   [
     "De ce cereți act de identitate și selfie?",
-    "Pentru ca atestatul tău PermiStart să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
+    "Pentru ca atestatul tău să aibă credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
   ],
 ];
 
@@ -972,29 +994,32 @@ function CountUp({ to }: { to: number }) {
 
 export function StatsBand() {
   const facts = [
-    { n: 10, l: "categorii de permis acoperite" },
-    { n: 7, l: "pași, de la înscriere la atestat" },
-    { n: 3, l: "zile, cel mult, până primești atestatul" },
-    { n: 26, l: "întrebări la examenul pentru categoria B" },
+    { n: 100, suffix: "%", l: "Aliniat la Codul Rutier (OUG 195/2002 și HG 1391/2006)" },
+    { n: 10, suffix: "", l: "Categorii de permis acoperite complet (AM – D)" },
+    { n: 72, suffix: "h", l: "Termen maxim pentru trimiterea atestatului cu cod QR" },
+    { n: 30, suffix: " zile", l: "Retenție maximă KYC criptat, apoi ștergere automată GDPR" },
   ];
   return (
     <section className="relative isolate overflow-hidden text-chalk">
       <div className="absolute inset-0 -z-10">
         <Parallax src="/media/dn7-brezoi.webp" alt="" className="h-full" />
       </div>
-      <div className="absolute inset-0 -z-10 bg-asphalt/85" />
+      <div className="absolute inset-0 -z-10 bg-asphalt/88" />
       <div className="mx-auto max-w-6xl px-5 py-20">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">PermiStart, concret</h2>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
+            Garanții măsurabile, de la lege la protecția datelor
+          </h2>
         </Reveal>
         <dl className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((f, i) => (
             <Reveal key={f.l} delay={i * 0.08}>
               <div className="border-t border-chalk/25 pt-5">
-                <dt className="font-cond text-6xl font-bold text-signal sm:text-7xl">
+                <dt className="font-cond text-5xl font-bold tabular-nums text-signal sm:text-6xl">
                   <CountUp to={f.n} />
+                  {f.suffix}
                 </dt>
-                <dd className="mt-2 max-w-[22ch] text-chalk/80">{f.l}</dd>
+                <dd className="mt-2 max-w-[26ch] text-sm text-chalk/85 sm:text-base">{f.l}</dd>
               </div>
             </Reveal>
           ))}

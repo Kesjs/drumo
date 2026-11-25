@@ -678,17 +678,26 @@ export function Payment() {
 /* ---------- exam ---------- */
 
 export function Exam() {
-  const f = [
-    ["Cronometru pe fiecare întrebare", "Trece automat la următoarea, fără întoarcere."],
-    ["Audio automat", "Întrebările se citesc automat (Reascultă / Fără sunet)."],
-    ["Cameră activă", "Rămâne pornită pe toată durata testului."],
-    ["Ieșirea din pagină", "Se înregistrează cu oră exactă și apare în raport."],
-    ["Întrebări aleatorii", "Fiecare candidat primește alt set securizat."],
-    ["Rezultat imediat", "Scor, Admis / Respins, alerte și explicații."],
+  const rules = [
+    {
+      Icon: ClockIcon,
+      title: "Cronometru strict & citire audio automată",
+      desc: "Fiecare întrebare este citită automat în limba română (cu opțiuni Reascultă sau Fără sunet) și trece automat la expirarea timpului, fără întoarcere.",
+    },
+    {
+      Icon: VideoCameraIcon,
+      title: "Cameră activă & jurnal de integritate",
+      desc: "Camera rămâne pornită continuu pe durata probei, iar ieșirile din pagină sau pierderea focusului se înregistrează cu oră exactă în raport.",
+    },
+    {
+      Icon: DocumentCheckIcon,
+      title: "Set aleatoriu securizat & bilanț imediat",
+      desc: "Primești o extragere unică din banca de întrebări, scor instant (Admis / Respins), explicațiile juridice și statusul eliberării atestatului.",
+    },
   ];
   return (
     <section id="examen" className="bg-ink py-24 text-chalk">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
         <Reveal>
           <ExamMock />
         </Reveal>
@@ -697,24 +706,37 @@ export function Exam() {
             <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
               Un examen în condiții reale
             </h2>
-            <p className="mt-4 max-w-[56ch] text-lg text-chalk/75">
-              Testul se deblochează când taxa este plătită integral, identitatea este aprobată și evaluarea globală
-              arată că ești pregătit. Tu alegi momentul.
+            <p className="mt-4 max-w-[54ch] text-base text-chalk/80 sm:text-lg">
+              Sala de examen se deblochează atunci când taxa este achitată integral, identitatea KYC este aprobată și
+              evaluarea globală confirmă pregătirea. Tu alegi când susții proba.
             </p>
           </Reveal>
-          <dl className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-            {f.map(([t, d], i) => (
-              <Reveal key={t} delay={i * 0.05}>
-                <div className="flex gap-3">
-                  <CheckIcon className="mt-1 h-5 w-5 shrink-0 text-signal" aria-hidden="true" />
+
+          <ul className="mt-8 divide-y divide-chalk/15 border-y border-chalk/15">
+            {rules.map(({ Icon, title, desc }, i) => (
+              <Reveal key={title} delay={i * 0.06}>
+                <li className="flex items-start gap-4 py-5">
+                  <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded border border-chalk/20 bg-asphalt text-signal">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
                   <div>
-                    <dt className="font-semibold">{t}</dt>
-                    <dd className="mt-0.5 text-sm text-chalk/70">{d}</dd>
+                    <h3 className="font-cond text-xl font-bold text-chalk">{title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-chalk/75">{desc}</p>
                   </div>
-                </div>
+                </li>
               </Reveal>
             ))}
-          </dl>
+          </ul>
+
+          <Reveal delay={0.2}>
+            <Link
+              href="/examen"
+              className="mt-7 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-signal underline underline-offset-4 hover:text-white"
+            >
+              Vezi toate regulile sălii de examen
+              <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>

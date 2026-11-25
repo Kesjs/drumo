@@ -402,47 +402,83 @@ export function GlobalEvalMock() {
 
 export function ExamMock() {
   return (
-    <Frame title="permistart.ro/examen/sala">
-      <div className="text-sm text-asphalt">
-        <div className="flex items-center justify-between border-b border-line bg-chalk px-4 py-2.5 text-xs">
-          <span className="font-mono font-semibold text-asphalt">Întrebarea 7 / 26</span>
-          <span className="inline-flex items-center gap-1.5 rounded bg-ok/15 px-2 py-0.5 font-semibold text-ok">
-            <span className="h-2 w-2 rounded-full bg-ok" aria-hidden="true" />
-            Cameră activă
+    <div className="overflow-hidden rounded-lg border border-chalk/20 bg-[#10161f] text-chalk shadow-[0_24px_60px_rgba(0,0,0,0.42)]">
+      {/* Proctoring telemetry bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-chalk/15 bg-asphalt px-5 py-3 text-xs">
+        <div className="flex items-center gap-2.5">
+          <span className="inline-flex h-2.5 w-2.5 rounded-full bg-ok" aria-hidden="true" />
+          <span className="font-mono font-semibold text-chalk">Cameră activă</span>
+          <span className="text-chalk/40">·</span>
+          <span className="font-mono text-chalk/75">Întrebarea 07 / 26</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 rounded bg-chalk/10 px-2.5 py-1 font-mono text-xs text-chalk/90">
+            <SpeakerWaveIcon className="h-3.5 w-3.5 text-signal" aria-hidden="true" />
+            Audio activ
           </span>
-          <span className="font-mono text-xl font-bold tabular-nums text-asphalt">18s</span>
+          <span className="rounded bg-signal px-2.5 py-0.5 font-mono text-sm font-bold tabular-nums text-asphalt">
+            00:18
+          </span>
         </div>
-        <div className="h-1 w-full bg-line">
-          <div className="h-full w-[70%] bg-signal" />
-        </div>
-        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-[128px_1fr]">
-          <SignSlot
+      </div>
+
+      {/* Per-question strict progress bar */}
+      <div className="h-1 w-full bg-chalk/10">
+        <div className="h-full w-[70%] bg-signal" />
+      </div>
+
+      {/* Question workspace */}
+      <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-[155px_1fr]">
+        <div className="overflow-hidden rounded border border-chalk/20 bg-asphalt">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/media/stop-panoramio.webp"
             alt="Indicatorul Oprire (Stop) la marginea unui drum din România"
-            className="aspect-[16/10] sm:aspect-square"
+            loading="lazy"
+            className="aspect-[4/3] h-full w-full object-cover sm:aspect-square"
           />
+        </div>
+        <div className="space-y-3">
+          <p className="font-cond text-xl font-bold leading-snug text-chalk">
+            Cum procedezi la această intersecție?
+          </p>
           <div className="space-y-2 text-xs">
-            <p className="text-sm font-semibold text-asphalt">Cum procedezi la această intersecție?</p>
-            <div className="divide-y divide-line border-y border-line">
-              {["Oprești complet și acorzi prioritate", "Continui fără să oprești", "Claxonezi și treci"].map((a, idx) => (
+            {[
+              "Oprești complet și acorzi prioritate",
+              "Continui deplasarea fără să oprești",
+              "Claxonezi și pătrunzi în intersecție",
+            ].map((a, idx) => {
+              const selected = idx === 0;
+              return (
                 <div
                   key={a}
-                  className={`flex items-center gap-2 px-2.5 py-2 ${
-                    idx === 0 ? "bg-signal/15 font-semibold text-asphalt" : "text-mute"
+                  className={`flex items-center gap-3 rounded border px-3 py-2.5 ${
+                    selected
+                      ? "border-signal bg-signal/15 font-semibold text-chalk"
+                      : "border-chalk/15 bg-chalk/[0.03] text-chalk/75"
                   }`}
                 >
-                  <span className="font-mono text-xs font-bold text-sign">{String.fromCharCode(65 + idx)}.</span>
+                  <span
+                    className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm font-mono text-xs font-bold ${
+                      selected ? "bg-signal text-asphalt" : "bg-chalk/10 text-chalk/70"
+                    }`}
+                  >
+                    {String.fromCharCode(65 + idx)}
+                  </span>
                   <span>{a}</span>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
-        <p className="mx-4 mb-4 border-t border-line pt-2.5 text-xs text-mute">
-          Fără întoarcere la întrebarea anterioară · Ieșirea din pagină se înregistrează automat.
-        </p>
       </div>
-    </Frame>
+
+      {/* Anti-cheat footer strip */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-chalk/15 bg-asphalt/70 px-5 py-2.5 font-mono text-xs text-chalk/65">
+        <span>Fără întoarcere la întrebarea anterioară</span>
+        <span className="text-signal/90">Ieșirea din filă se jurnalizează</span>
+      </div>
+    </div>
   );
 }
 

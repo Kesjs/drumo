@@ -60,7 +60,7 @@ export default async function CategoryDetailPage({ params }: { params: Promise<{
                       <span className="font-mono text-xs text-mute">({formatMoney(cat.fee_eur, "EUR")})</span>
                     </div>
                   </div>
-                  <div className="text-right text-xs text-mute">
+                  <div className="text-xs text-mute sm:text-right">
                     <div className="font-semibold text-asphalt">
                       Prima tranșă de la {formatMoney(cat.min_first_installment_ron, "RON")}
                     </div>

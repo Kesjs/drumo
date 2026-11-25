@@ -519,17 +519,17 @@ export function CertMock() {
           </p>
 
           <dl className="mt-5 grid grid-cols-3 divide-x divide-asphalt/15 border-y border-asphalt/20 py-3 text-xs">
-            <div className="pr-3">
+            <div className="pr-2 sm:pr-3">
               <dt className="text-mute">Scor obținut</dt>
-              <dd className="mt-0.5 font-mono text-base font-bold tabular-nums text-ok">24 / 26</dd>
+              <dd className="mt-0.5 font-mono text-sm font-bold tabular-nums text-ok sm:text-base">24 / 26</dd>
             </div>
-            <div className="px-3">
+            <div className="px-2 sm:px-3">
               <dt className="text-mute">Rezultat</dt>
-              <dd className="mt-0.5 font-mono text-sm font-bold text-asphalt">ADMIS</dd>
+              <dd className="mt-0.5 font-mono text-xs font-bold text-asphalt sm:text-sm">ADMIS</dd>
             </div>
-            <div className="pl-3">
+            <div className="pl-2 sm:pl-3">
               <dt className="text-mute">Data emiterii</dt>
-              <dd className="mt-0.5 font-mono text-sm font-semibold tabular-nums text-asphalt">19.11.2026</dd>
+              <dd className="mt-0.5 font-mono text-xs font-semibold tabular-nums text-asphalt sm:text-sm">19.11.2026</dd>
             </div>
           </dl>
 

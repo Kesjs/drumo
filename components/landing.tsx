@@ -526,8 +526,8 @@ export function Journey() {
           )}
         </div>
 
-        {/* Horizontal 4-step tab bar */}
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" role="tablist" aria-label="Etapele platformei">
+        {/* Horizontal 4-step tab bar (2x2 on mobile, 4-col on desktop) */}
+        <div className="mt-8 grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4" role="tablist" aria-label="Etapele platformei">
           {steps.map((s, k) => {
             const active = i === k;
             return (
@@ -539,20 +539,20 @@ export function Journey() {
                 aria-selected={active}
                 aria-controls={`journey-panel-${k}`}
                 onClick={() => selectStep(k)}
-                className={`flex min-h-[56px] items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
+                className={`flex min-h-[52px] items-center gap-2.5 rounded-xl border px-3 py-2.5 text-left transition-colors sm:min-h-[56px] sm:gap-3 sm:px-4 sm:py-3 ${
                   active
                     ? "border-asphalt bg-asphalt text-white"
                     : "border-line bg-chalk text-asphalt hover:border-asphalt hover:bg-white"
                 }`}
               >
                 <span
-                  className={`grid h-7 w-7 shrink-0 place-items-center rounded-md font-cond text-sm font-bold ${
+                  className={`grid h-6 w-6 shrink-0 place-items-center rounded-md font-cond text-xs font-bold sm:h-7 sm:w-7 sm:text-sm ${
                     active ? "bg-signal text-asphalt" : "border border-line bg-white text-asphalt"
                   }`}
                 >
                   {k + 1}
                 </span>
-                <span className="font-cond text-xl font-bold leading-tight">{s.short}</span>
+                <span className="font-cond text-base font-bold leading-tight sm:text-xl">{s.short}</span>
               </button>
             );
           })}
@@ -1079,7 +1079,7 @@ export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
 
   return (
-    <section id="marturii" className="border-t border-line bg-white py-20 text-asphalt">
+    <section id="marturii" className="scroll-mt-20 border-t border-line bg-white py-20 text-asphalt">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">

@@ -360,7 +360,7 @@ export function PublicFooter() {
         </motion.div>
       </div>
 
-      <div className="mx-auto max-w-6xl border-t border-chalk/15 px-5 py-6 text-xs text-chalk/60">
+      <div className="mx-auto max-w-6xl border-t border-chalk/15 px-5 py-6 pb-20 text-xs text-chalk/60 sm:pb-6">
         Atestatul de reușită PermiStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu
         înlocuiește examenul oficial organizat de autoritățile competente.
       </div>

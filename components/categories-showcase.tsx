@@ -107,22 +107,22 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 rounded-xl border border-white/20 bg-asphalt/90 p-4">
-              <div className="border-r border-white/15 pr-3">
+            <div className="grid grid-cols-1 divide-y divide-white/15 rounded-xl border border-white/20 bg-asphalt/90 p-4 sm:grid-cols-3 sm:gap-3 sm:divide-x sm:divide-y-0">
+              <div className="pb-3 sm:pb-0 sm:pr-3">
                 <div className="font-mono text-xs text-white/70">Două roți</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-white">
                   {currency === "RON" ? "de la 750 lei" : "de la 150 €"}
                 </div>
                 <div className="mt-0.5 text-xs text-white/75">AM · A1 · A2 · A</div>
               </div>
-              <div className="border-r border-white/15 pr-3">
+              <div className="py-3 sm:px-3 sm:py-0">
                 <div className="font-mono text-xs text-white/70">Autoturisme</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-signal">
                   {currency === "RON" ? "de la 900 lei" : "de la 180 €"}
                 </div>
                 <div className="mt-0.5 text-xs text-white/75">B1 · B · BE</div>
               </div>
-              <div>
+              <div className="pt-3 sm:pl-3 sm:pt-0">
                 <div className="font-mono text-xs text-white/70">Profesioniști</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-white">
                   {currency === "RON" ? "de la 1.350 lei" : "de la 270 €"}
@@ -230,7 +230,7 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
                           <span className="font-mono text-xs text-mute">({catBPrices.secondaryFormatted})</span>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="sm:text-right">
                         <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-ok">
                           <CreditCardIcon className="h-4 w-4" aria-hidden="true" />
                           <span>Sau de la {catBPrices.firstFormatted} / prima tranșă</span>

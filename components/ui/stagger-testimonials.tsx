@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/lib/testimonials";
@@ -11,17 +11,20 @@ interface TestimonialCardProps {
   position: number;
   testimonial: Testimonial;
   onSelect: () => void;
-  cardSize: number;
+  cardWidth: number;
+  cardHeight: number;
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({
   position,
   testimonial,
   onSelect,
-  cardSize,
+  cardWidth,
+  cardHeight,
 }) => {
   const isCenter = position === 0;
   const hiddenOutOfDeck = Math.abs(position) > 3;
+  const compactScore = testimonial.score.replace(/\s*\/\s*/, "/");
 
   return (
     <button
@@ -31,21 +34,21 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       aria-pressed={isCenter}
       tabIndex={hiddenOutOfDeck ? -1 : 0}
       className={cn(
-        "absolute left-1/2 top-1/2 flex flex-col justify-between border-2 p-7 text-left transition-all duration-500 ease-in-out motion-reduce:transition-none",
+        "absolute left-1/2 top-1/2 flex flex-col justify-between border-2 p-5 text-left transition-all duration-500 ease-in-out motion-reduce:transition-none sm:p-7",
         isCenter
           ? "z-10 border-asphalt bg-asphalt text-white"
           : "z-0 border-line bg-chalk text-asphalt hover:border-asphalt/50",
         hiddenOutOfDeck && "pointer-events-none opacity-0",
       )}
       style={{
-        width: cardSize,
-        height: cardSize,
+        width: cardWidth,
+        height: cardHeight,
         clipPath:
           "polygon(44px 0%, calc(100% - 44px) 0%, 100% 44px, 100% 100%, calc(100% - 44px) 100%, 44px 100%, 0 100%, 0 0)",
         transform: `
           translate(-50%, -50%)
-          translateX(${(cardSize / 1.48) * position}px)
-          translateY(${isCenter ? -48 : position % 2 ? 14 : -14}px)
+          translateX(${(cardWidth / 1.48) * position}px)
+          translateY(${isCenter ? -44 : position % 2 ? 14 : -14}px)
           rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)
         `,
         boxShadow: isCenter ? "0 14px 36px -12px rgba(24, 32, 43, 0.35)" : "0 2px 10px -4px rgba(24, 32, 43, 0.08)",
@@ -63,28 +66,28 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       />
 
       <div>
-        <div className="mb-4 flex items-center justify-between gap-3 pr-6">
+        <div className="mb-3.5 flex items-center justify-between gap-2.5 pr-6 sm:mb-4">
           <span
             className={cn(
-              "grid h-11 w-11 shrink-0 place-items-center rounded-md font-cond text-lg font-bold",
-              isCenter ? "bg-signal text-asphalt" : "bg-white text-asphalt border border-line",
+              "grid h-10 w-10 shrink-0 place-items-center rounded-md font-cond text-base font-bold sm:h-11 sm:w-11 sm:text-lg",
+              isCenter ? "bg-signal text-asphalt" : "border border-line bg-white text-asphalt",
             )}
           >
             {testimonial.initials}
           </span>
           <span
             className={cn(
-              "rounded px-2.5 py-1 font-mono text-xs font-semibold",
-              isCenter ? "bg-white/10 text-signal" : "bg-white text-asphalt border border-line",
+              "whitespace-nowrap rounded px-2.5 py-1 font-mono text-xs font-semibold",
+              isCenter ? "bg-white/10 text-signal" : "border border-line bg-white text-asphalt",
             )}
           >
-            {testimonial.category} · {testimonial.score}
+            {testimonial.category} · {compactScore}
           </span>
         </div>
 
         <blockquote
           className={cn(
-            "text-base font-medium leading-snug sm:text-lg",
+            "text-sm font-medium leading-relaxed sm:text-lg sm:leading-snug",
             isCenter ? "text-white" : "text-asphalt",
           )}
         >
@@ -94,7 +97,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
       <div
         className={cn(
-          "border-t pt-3 text-sm",
+          "border-t pt-3 text-xs sm:text-sm",
           isCenter ? "border-white/15 text-white/80" : "border-line text-mute",
         )}
       >
@@ -109,31 +112,62 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 };
 
 export function StaggerTestimonials({ items }: { items: Testimonial[] }) {
-  const [cardSize, setCardSize] = useState(356);
+  const [isDesktop, setIsDesktop] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
-    const updateSize = () => {
-      const { matches } = window.matchMedia("(min-width: 640px)");
-      setCardSize(matches ? 356 : 292);
-    };
-
+    const mq = window.matchMedia("(min-width: 640px)");
+    const updateSize = () => setIsDesktop(mq.matches);
     updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
+    mq.addEventListener("change", updateSize);
+    return () => mq.removeEventListener("change", updateSize);
   }, []);
 
   if (items.length === 0) return null;
 
   const total = items.length;
   const half = Math.floor(total / 2);
+  const cardWidth = isDesktop ? 356 : 296;
+  const cardHeight = isDesktop ? 356 : 318;
+  const containerHeight = isDesktop ? 540 : 500;
 
   const stepBy = (delta: number) => {
     setActiveIndex((prev) => (prev + delta + total) % total);
   };
 
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const endX = e.changedTouches[0]?.clientX;
+    if (typeof endX !== "number") return;
+    const dx = endX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return;
+    stepBy(dx < 0 ? 1 : -1);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      stepBy(-1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      stepBy(1);
+    }
+  }
+
   return (
-    <div className="relative w-full overflow-hidden bg-white" style={{ height: 540 }}>
+    <div
+      className="relative w-full touch-pan-y overflow-hidden bg-white"
+      style={{ height: containerHeight }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onKeyDown={handleKeyDown}
+    >
       {items.map((item, idx) => {
         // Compute circular shortest signed offset from activeIndex so cards stay mounted cleanly
         let position = idx - activeIndex;
@@ -145,7 +179,8 @@ export function StaggerTestimonials({ items }: { items: Testimonial[] }) {
             key={item.id}
             testimonial={item}
             position={position}
-            cardSize={cardSize}
+            cardWidth={cardWidth}
+            cardHeight={cardHeight}
             onSelect={() => setActiveIndex(idx)}
           />
         );

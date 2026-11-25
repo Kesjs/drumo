@@ -389,8 +389,19 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
           ))}
         </div>
 
+        {/* Transitional lead note before inclusion block */}
+        <div className="mt-16 border-t border-line pt-10">
+          <p className="max-w-[65ch] text-base font-medium text-asphalt sm:text-lg">
+            Indiferent de categoria aleasă, achiți o singură taxă — fără abonamente lunare sau pachete suplimentare.
+          </p>
+          <p className="mt-2 max-w-[65ch] text-sm text-mute sm:text-base">
+            Poți verifica suma exactă în RON sau EUR la înscriere, înainte de orice plată, și poți porni pregătirea cu
+            prima tranșă în câteva minute.
+          </p>
+        </div>
+
         {/* Bottom value & payment inclusion band */}
-        <section className="mt-20 rounded-xl border border-line bg-white p-8 sm:p-10">
+        <section className="mt-8 rounded-xl border border-line bg-white p-8 sm:p-10">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div>
               <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt">

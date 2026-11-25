@@ -28,9 +28,9 @@ const PUBLIC_NAV: NavItem[] = [
       { href: "/cum-functioneaza", label: "Cum funcționează", desc: "Parcursul complet și plata în tranșe" },
       { href: "/cursuri", label: "Cursuri pe capitole", desc: "Lecții, audio și indicatoare reale" },
       { href: "/examen", label: "Examen online", desc: "Reguli, cronometru și cameră activă" },
+      { href: "/verificare", label: "Verificare atestat", desc: "Confirmare cod QR și serie unică" },
     ],
   },
-  { kind: "link", href: "/verificare", label: "Verificare atestat" },
   {
     kind: "dropdown",
     id: "informatii",

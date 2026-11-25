@@ -5,8 +5,8 @@ import { ToastProvider } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: {
-    default: "PermisStart — Examen auto online: pregătire și test teoretic",
-    template: "%s · PermisStart",
+    default: "PermiStart — Examen auto online: pregătire și test teoretic",
+    template: "%s · PermiStart",
   },
   description:
     "Înscrie-te, plătești taxa categoriei tale, înveți pe capitole cu imagini reale și audio, te evaluezi adaptiv și dai testul teoretic online.",

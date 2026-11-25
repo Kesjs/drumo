@@ -57,7 +57,7 @@ export async function generateCertificatePdf(input: CertificatePdfInput): Promis
   const displayTitle = safeTitle.charAt(0).toUpperCase() + safeTitle.slice(1);
 
   page.drawText(displayTitle, { x: 56, y: height - 154, size: 28, font: fontBold, color: asphalt });
-  page.drawText("Confirmare oficială de parcurgere a pregătirii și a testului teoretic pe platforma PermisStart", {
+  page.drawText("Confirmare oficială de parcurgere a pregătirii și a testului teoretic pe platforma PermiStart", {
     x: 56,
     y: height - 182,
     size: 11.5,
@@ -104,7 +104,7 @@ export async function generateCertificatePdf(input: CertificatePdfInput): Promis
     page.drawRectangle({ x: 56, y: 52, width: width - 112, height: 62, color: chalk, borderColor: signal, borderWidth: 1.5 });
     page.drawText("MENȚIUNE LEGALĂ OBLIGATORIE", { x: 70, y: 95, size: 8.5, font: fontBold, color: asphalt });
     page.drawText(
-      "Acest atestat de reușită PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile competente.",
+      "Acest atestat de reușită PermiStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile competente.",
       { x: 70, y: 78, size: 9.5, font: fontReg, color: asphalt, maxWidth: width - 140, lineHeight: 13 },
     );
   }

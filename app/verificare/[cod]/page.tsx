@@ -65,7 +65,7 @@ export default async function VerifyCodePage({ params }: { params: Promise<{ cod
 
             {!cert.accredited ? (
               <p className="mt-6 rounded border border-asphalt bg-chalk p-4 text-xs text-asphalt">
-                Acest atestat confirmă rezultatul obținut pe platforma PermisStart. Nu este permis de conducere și nu
+                Acest atestat confirmă rezultatul obținut pe platforma PermiStart. Nu este permis de conducere și nu
                 înlocuiește examenul oficial organizat de autorități.
               </p>
             ) : null}

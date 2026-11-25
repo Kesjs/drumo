@@ -1,5 +1,5 @@
 {
-  "brand": "PermisStart",
+  "brand": "PermiStart",
   "locale": "ro-RO",
   "nav": {
     "categories": "Categorii",
@@ -13,8 +13,8 @@
     "dashboard": "Tablou de bord"
   },
   "legal": {
-    "documentName": "atestat de reușită PermisStart",
-    "disclaimer": "Atestatul de reușită PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile din România."
+    "documentName": "atestat de reușită PermiStart",
+    "disclaimer": "Atestatul de reușită PermiStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial organizat de autoritățile din România."
   },
   "payment": {
     "noSubscription": "Fără abonament și fără pachete. Plătești o singură taxă pentru categoria aleasă.",

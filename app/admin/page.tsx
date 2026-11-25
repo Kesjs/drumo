@@ -16,7 +16,7 @@ export default async function AdminHomePage() {
   return (
     <AdminShell userName={`${user.first_name} ${user.last_name}`}>
       <div className="space-y-6">
-        <h1 className="font-cond text-3xl font-bold md:text-4xl">Panou de administrare PermisStart</h1>
+        <h1 className="font-cond text-3xl font-bold md:text-4xl">Panou de administrare PermiStart</h1>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Panel>

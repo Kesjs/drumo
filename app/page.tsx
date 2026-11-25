@@ -3,19 +3,12 @@ import {
   Hero,
   SignsMarquee,
   Trust,
-  About,
-  Benefits,
-  Categories,
-  HowItWorks,
   Journey,
-  StatsBand,
+  Categories,
   Payment,
   Exam,
-  Signs,
   Certificate,
-  Testimonials,
   Faq,
-  ContactSection,
   FinalCta,
 } from "@/components/landing";
 import { ScrollProgress } from "@/components/motion-kit";
@@ -33,19 +26,12 @@ export default async function HomePage() {
         <Hero />
         <SignsMarquee />
         <Trust />
-        <About />
-        <Benefits />
-        <Categories />
-        <HowItWorks />
         <Journey />
-        <StatsBand />
+        <Categories />
         <Payment />
         <Exam />
-        <Signs />
         <Certificate />
-        <Testimonials />
         <Faq />
-        <ContactSection />
         <FinalCta />
       </main>
       <PublicFooter />

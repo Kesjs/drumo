@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "PermisStart — Pregătire și test teoretic auto",
-    short_name: "PermisStart",
+    name: "PermiStart — Pregătire și test teoretic auto",
+    short_name: "PermiStart",
     description:
       "Platformă de pregătire și testare teoretică auto pentru România. Fără abonament, taxă unică pe categorie.",
     start_url: "/tablou-de-bord",

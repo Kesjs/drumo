@@ -324,7 +324,7 @@ export function SignupForm({
               <Link href="/rambursari" target="_blank" className="font-semibold text-sign underline">
                 Politica de rambursare
               </Link>
-              . Înțeleg că documentul emis este un <strong>atestat de reușită PermisStart</strong>, nu permis de
+              . Înțeleg că documentul emis este un <strong>atestat de reușită PermiStart</strong>, nu permis de
               conducere oficial.
             </span>
           </label>

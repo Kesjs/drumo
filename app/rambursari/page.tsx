@@ -13,7 +13,7 @@ export default async function RefundsPage() {
       <main className="mx-auto max-w-3xl px-5 py-16 space-y-6 text-sm leading-relaxed text-mute">
         <h1 className="font-cond text-4xl font-bold text-asphalt">Politica de rambursare</h1>
         <p className="rounded-lg border-2 border-asphalt bg-surface p-5 text-asphalt">
-          Această politică este afișată integral înainte de orice plată pe PermisStart.
+          Această politică este afișată integral înainte de orice plată pe PermiStart.
         </p>
 
         <section className="space-y-2">

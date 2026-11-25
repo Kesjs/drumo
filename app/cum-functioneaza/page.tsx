@@ -39,7 +39,7 @@ const STEPS = [
   {
     n: "7",
     t: "Rezultat imediat și atestat cu QR",
-    d: "Primești imediat scorul și analiza întrebare cu întrebare. Dacă ești admis, atestatul de reușită PermisStart (PDF cu cod QR verificabil) este trimis automat pe e-mail în maximum 3 zile.",
+    d: "Primești imediat scorul și analiza întrebare cu întrebare. Dacă ești admis, atestatul de reușită PermiStart (PDF cu cod QR verificabil) este trimis automat pe e-mail în maximum 3 zile.",
   },
 ];
 
@@ -50,7 +50,7 @@ export default async function HowItWorksPage() {
       <PublicHeader loggedIn={Boolean(user)} />
       <main className="mx-auto max-w-4xl px-5 py-16">
         <h1 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-          Cum funcționează PermisStart
+          Cum funcționează PermiStart
         </h1>
         <p className="mt-4 max-w-[65ch] text-mute">
           De la înscriere până la atestatul verificabil, fiecare etapă este clară și urmărită pe server.

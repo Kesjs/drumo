@@ -12,7 +12,7 @@ export default async function VerifyIndexPage() {
       <PublicHeader loggedIn={Boolean(user)} />
       <main className="mx-auto max-w-2xl px-5 py-16">
         <h1 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">
-          Verificare atestat de reușită PermisStart
+          Verificare atestat de reușită PermiStart
         </h1>
         <p className="mt-4 text-mute">
           Introdu codul unic de pe document (format <span className="font-mono text-asphalt">DR-XXXX-XXXX</span>) sau

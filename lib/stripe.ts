@@ -32,7 +32,7 @@ export async function createStripeCheckoutSession(params: {
           currency: params.currency.toLowerCase(),
           unit_amount: params.amountMinor,
           product_data: {
-            name: `PermisStart — Taxă categoria ${params.categoryCode}`,
+            name: `PermiStart — Taxă categoria ${params.categoryCode}`,
             description:
               params.mode === "full"
                 ? "Plată integrală (cursuri + examen teoretic)"

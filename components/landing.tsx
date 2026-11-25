@@ -111,7 +111,7 @@ export function Hero() {
               Începe înscrierea
             </Link>
           </Magnetic>
-          <a href="#cum-functioneaza" className={btnGhostDark}>
+          <a href="#parcurs" className={btnGhostDark}>
             Vezi cum funcționează
           </a>
         </motion.div>
@@ -199,7 +199,7 @@ export function About() {
     ],
     [
       "Onestitate juridică",
-      "Atestatul PermisStart confirmă pregătirea pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial.",
+      "Atestatul PermiStart confirmă pregătirea pe platformă. Nu este permis de conducere și nu înlocuiește examenul oficial.",
     ],
     ["Date protejate", "Actele de identitate sunt stocate criptat și șterse automat după 30 de zile."],
   ];
@@ -223,7 +223,7 @@ export function About() {
               Făcut pentru cei care vor să înțeleagă regulile, nu doar să le memoreze.
             </h2>
             <p className="mt-5 max-w-[60ch] text-lg text-mute">
-              PermisStart este o platformă de pregătire teoretică și evaluare supravegheată pentru legislația rutieră din
+              PermiStart este o platformă de pregătire teoretică și evaluare supravegheată pentru legislația rutieră din
               România. Lecțiile pornesc de la Codul rutier (OUG 195/2002 și HG 1391/2006) și de la situații reale de pe
               drum, nu din desene generice.
             </p>
@@ -243,7 +243,7 @@ export function About() {
               href="/despre-noi"
               className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
             >
-              Despre PermisStart, pe larg
+              Despre PermiStart, pe larg
               <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </Reveal>
@@ -266,7 +266,7 @@ export function Benefits() {
     <section id="avantaje" className="bg-white py-24">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">De ce PermisStart</h2>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">De ce PermiStart</h2>
           <p className="mt-3 max-w-[58ch] text-lg text-mute">
             Tot ce ai nevoie ca să ajungi pregătit la examen, fără drumuri, fără cozi și fără abonament.
           </p>
@@ -795,8 +795,8 @@ export function Certificate() {
             ))}
           </ul>
           <Reveal delay={0.2}>
-            <p className="mt-6 rounded border-l-4 border-signal bg-chalk p-4 text-sm text-mute">
-              Atestatul PermisStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește
+            <p className="mt-6 rounded border border-asphalt/20 bg-chalk p-4 text-sm text-asphalt">
+              Atestatul PermiStart confirmă rezultatul obținut pe platformă. Nu este permis de conducere și nu înlocuiește
               examenul oficial organizat de autorități.
             </p>
           </Reveal>
@@ -813,12 +813,12 @@ export function Certificate() {
 
 const faq = [
   [
-    "De ce să mă pregătesc și să dau examenul pe PermisStart?",
-    "PermisStart îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
+    "De ce să mă pregătesc și să dau examenul pe PermiStart?",
+    "PermiStart îți oferă o pregătire completă, structurată pe capitole, cu fotografii reale ale indicatoarelor din România, lecții audio și un motor adaptiv care insistă exact pe temele la care mai greșești. Când ajungi la evaluarea oficială a autorităților, cunoști deja fiecare regulă și ai trecut printr-un examen supravegheat în condiții reale — fără surprize și fără emoții inutile.",
   ],
   [
-    "La ce îmi folosește atestatul de reușită PermisStart?",
-    "Atestatul de reușită PermisStart (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe PermisStart și nu înlocuiește permisul de conducere eliberat de autorități.",
+    "La ce îmi folosește atestatul de reușită PermiStart?",
+    "Atestatul de reușită PermiStart (PDF cu serie unică și cod QR verificabil public) certifică oficial pe platformă faptul că ai parcurs programa categoriei tale și ai promovat testul teoretic supravegheat. Îl primești pe e-mail în maximum 3 zile și îl poți prezenta instructorului, școlii de șoferi sau angajatorului ca dovadă clară a nivelului tău. Documentul confirmă pregătirea pe PermiStart și nu înlocuiește permisul de conducere eliberat de autorități.",
   ],
   [
     "Pot plăti în tranșe?",
@@ -834,7 +834,7 @@ const faq = [
   ],
   [
     "De ce cereți act de identitate și selfie?",
-    "Pentru ca atestatul tău PermisStart să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
+    "Pentru ca atestatul tău PermiStart să aibă valoare reală și credibilitate la verificare, confirmăm că persoana înscrisă este cea care susține examenul. Documentele sunt stocate criptat și șterse automat după 30 de zile (conform GDPR).",
   ],
 ];
 
@@ -845,10 +845,14 @@ export function Faq() {
         <Reveal>
           <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Întrebări frecvente</h2>
           <p className="mt-3 text-mute">
-            Nu găsești răspunsul?{" "}
-            <a href="#contact" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
-              Scrie-ne direct
-            </a>
+            Nu găsești răspunsul? Consultă{" "}
+            <Link href="/intrebari-frecvente" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
+              toate întrebările
+            </Link>{" "}
+            sau{" "}
+            <Link href="/contact" className="font-semibold text-sign underline underline-offset-4 hover:text-asphalt">
+              scrie-ne direct
+            </Link>
             .
           </p>
         </Reveal>
@@ -889,7 +893,7 @@ export function ContactSection() {
             Ai o întrebare? Scrie-ne direct.
           </h2>
           <p className="mt-3 max-w-[56ch] text-lg text-mute">
-            Echipa PermisStart răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
+            Echipa PermiStart răspunde în limba română pentru întrebări legate de categorii, plata în tranșe, verificarea
             identității (KYC) sau atestatul QR.
           </p>
           <dl className="mt-8 space-y-5">
@@ -981,7 +985,7 @@ export function StatsBand() {
       <div className="absolute inset-0 -z-10 bg-asphalt/85" />
       <div className="mx-auto max-w-6xl px-5 py-20">
         <Reveal>
-          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">PermisStart, concret</h2>
+          <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">PermiStart, concret</h2>
         </Reveal>
         <dl className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((f, i) => (

@@ -13,9 +13,9 @@ export default async function AboutPage() {
       <PublicHeader loggedIn={Boolean(user)} />
       <main className="mx-auto max-w-3xl space-y-8 px-5 py-16">
         <div>
-          <h1 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Despre PermisStart</h1>
+          <h1 className="font-cond text-4xl font-bold tracking-[-0.015em] md:text-5xl">Despre PermiStart</h1>
           <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-mute">
-            PermisStart este o platformă educațională de pregătire teoretică și evaluare supravegheată pentru legislația rutieră
+            PermiStart este o platformă educațională de pregătire teoretică și evaluare supravegheată pentru legislația rutieră
             din România și Uniunea Europeană, construită cu reguli transparente de plată, conținut bazat pe Codul rutier
             (OUG 195/2002 și HG 1391/2006) și fotografii reale de pe drumurile din România.
           </p>
@@ -33,7 +33,7 @@ export default async function AboutPage() {
               capitolele la care mai greșești, iar accesul la examen se deblochează după evaluarea globală.
             </li>
             <li className="py-3">
-              <strong className="text-asphalt">Onestitate juridică:</strong> atestatul de reușită PermisStart confirmă
+              <strong className="text-asphalt">Onestitate juridică:</strong> atestatul de reușită PermiStart confirmă
               pregătirea pe platformă și nu este prezentat drept permis oficial de conducere.
             </li>
             <li className="py-3">

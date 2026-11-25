@@ -18,8 +18,6 @@ import {
   PauseIcon,
   CheckIcon,
   CreditCardIcon,
-  DevicePhoneMobileIcon,
-  BuildingLibraryIcon,
   EnvelopeIcon,
   PhoneIcon,
   MapPinIcon,
@@ -32,6 +30,7 @@ import {
   DocumentCheckIcon,
 } from "@heroicons/react/24/outline";
 import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
+import { PaymentMethodBadges } from "./payment-badges";
 import { ContactForm } from "./contact-form";
 import { LEGAL_ENTITY } from "@/lib/config";
 import {
@@ -630,13 +629,6 @@ export function Payment() {
       ],
     },
   ];
-  const methods = [
-    [CreditCardIcon, "Card bancar (Visa / Mastercard)"],
-    [DevicePhoneMobileIcon, "Apple Pay & Google Pay"],
-    [BuildingLibraryIcon, "Transfer instant / SEPA (RON & EUR)"],
-    [EnvelopeIcon, "Chitanță automată pe e-mail"],
-  ] as const;
-
   return (
     <section id="plata" className="bg-chalk py-24">
       <div className="mx-auto max-w-6xl px-5">
@@ -683,14 +675,7 @@ export function Payment() {
         </div>
 
         <Reveal delay={0.14}>
-          <ul className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded border border-line bg-white px-5 py-4 text-xs font-medium text-asphalt sm:text-sm">
-            {methods.map(([Icon, label]) => (
-              <li key={label} className="flex items-center gap-2">
-                <Icon className="h-5 w-5 shrink-0 text-sign" aria-hidden="true" />
-                <span>{label}</span>
-              </li>
-            ))}
-          </ul>
+          <PaymentMethodBadges />
         </Reveal>
       </div>
     </section>

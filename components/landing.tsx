@@ -31,7 +31,7 @@ import {
   VideoCameraIcon,
   DocumentCheckIcon,
 } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
 import { ContactForm } from "./contact-form";
 import { LEGAL_ENTITY } from "@/lib/config";
 import {
@@ -1073,62 +1073,37 @@ export function StatsBand() {
   );
 }
 
-/* ---------- testimonials (3-column editorial grid) ---------- */
+/* ---------- testimonials (staggered deck on white background) ---------- */
 
 export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
 
   return (
-    <section id="marturii" className="bg-asphalt py-24 text-chalk">
+    <section id="marturii" className="border-t border-line bg-white py-20 text-asphalt">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-chalk/15 pb-6">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
             <div>
-              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] text-white md:text-5xl">
+              <h2 className="font-cond text-4xl font-bold tracking-[-0.015em] text-asphalt md:text-5xl">
                 Experiențe ale candidaților
               </h2>
-              <p className="mt-2 max-w-[58ch] text-base text-chalk/75">
+              <p className="mt-2 max-w-[58ch] text-base text-mute">
                 Pregătire în ritm propriu, atât din țară, cât și din diaspora, cu progres urmărit pe capitole.
               </p>
             </div>
             <Link
               href="/verificare"
-              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-signal underline underline-offset-4 hover:text-white"
+              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-sign underline underline-offset-4 hover:text-asphalt"
             >
               <span>Verifică un atestat QR</span>
               <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </Reveal>
+      </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((t, idx) => (
-            <Reveal key={t.name} delay={idx * 0.06}>
-              <figure className="flex h-full flex-col justify-between rounded-xl border border-chalk/20 bg-[#10161f] p-6">
-                <div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="inline-flex items-center rounded-md bg-asphalt px-2.5 py-1 font-mono text-xs font-semibold text-signal border border-chalk/15">
-                      {t.category} · {t.score}
-                    </span>
-                    <div className="flex gap-0.5" aria-label={`${t.rating} din 5 stele`}>
-                      {Array.from({ length: t.rating }).map((_, k) => (
-                        <StarIcon key={k} className="h-4 w-4 text-signal" aria-hidden="true" />
-                      ))}
-                    </div>
-                  </div>
-                  <blockquote className="mt-5 text-base leading-relaxed text-chalk/90">
-                    „{t.quote}”
-                  </blockquote>
-                </div>
-
-                <figcaption className="mt-6 flex items-center justify-between border-t border-chalk/15 pt-4 text-sm">
-                  <span className="font-semibold text-white">{t.name}</span>
-                  <span className="font-mono text-xs text-chalk/65">{t.location}</span>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+      <div className="mt-8">
+        <StaggerTestimonials items={TESTIMONIALS} />
       </div>
     </section>
   );

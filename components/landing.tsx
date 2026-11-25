@@ -90,22 +90,22 @@ export function Hero() {
 
       <motion.div
         style={reduce ? undefined : { y: textY }}
-        className="mx-auto w-full max-w-6xl px-5 pb-20 pt-32 sm:pb-28"
+        className="mx-auto w-full max-w-6xl px-5 pb-16 pt-28 sm:pb-24"
       >
-        <motion.p
+        <motion.div
           {...a(0)}
-          className="mb-5 inline-flex items-center gap-2 rounded-sm bg-white/95 px-3 py-1.5 text-sm font-semibold text-asphalt shadow-card"
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-asphalt/75 px-3.5 py-1.5 text-xs font-medium tracking-wide text-chalk backdrop-blur-sm"
         >
-          <span className="h-2 w-2 rounded-sm bg-signal" aria-hidden="true" />
-          Examen auto online, în limba română
-        </motion.p>
-        <h1 className="max-w-[14ch] font-cond text-5xl font-bold leading-[1.04] tracking-[-0.02em] text-white sm:text-6xl lg:text-7xl">
+          <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
+          <span>Examen auto online · 100% în limba română</span>
+        </motion.div>
+        <h1 className="max-w-[20ch] font-cond text-4xl font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
           <SplitWords text="Înveți. Dai testul. Primești atestatul." />
         </h1>
-        <motion.p {...a(0.18)} className="mt-5 max-w-[44ch] text-lg text-white/90 sm:text-xl">
+        <motion.p {...a(0.18)} className="mt-4 max-w-[46ch] text-base text-white/90 sm:text-lg">
           Cursuri pe capitole, evaluare adaptivă și test supravegheat, de acasă. O singură taxă, fără abonament.
         </motion.p>
-        <motion.div {...a(0.3)} className="mt-8 flex flex-wrap gap-3">
+        <motion.div {...a(0.3)} className="mt-7 flex flex-wrap gap-3">
           <Magnetic>
             <Link href={CTA_HREF} className={btnPrimary}>
               Începe înscrierea

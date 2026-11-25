@@ -61,11 +61,11 @@ export function PublicHeader({
           solid ? "h-16" : "h-20"
         }`}
       >
-        <Link href="/" aria-label="PermisStart, prima pagină" className={`transition-colors ${tone}`}>
+        <Link href="/" aria-label="PermiStart, prima pagină" className={`shrink-0 transition-colors ${tone}`}>
           <Logo className="h-10 sm:h-11" />
         </Link>
 
-        <nav aria-label="Navigare principală" className="hidden items-center gap-5 text-sm xl:flex">
+        <nav aria-label="Navigare principală" className="hidden items-center gap-4 whitespace-nowrap text-sm lg:flex">
           {PUBLIC_NAV.map((item) => (
             <Link
               key={item.href}
@@ -77,7 +77,7 @@ export function PublicHeader({
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
         <div className="hidden items-center gap-3 md:flex">
           {loggedIn ? (
             <Link href="/tablou-de-bord" className={ctaBtn}>
@@ -103,9 +103,7 @@ export function PublicHeader({
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Închide meniul" : "Deschide meniul"}
-          className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded border xl:hidden ${
-            "border-line bg-surface text-asphalt"
-          }`}
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded border border-line bg-surface text-asphalt lg:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -117,7 +115,7 @@ export function PublicHeader({
           initial={reduce ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="border-t border-line bg-surface px-5 py-4 xl:hidden"
+          className="border-t border-line bg-surface px-5 py-4 lg:hidden"
         >
           <nav aria-label="Meniu mobil" className="flex flex-col gap-1">
             {PUBLIC_NAV.map((item) => (

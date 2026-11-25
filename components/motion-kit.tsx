@@ -38,10 +38,10 @@ export function Pic({
   className?: string;
   eager?: boolean;
 }) {
-  const avif = src.replace(/\.webp$/, ".avif");
+  const avif = src.endsWith(".webp") ? src.replace(/\.webp$/, ".avif") : null;
   return (
     <picture className="block h-full w-full">
-      <source srcSet={avif} type="image/avif" />
+      {avif ? <source srcSet={avif} type="image/avif" /> : null}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}

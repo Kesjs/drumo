@@ -21,7 +21,7 @@ export function VerifyLookup() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-lg border-2 border-asphalt bg-surface p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-line bg-white p-6 sm:p-8">
       <div>
         <FieldLabel htmlFor="cert-code">Cod atestat</FieldLabel>
         <FieldInput

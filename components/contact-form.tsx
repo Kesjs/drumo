@@ -76,7 +76,7 @@ export function ContactForm() {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="space-y-4 rounded-lg border-2 border-asphalt bg-surface p-6">
+    <form noValidate onSubmit={onSubmit} className="space-y-4 rounded-xl border border-line bg-white p-6 sm:p-8">
       {status ? (
         <NoticeBox tone={status.type === "ok" ? "success" : "error"}>{status.text}</NoticeBox>
       ) : null}

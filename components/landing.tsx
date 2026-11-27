@@ -45,7 +45,7 @@ import {
 } from "./mockups";
 
 import { Reveal, Pic, Parallax, DashLine, SplitWords, Magnetic, Tilt } from "./motion-kit";
-import { EASE_OUT, CTA_HREF, btn, btnPrimary, btnGhostDark, btnGhostLight, card } from "@/lib/ui";
+import { EASE_OUT, CTA_HREF, btn, btnPrimary, btnGhostLight, card } from "@/lib/ui";
 import { TESTIMONIALS } from "@/lib/testimonials";
 
 /* ---------- hero ---------- */
@@ -87,13 +87,6 @@ export function Hero() {
         style={reduce ? undefined : { y: textY }}
         className="mx-auto w-full max-w-6xl px-5 pb-16 pt-28 sm:pb-24"
       >
-        <motion.div
-          {...a(0)}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-asphalt/90 px-3.5 py-1.5 text-xs font-medium tracking-wide text-chalk"
-        >
-          <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
-          <span>Pregătire auto și examen supravegheat · 100% online</span>
-        </motion.div>
         <h1 className="max-w-[22ch] font-cond text-4xl font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
           <SplitWords text="Învață codul rutier și susține examenul teoretic de acasă." />
         </h1>
@@ -101,16 +94,6 @@ export function Hero() {
           Cursuri structurate pe capitole cu fotografii reale din România, lecții audio, evaluare adaptivă și examen
           supravegheat. O singură taxă per categorie, fără abonament — cu atestat verificabil prin cod QR.
         </motion.p>
-        <motion.div {...a(0.3)} className="mt-7 flex flex-wrap gap-3">
-          <Magnetic>
-            <Link href={CTA_HREF} className={btnPrimary}>
-              Alege categoria și înscrie-te
-            </Link>
-          </Magnetic>
-          <a href="#parcurs" className={btnGhostDark}>
-            Vezi cum funcționează
-          </a>
-        </motion.div>
       </motion.div>
     </section>
   );

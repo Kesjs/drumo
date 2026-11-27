@@ -17,6 +17,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "./language-switcher";
 import type { UserRole } from "@/lib/data/store";
 
 export interface AppShellProps {
@@ -69,7 +70,8 @@ export function AppShell({
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-sm">
+          <div className="flex items-center gap-2 sm:gap-3 text-sm">
+            <LanguageSwitcher />
             {(role === "admin" || role === "reviewer") && (
               <Link
                 href="/admin"

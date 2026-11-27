@@ -8,6 +8,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { LEGAL_ENTITY } from "@/lib/config";
 import { Logo } from "./logo";
 import { FloatingActions } from "./floating-actions";
+import { LanguageSwitcher } from "./language-switcher";
 
 type NavItem =
   | { kind: "link"; href: string; label: string }
@@ -101,7 +102,7 @@ export function PublicHeader({
       }`}
     >
       <div
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 transition-[height] duration-300 ${
+        className={`mx-auto flex max-w-6xl items-center justify-between gap-2.5 px-4 transition-[height] duration-300 sm:gap-4 sm:px-5 ${
           solid ? "h-16" : "h-20"
         }`}
       >
@@ -172,7 +173,9 @@ export function PublicHeader({
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <LanguageSwitcher onDarkOverlay={!solid} />
+
           <div className="hidden items-center gap-3 md:flex">
             {loggedIn ? (
               <Link href="/tablou-de-bord" className={ctaBtn}>

@@ -15,11 +15,11 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "Cum sunt stabilite taxele și de ce nu există abonament lunar?",
-        a: "PermiStart funcționează cu o singură taxă per categorie de permis (AM, A1, A2, A, B1, B, BE, C, CE, D), fără costuri recurente. Poți consulta toate sumele în RON și EUR direct în pagina Categorii înainte de a crea un cont.",
+        a: "PermiStart funcționează cu o singură taxă per categorie de permis (toate cele 15 categorii europene: AM, A1, A2, A, B1, B, BE, C1, C1E, C, CE, D1, D1E, D, DE), fără costuri recurente. Poți consulta toate sumele în RON și EUR direct în pagina Categorii înainte de a crea un cont.",
       },
       {
         q: "Cum funcționează plata în tranșe?",
-        a: "Prima tranșă (minimul afișat pentru categoria ta, de exemplu de la 300 lei pentru AM sau 550 lei pentru B) deblochează imediat toate cursurile pe capitole, testele și evaluarea adaptivă. Examenul teoretic final devine accesibil odată ce taxa este achitată integral.",
+        a: "Prima tranșă (minimul afișat pentru categoria ta, de exemplu de la 750 lei / 150 € pentru AM sau 2.000 lei / 400 € pentru B) deblochează imediat toate cursurile pe capitole, testele și evaluarea adaptivă. Examenul teoretic final devine accesibil odată ce taxa este achitată integral.",
       },
       {
         q: "Cum pot solicita rambursarea?",

@@ -76,10 +76,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Acoperă vehiculele ușoare cu viteză maximă prin construcție între 25 și 45 km/h și capacitate cilindrică de cel mult 50 cm³ (sau putere electrică de până la 4 kW). Pregătirea pune accent pe indicatoare, vizibilitate și poziționarea corectă pe carosabil.",
     min_age: 16,
-    fee_ron: 75000,
-    fee_eur: 15000,
-    min_first_installment_ron: 30000,
-    min_first_installment_eur: 6000,
+    fee_ron: 175000,
+    fee_eur: 35000,
+    min_first_installment_ron: 75000,
+    min_first_installment_eur: 15000,
     max_installments: 2,
     exam_question_count: 20,
     exam_pass_mark: 17,
@@ -98,10 +98,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Destinată motocicletelor ușoare cu cilindree maximă de 125 cm³, putere de cel mult 11 kW și raport putere/masă de până la 0,1 kW/kg, precum și triciclurilor cu motor de până la 15 kW.",
     min_age: 16,
-    fee_ron: 95000,
-    fee_eur: 19000,
-    min_first_installment_ron: 38000,
-    min_first_installment_eur: 7500,
+    fee_ron: 325000,
+    fee_eur: 65000,
+    min_first_installment_ron: 125000,
+    min_first_installment_eur: 25000,
     max_installments: 2,
     exam_question_count: 20,
     exam_pass_mark: 17,
@@ -120,10 +120,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Include motocicletele cu putere maximă de 35 kW și raport putere/masă de până la 0,2 kW/kg, care nu derivă dintr-un vehicul având mai mult de dublul puterii sale.",
     min_age: 18,
-    fee_ron: 105000,
-    fee_eur: 21000,
-    min_first_installment_ron: 42000,
-    min_first_installment_eur: 8500,
+    fee_ron: 425000,
+    fee_eur: 85000,
+    min_first_installment_ron: 150000,
+    min_first_installment_eur: 30000,
     max_installments: 3,
     exam_question_count: 20,
     exam_pass_mark: 17,
@@ -142,10 +142,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Acoperă toate motocicletele cu sau fără ataș și triciclurile cu putere de peste 15 kW. Include reguli specifice de frânare, abordare a curbelor și conduită preventivă pe două roți.",
     min_age: 24,
-    fee_ron: 120000,
-    fee_eur: 24000,
-    min_first_installment_ron: 48000,
-    min_first_installment_eur: 9500,
+    fee_ron: 490000,
+    fee_eur: 98000,
+    min_first_installment_ron: 175000,
+    min_first_installment_eur: 35000,
     max_installments: 3,
     exam_question_count: 20,
     exam_pass_mark: 17,
@@ -164,10 +164,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Permite pregătirea pentru cvadricicluri grele cu motor, cu accent pe legislația urbană, prioritate în intersecții și semnalizare.",
     min_age: 16,
-    fee_ron: 99000,
-    fee_eur: 20000,
-    min_first_installment_ron: 40000,
-    min_first_installment_eur: 8000,
+    fee_ron: 295000,
+    fee_eur: 59000,
+    min_first_installment_ron: 125000,
+    min_first_installment_eur: 25000,
     max_installments: 2,
     exam_question_count: 26,
     exam_pass_mark: 22,
@@ -186,10 +186,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Cea mai frecventă categorie: autoturisme și autoutilitare ușoare cu cel mult 8 locuri pe scaune în afara conducătorului, inclusiv cu remorcă ușoară de până la 750 kg.",
     min_age: 18,
-    fee_ron: 145000,
-    fee_eur: 29000,
-    min_first_installment_ron: 55000,
-    min_first_installment_eur: 11000,
+    fee_ron: 575000,
+    fee_eur: 115000,
+    min_first_installment_ron: 200000,
+    min_first_installment_eur: 40000,
     max_installments: 3,
     exam_question_count: 26,
     exam_pass_mark: 22,
@@ -211,10 +211,10 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Adaugă regulile de cuplare, repartizare a încărcăturii, distanțe de frânare și limite de viteză specifice ansamblurilor cu remorcă grea.",
     min_age: 18,
-    fee_ron: 90000,
-    fee_eur: 18000,
-    min_first_installment_ron: 38000,
-    min_first_installment_eur: 7500,
+    fee_ron: 340000,
+    fee_eur: 68000,
+    min_first_installment_ron: 140000,
+    min_first_installment_eur: 28000,
     max_installments: 2,
     exam_question_count: 26,
     exam_pass_mark: 22,
@@ -225,24 +225,68 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     vehicles_ro: ["Vehicul tractor cat. B + remorcă ≤ 3.500 kg"],
   },
   {
-    id: "cat-c",
-    code: "C",
-    slug: "c",
-    name_ro: "Categoria C — Camioane",
-    short_ro: "Autovehicule de marfă peste 3.500 kg, fără remorcă grea.",
+    id: "cat-c1",
+    code: "C1",
+    slug: "c1",
+    name_ro: "Categoria C1 — Camioane medii",
+    short_ro: "Autovehicule între 3.500 kg și 7.500 kg, cu cel mult 8+1 locuri.",
     description_ro:
-      "Legislație rutieră, limite de viteză diferențiate, mase și dimensiuni maxime admise, timp de conducere și odihnă, precum și semnalizarea vehiculelor grele.",
-    min_age: 21,
-    fee_ron: 195000,
-    fee_eur: 39000,
-    min_first_installment_ron: 75000,
-    min_first_installment_eur: 15000,
+      "Categoria intermediară pentru transport de marfă și distribuție cu vehicule între 3,5 și 7,5 tone, inclusiv o remorcă ușoară de până la 750 kg.",
+    min_age: 18,
+    fee_ron: 675000,
+    fee_eur: 135000,
+    min_first_installment_ron: 240000,
+    min_first_installment_eur: 48000,
     max_installments: 3,
     exam_question_count: 26,
     exam_pass_mark: 22,
     seconds_per_question: 60,
     readiness_threshold: 80,
     sort_order: 8,
+    active: true,
+    vehicles_ro: ["Autovehicule 3.500–7.500 kg", "Remorcă ușoară ≤ 750 kg"],
+  },
+  {
+    id: "cat-c1e",
+    code: "C1E",
+    slug: "c1e",
+    name_ro: "Categoria C1E — Camion mediu cu remorcă",
+    short_ro: "Ansamblu format din vehicul C1 și remorcă > 750 kg (total ≤ 12.000 kg).",
+    description_ro:
+      "Include conducerea ansamblurilor medii de până la 12 tone masă totală maximă autorizată, manevrele cu remorcă cu proțap și siguranța încărcăturii.",
+    min_age: 18,
+    fee_ron: 525000,
+    fee_eur: 105000,
+    min_first_installment_ron: 200000,
+    min_first_installment_eur: 40000,
+    max_installments: 3,
+    exam_question_count: 26,
+    exam_pass_mark: 22,
+    seconds_per_question: 60,
+    readiness_threshold: 80,
+    sort_order: 9,
+    active: true,
+    vehicles_ro: ["Vehicul cat. C1 + remorcă > 750 kg (ansamblu ≤ 12.000 kg)"],
+  },
+  {
+    id: "cat-c",
+    code: "C",
+    slug: "c",
+    name_ro: "Categoria C — Camioane grele",
+    short_ro: "Autovehicule de marfă peste 3.500 kg, fără remorcă grea.",
+    description_ro:
+      "Legislație rutieră, limite de viteză diferențiate, mase și dimensiuni maxime admise, timp de conducere și odihnă, precum și semnalizarea vehiculelor grele.",
+    min_age: 21,
+    fee_ron: 825000,
+    fee_eur: 165000,
+    min_first_installment_ron: 300000,
+    min_first_installment_eur: 60000,
+    max_installments: 3,
+    exam_question_count: 26,
+    exam_pass_mark: 22,
+    seconds_per_question: 60,
+    readiness_threshold: 80,
+    sort_order: 10,
     active: true,
     vehicles_ro: ["Autovehicule > 3.500 kg, ≤ 8+1 locuri", "Remorcă ușoară ≤ 750 kg"],
   },
@@ -255,18 +299,62 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Conducerea ansamblurilor de vehicule grele: traiectorie în viraje și sensuri giratorii, distanțe de oprire, stabilitate la vânt lateral și reguli pe autostradă.",
     min_age: 21,
-    fee_ron: 135000,
-    fee_eur: 27000,
-    min_first_installment_ron: 55000,
-    min_first_installment_eur: 11000,
-    max_installments: 2,
+    fee_ron: 725000,
+    fee_eur: 145000,
+    min_first_installment_ron: 260000,
+    min_first_installment_eur: 52000,
+    max_installments: 3,
     exam_question_count: 26,
     exam_pass_mark: 22,
     seconds_per_question: 60,
     readiness_threshold: 80,
-    sort_order: 9,
+    sort_order: 11,
     active: true,
     vehicles_ro: ["Camion cat. C + remorcă/semiremorcă > 750 kg"],
+  },
+  {
+    id: "cat-d1",
+    code: "D1",
+    slug: "d1",
+    name_ro: "Categoria D1 — Microbuze",
+    short_ro: "Microbuze pentru 9–16 pasageri și lungime maximă de 8 metri.",
+    description_ro:
+      "Transport comercial sau privat de persoane cu microbuze de până la 16+1 locuri și lungime de cel mult 8 metri, cu reguli specifice stațiilor și îmbarcării.",
+    min_age: 21,
+    fee_ron: 775000,
+    fee_eur: 155000,
+    min_first_installment_ron: 275000,
+    min_first_installment_eur: 55000,
+    max_installments: 3,
+    exam_question_count: 26,
+    exam_pass_mark: 22,
+    seconds_per_question: 60,
+    readiness_threshold: 80,
+    sort_order: 12,
+    active: true,
+    vehicles_ro: ["Microbuze cu 9–16 locuri pe scaune (lungime ≤ 8 m)", "Remorcă ușoară ≤ 750 kg"],
+  },
+  {
+    id: "cat-d1e",
+    code: "D1E",
+    slug: "d1e",
+    name_ro: "Categoria D1E — Microbuz cu remorcă",
+    short_ro: "Ansamblu format din microbuz D1 și remorcă de bagaje peste 750 kg.",
+    description_ro:
+      "Destinată transportului de pasageri cu remorcă pentru echipamente sau bagaje de peste 750 kg, cu accent pe frânare, timpi de condus și gabarit.",
+    min_age: 21,
+    fee_ron: 590000,
+    fee_eur: 118000,
+    min_first_installment_ron: 225000,
+    min_first_installment_eur: 45000,
+    max_installments: 3,
+    exam_question_count: 26,
+    exam_pass_mark: 22,
+    seconds_per_question: 60,
+    readiness_threshold: 80,
+    sort_order: 13,
+    active: true,
+    vehicles_ro: ["Microbuz cat. D1 + remorcă > 750 kg"],
   },
   {
     id: "cat-d",
@@ -277,18 +365,40 @@ export const SEED_CATEGORIES: SeedCategory[] = [
     description_ro:
       "Siguranța pasagerilor, staționarea în stații, prioritatea la ieșirea autobuzelor din alveole în localități și reguli stricte privind alcoolul și oboseala.",
     min_age: 24,
-    fee_ron: 210000,
-    fee_eur: 42000,
-    min_first_installment_ron: 80000,
-    min_first_installment_eur: 16000,
+    fee_ron: 975000,
+    fee_eur: 195000,
+    min_first_installment_ron: 350000,
+    min_first_installment_eur: 70000,
     max_installments: 3,
     exam_question_count: 26,
     exam_pass_mark: 22,
     seconds_per_question: 60,
     readiness_threshold: 80,
-    sort_order: 10,
+    sort_order: 14,
     active: true,
-    vehicles_ro: ["Autobuze și microbuze > 8+1 locuri", "Remorcă ușoară ≤ 750 kg"],
+    vehicles_ro: ["Autobuze și autocare > 8+1 locuri", "Remorcă ușoară ≤ 750 kg"],
+  },
+  {
+    id: "cat-de",
+    code: "DE",
+    slug: "de",
+    name_ro: "Categoria DE — Autobuz cu remorcă",
+    short_ro: "Ansamblu format din autobuz sau autocar categoria D și remorcă > 750 kg.",
+    description_ro:
+      "Operarea autocarelor și autobuzelor cu remorcă de bagaje peste 750 kg: manevre la intrarea în terminale, distanțe de oprire și legislație europeană de transport.",
+    min_age: 24,
+    fee_ron: 745000,
+    fee_eur: 149000,
+    min_first_installment_ron: 270000,
+    min_first_installment_eur: 54000,
+    max_installments: 3,
+    exam_question_count: 26,
+    exam_pass_mark: 22,
+    seconds_per_question: 60,
+    readiness_threshold: 80,
+    sort_order: 15,
+    active: true,
+    vehicles_ro: ["Autobuz / autocar cat. D + remorcă > 750 kg"],
   },
 ];
 
@@ -311,7 +421,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 1: Semne de circulație și marcaje rutiere. În România, semnalizarea rutieră respectă o ierarhie strictă. Pe primul loc se află semnalele și indicațiile polițistului rutier, urmate de semnalele speciale de avertizare ale vehiculelor prioritare, semnalizarea temporară de lucrări, semafoarele, indicatoarele rutiere și, în final, marcajele de pe carosabil. Indicatoarele de avertizare au formă triunghiulară cu chenar roșu; cele de interzicere sunt rotunde cu chenar roșu; cele de obligare sunt rotunde cu fond albastru.",
     minutes: 18,
     sort_order: 1,
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-1-1",
@@ -386,7 +496,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 2: Reguli de prioritate și intersecții. La întâlnirea indicatorului Oprire, conducătorul auto trebuie să oprească complet roțile, chiar dacă drumul transversal pare liber, și să acorde prioritate vehiculelor de pe drumul prioritar. La Cedează trecerea, oprirea este necesară doar dacă circulă vehicule cărora trebuie să le acordați prioritate. În sensul giratoriu, vehiculele aflate deja în interiorul intersecției au prioritate față de cele care urmează să pătrundă.",
     minutes: 20,
     sort_order: 2,
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-2-1",
@@ -445,7 +555,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 3: Viteză, vizibilitate și condiții meteo. Pentru autoturismele din categoria B, limita maximă legală în localitate este de 50 km/h, dacă un indicator nu stabilește altfel, de exemplu 80 km/h pe anumite tronsoane. În afara localităților, limita este de 90 km/h pe drumuri naționale, 100 km/h pe drumuri europene, 120 km/h pe drum expres și 130 km/h pe autostradă. Conducătorii cu mai puțin de un an experiență circulă în afara localităților cu 20 km/h sub limita maximă admisă.",
     minutes: 18,
     sort_order: 3,
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-3-1",
@@ -513,7 +623,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 4: Distanțe de siguranță, depășirea și oprirea. Distanța față de vehiculul care circulă în față trebuie să permită oprirea în siguranță în orice situație. O regulă practică este menținerea unui interval de cel puțin două secunde pe carosabil uscat și cel puțin patru secunde pe carosabil ud. Depășirea este permisă numai după asigurare temeinică și semnalizare, și este interzisă în intersecții nedirijate, în curbe fără vizibilitate, pe treceri pentru pietoni și la treceri la nivel cu calea ferată.",
     minutes: 16,
     sort_order: 4,
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-4-1",
@@ -573,7 +683,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 5: Circulația pe autostrăzi și drumuri naționale. Pe autostrăzi nu au acces pietonii, bicicliștii, mopedele sau vehiculele care nu pot atinge prin construcție 50 km/h. La intrare, accelerați pe banda de accelerare și acordați prioritate vehiculelor aflate pe banda întâi. Întoarcerea, mersul înapoi și traversarea spațiului median sunt strict interzise.",
     minutes: 14,
     sort_order: 5,
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-5-1",
@@ -625,7 +735,7 @@ export const SEED_CHAPTERS: SeedChapter[] = [
       "Capitolul 6: Prim ajutor și conduită preventivă. În cazul unui accident rutier cu victime, nu părăsiți locul faptei și nu modificați poziția vehiculelor până la sosirea poliției. Securizați zona cu triunghiurile reflectorizante, apelați 112 comunicând exact locul și numărul victimelor, opriți contactul vehiculelor implicate și nu deplasați răniții decât dacă există pericol de incendiu sau explozie.",
     minutes: 15,
     sort_order: 6,
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     blocks: [
       {
         id: "b-6-1",
@@ -674,7 +784,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Indicatorul „Oprirea interzisă” interzice atât oprirea voluntară, cât și staționarea vehiculelor în zona sa de acțiune.",
     legal_ref: "HG 1391/2006, Anexa 2",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Staționarea interzisă (oprirea sub 5 minute este permisă)", is_correct: false },
       { label: "B", body_ro: "Oprirea interzisă (interzice atât oprirea, cât și staționarea)", is_correct: true },
@@ -692,7 +802,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Semnalele și indicațiile polițistului rutier primează față de semafoare, semnalizare temporară, indicatoare și marcaje.",
     legal_ref: "OUG 195/2002, art. 31",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Semaforul aflat în funcțiune", is_correct: false },
       { label: "B", body_ro: "Semnalele polițistului rutier", is_correct: true },
@@ -711,7 +821,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Triunghiul cu vârful în jos impune cedarea trecerii vehiculelor de pe drumul prioritar (când semaforul este stins sau pe galben intermitent), iar indicatorul rotund interzice virajul la stânga.",
     legal_ref: "HG 1391/2006, Anexa 2",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Acordarea priorității (dacă semaforul nu funcționează) și interzicerea virajului la stânga", is_correct: true },
       { label: "B", body_ro: "Oprire obligatorie și viraj obligatoriu la stânga", is_correct: false },
@@ -730,7 +840,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Linia continuă interzice încălcarea sau depășirea ei de către vehicule, delimitând sensurile sau benzile de circulație.",
     legal_ref: "HG 1391/2006, art. 77",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Poate fi încălcată doar la virajul la stânga", is_correct: false },
       { label: "B", body_ro: "Interzice încălcarea sau depășirea sa", is_correct: true },
@@ -749,7 +859,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Semnalizarea temporară pe fond galben modifică regimul normal al circulației și are prioritate față de indicatoarele permanente din acel sector.",
     legal_ref: "OUG 195/2002, art. 31",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Are prioritate față de indicatoarele permanente", is_correct: true },
       { label: "B", body_ro: "Are caracter exclusiv informativ", is_correct: false },
@@ -768,7 +878,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Indicatorul „Sfârșitul limitării de viteză” anulează restricția anterioară de 50 km/h; de aici se aplică limita generală a sectorului de drum sau următorul indicator.",
     legal_ref: "HG 1391/2006, Anexa 2",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Impune o viteză minimă obligatorie de 50 km/h", is_correct: false },
       { label: "B", body_ro: "Anulează limitarea anterioară de viteză la 50 km/h", is_correct: true },
@@ -789,7 +899,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "La indicatorul „Oprire” oprirea completă este obligatorie în locul cu vizibilitate maximă, indiferent dacă se apropie sau nu alte vehicule.",
     legal_ref: "HG 1391/2006, art. 57",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Încetinești fără să oprești și intri în intersecție", is_correct: false },
       { label: "B", body_ro: "Oprești complet roțile, te asiguri și acorzi prioritate", is_correct: true },
@@ -808,7 +918,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "În intersecțiile cu sens giratoriu au prioritate vehiculele care circulă deja în interiorul acestuia.",
     legal_ref: "OUG 195/2002, art. 57 alin. (4)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Vehiculele care pătrund în sensul giratoriu din dreapta", is_correct: false },
       { label: "B", body_ro: "Vehiculele care circulă în interiorul sensului giratoriu", is_correct: true },
@@ -827,7 +937,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Schimbarea benzilor în interiorul sensului giratoriu necesită semnalizare și acordarea priorității vehiculelor care circulă pe banda pe care intenționezi să intri.",
     legal_ref: "HG 1391/2006, art. 107",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Ieși direct, deoarece ești deja în sensul giratoriu", is_correct: false },
       { label: "B", body_ro: "Semnalizezi dreapta, te asiguri și acorzi prioritate vehiculelor de pe banda exterioară", is_correct: true },
@@ -845,7 +955,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "În intersecțiile cu circulație nedirijată se aplică regula priorității de dreapta.",
     legal_ref: "OUG 195/2002, art. 57 alin. (1)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Vehiculului care vine din partea stângă", is_correct: false },
       { label: "B", body_ro: "Vehiculului care vine din partea dreaptă", is_correct: true },
@@ -864,7 +974,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "La „Oprire” trebuie să oprești întotdeauna roțile înainte de a pătrunde în intersecție; la „Cedează trecerea” oprești doar dacă pe drumul prioritar circulă vehicule cărora trebuie să le cedezi trecerea.",
     legal_ref: "HG 1391/2006, art. 57–58",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "La „Cedează trecerea” oprești numai dacă se apropie vehicule pe drumul prioritar", is_correct: true },
       { label: "B", body_ro: "La „Cedează trecerea” ai prioritate dacă virezi la dreapta", is_correct: false },
@@ -882,7 +992,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Vehiculele care ies din curți, garaje, ganguri sau drumuri laterale fără prioritate acordă prioritate tuturor vehiculelor și pietonilor care circulă pe drumul public.",
     legal_ref: "OUG 195/2002, art. 58",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Acorzi prioritate doar vehiculelor din dreapta", is_correct: false },
       { label: "B", body_ro: "Acorzi prioritate tuturor vehiculelor și pietonilor de pe drumul public", is_correct: true },
@@ -902,7 +1012,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Limita generală de viteză în localități este de 50 km/h, dacă administratorul drumului nu a stabilit altă limită prin indicatoare.",
     legal_ref: "OUG 195/2002, art. 49",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "50 km/h", is_correct: true },
       { label: "B", body_ro: "60 km/h", is_correct: false },
@@ -957,7 +1067,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Carosabilul ud și zona de lucrări impun respectarea limitării de 40 km/h, mărirea distanței față de vehiculul din față și evitarea manevrelor bruște.",
     legal_ref: "HG 1391/2006, art. 123",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Respectarea limitării de viteză de 40 km/h", is_correct: true },
       { label: "B", body_ro: "Mărirea distanței față de vehiculul din față", is_correct: true },
@@ -976,7 +1086,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Panoul de localitate cu limită de 80 km/h stabilește 80 km/h în localitate, însă imediat după acesta este montat indicatorul de lucrări cu limitare la 60 km/h, care devine obligatoriu.",
     legal_ref: "OUG 195/2002, art. 31 & art. 49",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "90 km/h", is_correct: false },
       { label: "B", body_ro: "80 km/h pe sectorul de intrare, apoi 60 km/h la indicatorul de lucrări", is_correct: true },
@@ -995,7 +1105,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Indicatorul „Copii” obligă la prudență și reducerea vitezei până la cel mult 30 km/h în localități (50 km/h în afara lor) în intervalul orar stabilit sau ori de câte ori sunt copii în zonă.",
     legal_ref: "HG 1391/2006, art. 123 lit. i)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Între orele 07:00 și 22:00 sau ori de câte ori sunt copii în apropierea carosabilului", is_correct: true },
       { label: "B", body_ro: "Doar când există o trecere de pietoni semnalizată", is_correct: false },
@@ -1015,7 +1125,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Oprirea voluntară este interzisă pe trecerea pentru pietoni și la mai puțin de 25 m înainte și după aceasta, pentru a nu bloca vizibilitatea.",
     legal_ref: "HG 1391/2006, art. 142 lit. e)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "5 metri", is_correct: false },
       { label: "B", body_ro: "15 metri", is_correct: false },
@@ -1034,7 +1144,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Panoul avertizează asupra unui sector cu lucrări pe drum și semaforizare temporară la 400 m, cu risc ridicat de accidente.",
     legal_ref: "HG 1391/2006, Anexa 2",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Lucrări și semaforizare temporară la 400 m", is_correct: true },
       { label: "B", body_ro: "Drum închis definitiv după 400 m", is_correct: false },
@@ -1052,7 +1162,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Depășirea este interzisă în intersecțiile cu circulație nedirijată, pe trecerile pentru pietoni și în curbele cu vizibilitate sub 50 m.",
     legal_ref: "HG 1391/2006, art. 120",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "În intersecțiile cu circulație nedirijată", is_correct: true },
       { label: "B", body_ro: "Pe trecerile pentru pietoni semnalizate", is_correct: true },
@@ -1071,7 +1181,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Indicatorul „Drum alunecos” și balizele de lucrări impun reducerea vitezei, mărirea distanței de siguranță și evitarea frânărilor bruște.",
     legal_ref: "HG 1391/2006, art. 123",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Accelerezi ușor pentru a trece mai repede de zonă", is_correct: false },
       { label: "B", body_ro: "Reduci viteza și mărești distanța față de vehiculul din față", is_correct: true },
@@ -1089,7 +1199,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Conducătorul trebuie să se asigure că cel din față nu a semnalizat intenția de depășire/viraj, cel din spate nu a început depășirea și există spațiu și vizibilitate suficiente pentru revenire.",
     legal_ref: "HG 1391/2006, art. 118",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Vehiculul din spate nu a început deja manevra de depășire", is_correct: true },
       { label: "B", body_ro: "Există vizibilitate și spațiu suficient pentru revenirea pe bandă fără a stânjeni", is_correct: true },
@@ -1107,7 +1217,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Oprirea este interzisă în intersecții, inclusiv cele cu circulație în sens giratoriu, precum și în zona de preselecție ori la mai puțin de 25 m de colțul intersecției.",
     legal_ref: "HG 1391/2006, art. 142 lit. f)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "La mai puțin de 10 metri", is_correct: false },
       { label: "B", body_ro: "La mai puțin de 25 metri", is_correct: true },
@@ -1128,7 +1238,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Pe autostradă sunt interzise întoarcerea, mersul înapoi, traversarea spațiului median și circulația pe banda de urgență în condiții normale.",
     legal_ref: "OUG 195/2002, art. 74",
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Întoarcerea și mersul înapoi", is_correct: true },
       { label: "B", body_ro: "Circulația pe banda de urgență pentru depășirea coloanei", is_correct: true },
@@ -1147,7 +1257,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Pe banda de accelerare adaptezi viteza la cea a traficului de pe autostradă, semnalizezi stânga și acorzi prioritate vehiculelor care circulă pe banda 1.",
     legal_ref: "HG 1391/2006, art. 169",
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Oprești la începutul benzii de accelerare până nu mai vine nicio mașină", is_correct: false },
       { label: "B", body_ro: "Accelerezi pe banda dedicată și pătrunzi pe banda 1 acordând prioritate", is_correct: true },
@@ -1165,7 +1275,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Conform modificărilor la OUG 195/2002, pe toate categoriile de drumuri publice (inclusiv în localități), luminile de întâlnire sau de circulație diurnă trebuie să fie aprinse permanent în timpul mersului.",
     legal_ref: "OUG 195/2002, art. 44 alin. (2)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Permanent, pe toate categoriile de drumuri publice", is_correct: true },
       { label: "B", body_ro: "Doar pe autostrăzi și pe timp de noapte", is_correct: false },
@@ -1184,7 +1294,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "La coborârea pantelor lungi, utilizarea frânei de motor într-o treaptă inferioară previne supraîncălzirea și pierderea eficienței frânelor de serviciu.",
     legal_ref: "Conduită preventivă",
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Cu schimbătorul la punctul mort, apăsând continuu pedala de frână", is_correct: false },
       { label: "B", body_ro: "Într-o treaptă inferioară de viteză, folosind frâna de motor", is_correct: true },
@@ -1202,7 +1312,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Pe autostrăzi este interzis accesul autovehiculelor care, prin construcție sau din alte cauze, nu pot depăși viteza de 50 km/h, precum și al mopedelor, bicicletelor și vehiculelor cu tracțiune animală.",
     legal_ref: "OUG 195/2002, art. 74",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Autoturismele cu remorcă ușoară", is_correct: false },
       { label: "B", body_ro: "Mopedele și vehiculele care nu pot depăși 50 km/h", is_correct: true },
@@ -1220,7 +1330,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Întoarcerea și mersul înapoi sunt strict interzise. Trebuie să continui deplasarea până la următorul nod rutier (ieșire).",
     legal_ref: "OUG 195/2002, art. 74",
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Dai cu spatele pe banda de urgență până la bretea", is_correct: false },
       { label: "B", body_ro: "Continui până la următoarea ieșire de pe autostradă", is_correct: true },
@@ -1240,7 +1350,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Prioritară este siguranța salvatorului și a victimelor: semnalizarea zonei, oprirea motorului și apelul la 112 înainte de orice manevră medicală.",
     legal_ref: "OUG 195/2002, art. 77",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Securizarea locului accidentului și apelarea serviciului 112", is_correct: true },
       { label: "B", body_ro: "Mutarea imediată a tuturor victimelor pe trotuar", is_correct: false },
@@ -1258,7 +1368,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Autovehiculele trebuie dotate cu trusă medicală de prim ajutor, două triunghiuri reflectorizante și un stingător de incendiu, omologate și în termen.",
     legal_ref: "OUG 195/2002, art. 8",
-    category_codes: ["B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Trusă medicală omologată în termen de valabilitate", is_correct: true },
       { label: "B", body_ro: "Două triunghiuri reflectorizante și stingător verificat", is_correct: true },
@@ -1276,7 +1386,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Poziția laterală de siguranță menține căile aeriene libere și previne aspirarea secrețiilor.",
     legal_ref: "Protocol prim ajutor rutier",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "O așezi în poziția laterală de siguranță", is_correct: true },
       { label: "B", body_ro: "Începi imediat compresiile toracice", is_correct: false },
@@ -1294,7 +1404,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Este interzisă ținerea în mână sau folosirea telefonului în timpul mersului fără un sistem de tip „mâini libere” (hands-free).",
     legal_ref: "OUG 195/2002, art. 36 alin. (3)",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Oricând dacă circuli cu sub 30 km/h", is_correct: false },
       { label: "B", body_ro: "Numai cu dispozitiv de tip „mâini libere” (hands-free)", is_correct: true },
@@ -1312,7 +1422,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Primul gest eficient și sigur este compresia directă pe plagă cu pansament steril sau material curat; garoul se folosește doar ca ultimă soluție în amputații sau hemoragii ce nu pot fi controlate prin compresie.",
     legal_ref: "Protocol prim ajutor rutier",
-    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["AM", "A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Prin compresie directă pe rană cu pansament curat", is_correct: true },
       { label: "B", body_ro: "Prin aplicarea imediată a unui garou fără pansament", is_correct: false },
@@ -1330,7 +1440,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Pe drumurile obișnuite triunghiurile se așază la cel puțin 30 m, iar pe autostrăzi la cel puțin 100 m pentru a oferi timp de reacție la viteze mari.",
     legal_ref: "HG 1391/2006, art. 156",
-    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C", "CE", "D"],
+    category_codes: ["A1", "A2", "A", "B1", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Cel puțin 15 metri", is_correct: false },
       { label: "B", body_ro: "Cel puțin 30 metri", is_correct: false },
@@ -1404,7 +1514,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Viteza maximă admisă în afara localităților pentru autovehiculele care tractează remorci sau semiremorci este cu 10 km/h mai mică decât viteza maximă admisă pentru categoria din care face parte autovehiculul trăgător.",
     legal_ref: "OUG 195/2002, art. 50 alin. (2)",
-    category_codes: ["B", "BE", "C", "CE"],
+    category_codes: ["B", "BE", "C1", "C1E", "C", "CE", "D1E", "DE"],
     options: [
       { label: "A", body_ro: "Cu 10 km/h mai mică decât cea a autovehiculului trăgător", is_correct: true },
       { label: "B", body_ro: "Cu 30 km/h mai mică pe toate drumurile", is_correct: false },
@@ -1422,7 +1532,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Centrul de greutate trebuie menținut cât mai jos și deasupra axei (sau ușor în fața axei remorcii), respectând apăsarea verticală admisă pe cupla de remorcare.",
     legal_ref: "HG 1391/2006, art. 148–153",
-    category_codes: ["B", "BE", "C", "CE"],
+    category_codes: ["B", "BE", "C1", "C1E", "C", "CE", "D1E", "DE"],
     options: [
       { label: "A", body_ro: "Toată greutatea în partea din spate a remorcii", is_correct: false },
       { label: "B", body_ro: "Centrul de greutate jos, deasupra axei și cu apăsare corectă pe cârligul de remorcare", is_correct: true },
@@ -1441,7 +1551,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Pentru autovehiculele din categoriile C, CE și D, viteza maximă admisă pe autostrăzi este de 110 km/h (100 km/h pe drum expres, 90 km/h pe drumuri europene E și 80 km/h pe celelalte drumuri din afara localităților).",
     legal_ref: "OUG 195/2002, art. 50 alin. (1) lit. b)",
-    category_codes: ["C", "CE", "D"],
+    category_codes: ["C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "130 km/h", is_correct: false },
       { label: "B", body_ro: "110 km/h", is_correct: true },
@@ -1459,7 +1569,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Conform Regulamentului (CE) nr. 561/2006, după o perioadă de conducere de 4 ore și jumătate, conducătorul trebuie să ia o pauză neîntreruptă de cel puțin 45 de minute (sau fracționată: minimum 15 minute urmate de minimum 30 de minute).",
     legal_ref: "Regulamentul (CE) 561/2006, art. 7",
-    category_codes: ["C", "CE", "D"],
+    category_codes: ["C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Cel puțin 45 de minute (sau 15 min + 30 min în interiorul perioadei)", is_correct: true },
       { label: "B", body_ro: "Cel puțin 15 minute la fiecare 6 ore", is_correct: false },
@@ -1477,7 +1587,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Autovehiculele cu masa mai mare de 3,5 tone sau lungimea peste 7 metri pot folosi doar primele două benzi din partea dreaptă a autostrăzii și nu au voie pe banda a 3-a (cea de lângă axul median).",
     legal_ref: "HG 1391/2006, art. 102",
-    category_codes: ["C", "CE", "D"],
+    category_codes: ["C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Pe oricare dintre cele 3 benzi", is_correct: false },
       { label: "B", body_ro: "Numai pe primele două benzi de lângă marginea din dreapta a părții carosabile", is_correct: true },
@@ -1496,7 +1606,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "În localități, conducătorii de vehicule sunt obligați să reducă viteza și, la nevoie, să oprească pentru a permite reintrarea în trafic a autobuzelor sau troleibuzelor care semnalizează plecarea din stațiile cu alveolă.",
     legal_ref: "HG 1391/2006, art. 131",
-    category_codes: ["B", "BE", "C", "CE", "D"],
+    category_codes: ["B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Să accelereze pentru a trece înaintea autobuzului", is_correct: false },
       { label: "B", body_ro: "Să reducă viteza și, la nevoie, să oprească pentru a-i permite reintrarea în trafic", is_correct: true },
@@ -1514,7 +1624,7 @@ export const SEED_QUESTIONS: SeedQuestion[] = [
     explanation_ro:
       "Ușile autobuzului se deschid numai după oprirea completă în stație, iar pornirea din stație se face doar după închiderea ușilor și asigurarea că pasagerii au urcat/coborât în siguranță.",
     legal_ref: "HG 1391/2006, art. 148",
-    category_codes: ["D"],
+    category_codes: ["D1", "D1E", "D", "DE"],
     options: [
       { label: "A", body_ro: "Să deschidă ușile numai după oprirea completă în stație", is_correct: true },
       { label: "B", body_ro: "Să pornească din stație numai după închiderea ușilor și asigurarea călătorilor", is_correct: true },

@@ -1,4 +1,4 @@
-export type CategoryGroupKey = "moto" | "auto" | "pro";
+export type CategoryGroupKey = "moto" | "auto" | "camioane" | "autobuze";
 
 export interface CategoryMediaMeta {
   src: string;
@@ -19,9 +19,14 @@ export const CATEGORY_GROUPS: Array<{ key: CategoryGroupKey; label_ro: string; d
     description_ro: "Cvadricicluri ușoare, autoturisme până la 3.500 kg și ansambluri cu remorcă grea.",
   },
   {
-    key: "pro",
-    label_ro: "Transport marfă și persoane",
-    description_ro: "Camioane, ansambluri grele TIR cu semiremorcă și autobuze pentru transport persoane.",
+    key: "camioane",
+    label_ro: "Camioane și transport marfă",
+    description_ro: "Camioane medii (3.500–7.500 kg), camioane grele peste 3.500 kg și ansambluri cu remorcă sau semiremorcă.",
+  },
+  {
+    key: "autobuze",
+    label_ro: "Microbuze și autobuze",
+    description_ro: "Microbuze până la 16+1 locuri, autobuze urbane și autocare cu remorcă.",
   },
 ];
 
@@ -68,23 +73,53 @@ export const CATEGORY_MEDIA: Record<string, CategoryMediaMeta> = {
     group: "auto",
     groupLabel_ro: "Autoturisme și remorci",
   },
+  C1: {
+    src: "/media/cat-c1.jpg",
+    alt_ro: "Camion mediu Iveco Eurocargo între 3.500 și 7.500 kg — categoria C1",
+    group: "camioane",
+    groupLabel_ro: "Camioane și transport marfă",
+  },
+  C1E: {
+    src: "/media/cat-c1e.jpg",
+    alt_ro: "Ansamblu format din camion și remorcă — categoria C1E",
+    group: "camioane",
+    groupLabel_ro: "Camioane și transport marfă",
+  },
   C: {
     src: "/media/cat-c.jpg",
     alt_ro: "Camion rigid Mercedes-Benz Atego pentru marfă — categoria C",
-    group: "pro",
-    groupLabel_ro: "Transport marfă și persoane",
+    group: "camioane",
+    groupLabel_ro: "Camioane și transport marfă",
   },
   CE: {
     src: "/media/cat-ce.jpg",
     alt_ro: "Ansamblu greu Scania G410 cu semiremorcă — categoria CE",
-    group: "pro",
-    groupLabel_ro: "Transport marfă și persoane",
+    group: "camioane",
+    groupLabel_ro: "Camioane și transport marfă",
+  },
+  D1: {
+    src: "/media/cat-d1.jpg",
+    alt_ro: "Microbuz Mercedes-Benz Sprinter pentru transport persoane — categoria D1",
+    group: "autobuze",
+    groupLabel_ro: "Microbuze și autobuze",
+  },
+  D1E: {
+    src: "/media/cat-d1e.jpg",
+    alt_ro: "Microbuz Mercedes-Benz Sprinter cu remorcă pe două axe — categoria D1E",
+    group: "autobuze",
+    groupLabel_ro: "Microbuze și autobuze",
   },
   D: {
     src: "/media/cat-d.jpg",
     alt_ro: "Autobuz urban Mercedes-Benz Citaro pe linia 336 în București — categoria D",
-    group: "pro",
-    groupLabel_ro: "Transport marfă și persoane",
+    group: "autobuze",
+    groupLabel_ro: "Microbuze și autobuze",
+  },
+  DE: {
+    src: "/media/cat-de.jpg",
+    alt_ro: "Autocar Mercedes-Benz Tourismo cu remorcă pentru bagaje pe autostradă — categoria DE",
+    group: "autobuze",
+    groupLabel_ro: "Microbuze și autobuze",
   },
 };
 

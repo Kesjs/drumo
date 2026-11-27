@@ -131,7 +131,7 @@ export function SignupStepMock() {
             <p className="mt-1.5 font-cond text-lg font-bold leading-snug">
               Program adaptat categoriei alese
             </p>
-            <p className="text-xs text-chalk/80">10 categorii disponibile · RO &amp; UE</p>
+            <p className="text-xs text-chalk/80">15 categorii europene · RO &amp; UE</p>
           </div>
         </div>
         <div className="p-4 text-xs">

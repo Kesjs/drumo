@@ -10,7 +10,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { Car, Bike, Truck, Bus, Caravan } from "lucide-react";
+import { Car, Bike, Truck, Bus } from "lucide-react";
 import {
   ChevronDownIcon,
   ArrowUpRightIcon,
@@ -285,29 +285,80 @@ export function Benefits() {
   );
 }
 
-/* ---------- categories (short version, full list on /categorii) ---------- */
+/* ---------- service value clarity (who & why PermiStart, not random QCM) ---------- */
+
+export function ServiceForWho() {
+  const audiences = [
+    {
+      tag: "Primul permis · România",
+      title: "Înțelegi regulile, nu doar memorezi grile",
+      body: "În loc să ghicești răspunsuri la întâmplare, parcurgi lecțiile din Codul rutier cu fotografii reale din intersecții din România, audio și explicații juridice la fiecare întrebare.",
+    },
+    {
+      tag: "Diaspora · Uniunea Europeană",
+      title: "Pregătire 100% în limba română, de oriunde",
+      body: "Studiezi de acasă după program, de pe telefon sau laptop, cu plată transparentă în EUR sau RON (integral sau în tranșe) și fără abonamente lunare.",
+    },
+    {
+      tag: "Profesioniști C1–DE · Școli",
+      title: "Toate categoriile europene și atestat cu QR",
+      body: "De la mopede (AM) până la camioane grele și autocare (C1–CE, D1–DE), susții examenul supravegheat cu cameră și primești atestat nominal verificabil public prin cod QR.",
+    },
+  ];
+
+  return (
+    <section className="border-b border-line bg-white py-20 text-asphalt">
+      <div className="mx-auto max-w-6xl px-5">
+        <Reveal>
+          <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-end">
+            <h2 className="max-w-[24ch] font-cond text-3xl font-bold leading-[1.06] tracking-[-0.015em] text-asphalt sm:text-4xl md:text-5xl">
+              Pregătire completă de acasă, nu doar chestionare la întâmplare.
+            </h2>
+            <p className="max-w-[54ch] text-base leading-relaxed text-mute sm:text-lg">
+              PermiStart combină cursul structurat pe capitole cu evaluarea adaptivă pe punctele tale slabe și cu un
+              examen teoretic supravegheat, ca să știi sigur când ești pregătit.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid divide-y divide-line overflow-hidden rounded-xl border border-line bg-chalk md:grid-cols-3 md:divide-x md:divide-y-0">
+          {audiences.map((item, idx) => (
+            <Reveal key={item.tag} delay={idx * 0.05} className="flex flex-col justify-between p-6 sm:p-8">
+              <div>
+                <p className="font-mono text-xs font-semibold text-sign">{item.tag}</p>
+                <h3 className="mt-2 font-cond text-2xl font-bold leading-snug text-asphalt">{item.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-mute sm:text-base">{item.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- categories (all 15 EU categories without prices; prices live on /categorii) ---------- */
 
 const BRIEF = [
-  { codes: "AM", t: "Mopede și scutere ușoare · 20 întrebări", href: "/categorii/am", Icon: Bike },
-  { codes: "A1 · A2 · A", t: "Motociclete, după putere · 20 întrebări", href: "/categorii/a", Icon: Bike },
-  { codes: "B · B1", t: "Autoturisme ≤ 3.500 kg · 26 întrebări", href: "/categorii/b", Icon: Car },
-  { codes: "BE", t: "Autoturism cu remorcă · 26 întrebări", href: "/categorii/be", Icon: Caravan },
-  { codes: "C · CE", t: "Camioane și ansambluri · 26 întrebări", href: "/categorii/c", Icon: Truck },
-  { codes: "D", t: "Autobuze și microbuze · 26 întrebări", href: "/categorii/d", Icon: Bus },
+  { codes: "AM", t: "Mopede și cvadricicluri ușoare · 20 întrebări", href: "/categorii/am", Icon: Bike },
+  { codes: "A1 · A2 · A", t: "Motociclete, după cilindree și putere · 20 întrebări", href: "/categorii/a", Icon: Bike },
+  { codes: "B1 · B · BE", t: "Autoturisme ≤ 3.500 kg și remorci · 26 întrebări", href: "/categorii/b", Icon: Car },
+  { codes: "C1 · C1E · C · CE", t: "Camioane medii, grele și TIR-uri · 26 întrebări", href: "/categorii/c", Icon: Truck },
+  { codes: "D1 · D1E · D · DE", t: "Microbuze, autobuze și autocare · 26 întrebări", href: "/categorii/d", Icon: Bus },
 ];
 
 export function Categories() {
   return (
     <section id="categorii" className="bg-chalk py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
         <div>
           <Reveal>
             <h2 className="font-cond text-4xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl">
-              Toate categoriile, într-un singur loc.
+              Toate categoriile europene, într-un singur loc.
             </h2>
             <p className="mt-4 max-w-[52ch] text-lg text-mute">
-              Capitolele, întrebările de examen și taxa unică depind de categorie. Alege-o pe a ta și vezi suma exactă
-              la înscriere, înainte să plătești.
+              Acoperim toate cele 15 categorii europene, de la mopede (AM) până la camioane și autobuze cu remorcă.
+              Alege categoria ta și consultă prețurile și opțiunile în tranșe.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
@@ -319,7 +370,7 @@ export function Categories() {
           </Reveal>
           <Reveal delay={0.12}>
             <Link href="/categorii" className={`${btnPrimary} mt-8`}>
-              Vezi taxele pe categorii
+              Vezi categoriile și prețurile
             </Link>
           </Reveal>
         </div>
@@ -331,7 +382,7 @@ export function Categories() {
                   href={href}
                   className="group flex items-center gap-4 px-2 py-5 transition-colors hover:bg-white sm:px-4"
                 >
-                  <span className="w-36 shrink-0 whitespace-nowrap font-cond text-2xl font-bold text-asphalt sm:w-40 sm:text-3xl">
+                  <span className="w-40 shrink-0 font-cond text-xl font-bold leading-tight text-asphalt sm:w-48 sm:text-2xl">
                     {codes}
                   </span>
                   <span className="flex-1 text-sm text-mute group-hover:text-asphalt sm:text-base">{t}</span>
@@ -1024,7 +1075,7 @@ function CountUp({ to }: { to: number }) {
 export function StatsBand() {
   const facts = [
     { n: 100, suffix: "%", l: "Aliniat la Codul Rutier (OUG 195/2002 și HG 1391/2006)" },
-    { n: 10, suffix: "", l: "Categorii de permis acoperite complet (AM – D)" },
+    { n: 15, suffix: "", l: "Categorii europene acoperite complet (AM – DE)" },
     { n: 72, suffix: "h", l: "Termen maxim pentru trimiterea atestatului cu cod QR" },
     { n: 30, suffix: " zile", l: "Retenție maximă KYC criptat, apoi ștergere automată GDPR" },
   ];

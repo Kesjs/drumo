@@ -19,7 +19,7 @@ const PRINCIPLES = [
   {
     Icon: BanknotesIcon,
     title: "Fără abonamente ascunse",
-    body: "Plătești o singură taxă stabilită în funcție de categoria aleasă (AM, A1, A2, A, B1, B, BE, C, CE, D), integral sau în 2–3 tranșe. Vezi suma exactă înainte de plată.",
+    body: "Plătești o singură taxă stabilită în funcție de categoria aleasă (toate cele 15 categorii europene: AM, A1, A2, A, B1, B, BE, C1, C1E, C, CE, D1, D1E, D, DE), integral sau în 2–3 tranșe. Vezi suma exactă înainte de plată.",
   },
   {
     Icon: BookOpenIcon,

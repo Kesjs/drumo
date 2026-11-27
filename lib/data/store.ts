@@ -385,6 +385,16 @@ function createInitialLocalDb(): LocalDb {
 
 let writeLock: Promise<void> = Promise.resolve();
 
+function syncCatalogSeed(db: LocalDb): boolean {
+  const catB = db.categories.find((c) => c.code === "B");
+  const hasAllEu = SEED_CATEGORIES.every((sc) => db.categories.some((c) => c.code === sc.code));
+  if (hasAllEu && (!catB || catB.fee_eur >= 50_000)) return false;
+  db.categories = structuredClone(SEED_CATEGORIES);
+  db.chapters = structuredClone(SEED_CHAPTERS);
+  db.questions = structuredClone(SEED_QUESTIONS);
+  return true;
+}
+
 async function readLocalDb(): Promise<LocalDb> {
   if (isSupabaseConfigured()) {
     try {
@@ -392,7 +402,14 @@ async function readLocalDb(): Promise<LocalDb> {
       if (svc) {
         const { data } = await svc.from("app_config").select("value").eq("key", "runtime_state_v1").single();
         if (data?.value && typeof data.value === "object") {
-          return data.value as LocalDb;
+          const parsed = data.value as LocalDb;
+          if (syncCatalogSeed(parsed)) {
+            await svc.from("app_config").upsert(
+              { key: "runtime_state_v1", value: parsed, updated_at: new Date().toISOString() },
+              { onConflict: "key" },
+            );
+          }
+          return parsed;
         }
       }
     } catch {
@@ -401,7 +418,11 @@ async function readLocalDb(): Promise<LocalDb> {
   }
   try {
     const raw = await fs.readFile(LOCAL_DB_PATH, "utf8");
-    return JSON.parse(raw) as LocalDb;
+    const parsed = JSON.parse(raw) as LocalDb;
+    if (syncCatalogSeed(parsed)) {
+      await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(parsed, null, 2), "utf8");
+    }
+    return parsed;
   } catch {
     const db = createInitialLocalDb();
     await fs.writeFile(LOCAL_DB_PATH, JSON.stringify(db, null, 2), "utf8");
@@ -458,7 +479,9 @@ export async function listCategories(): Promise<SeedCategory[]> {
   if (isSupabaseConfigured()) {
     const svc = createSupabaseService()!;
     const { data } = await svc.from("categories").select("*").eq("active", true).order("sort_order");
-    if (data && data.length > 0) {
+    const hasAll = Boolean(data && SEED_CATEGORIES.every((sc) => data.some((r) => r.code === sc.code)));
+    const catB = data?.find((r) => r.code === "B");
+    if (data && data.length > 0 && hasAll && (!catB || catB.fee_eur >= 50_000)) {
       return data.map((row) => ({
         ...row,
         vehicles_ro: SEED_CATEGORIES.find((c) => c.code === row.code)?.vehicles_ro ?? [],

@@ -59,6 +59,13 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
       ? categories.length
       : categories.filter((c) => getCategoryMedia(c.code).group === key).length;
 
+  const minPriceFor = (groups: CategoryGroupKey[]) => {
+    const matches = categories.filter((c) => groups.includes(getCategoryMedia(c.code).group));
+    if (matches.length === 0) return "";
+    const minVal = Math.min(...matches.map((c) => (currency === "RON" ? c.fee_ron : c.fee_eur)));
+    return `de la ${formatMoney(minVal, currency)}`;
+  };
+
   const includedPerFee = [
     { Icon: BookOpenIcon, t: "Toate capitolele cu fotografii reale și redare audio" },
     { Icon: ShieldCheckIcon, t: "Evaluare adaptivă nelimitată + evaluare globală de pregătire" },
@@ -91,13 +98,13 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
                 <SplitWords text="Alege categoria. Vezi taxa din start." />
               </h1>
               <p className="mt-4 max-w-[54ch] text-base text-white/90 sm:text-lg">
-                10 categorii de permis cu cursuri dedicate, evaluare adaptivă și examen supravegheat. O singură taxă per
-                categorie — plătită integral sau în tranșe, fără abonament.
+                Toate cele 15 categorii europene de permis cu cursuri dedicate, evaluare adaptivă și examen supravegheat.
+                O singură taxă per categorie — plătită integral sau în tranșe, fără abonament.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Magnetic>
                   <Link href="/inscriere?cat=B" className={btnPrimary}>
-                    Începe cu Categoria B · {catBPrices ? catBPrices.totalFormatted : "1.450 lei"}
+                    Începe cu Categoria B · {catBPrices ? catBPrices.totalFormatted : "5.750 lei"}
                   </Link>
                 </Magnetic>
                 <a href="#lista-categorii" className={btnGhostDark}>
@@ -111,23 +118,23 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
               <div className="pb-3 sm:pb-0 sm:pr-3">
                 <div className="font-mono text-xs text-white/70">Două roți</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-white">
-                  {currency === "RON" ? "de la 750 lei" : "de la 150 €"}
+                  {minPriceFor(["moto"])}
                 </div>
                 <div className="mt-0.5 text-xs text-white/75">AM · A1 · A2 · A</div>
               </div>
               <div className="py-3 sm:px-3 sm:py-0">
                 <div className="font-mono text-xs text-white/70">Autoturisme</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-signal">
-                  {currency === "RON" ? "de la 900 lei" : "de la 180 €"}
+                  {minPriceFor(["auto"])}
                 </div>
                 <div className="mt-0.5 text-xs text-white/75">B1 · B · BE</div>
               </div>
               <div className="pt-3 sm:pl-3 sm:pt-0">
-                <div className="font-mono text-xs text-white/70">Profesioniști</div>
+                <div className="font-mono text-xs text-white/70">Camioane &amp; Autobuze</div>
                 <div className="mt-1 font-cond text-2xl font-bold tabular-nums text-white">
-                  {currency === "RON" ? "de la 1.350 lei" : "de la 270 €"}
+                  {minPriceFor(["camioane", "autobuze"])}
                 </div>
-                <div className="mt-0.5 text-xs text-white/75">C · CE · D</div>
+                <div className="mt-0.5 text-xs text-white/75">C1 · C · CE · D1 · D · DE</div>
               </div>
             </div>
           </div>
@@ -143,7 +150,8 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
                 ["all", `Toate (${countFor("all")})`],
                 ["moto", `Mopede & Moto (${countFor("moto")})`],
                 ["auto", `Autoturisme (${countFor("auto")})`],
-                ["pro", `Camioane & Autobuze (${countFor("pro")})`],
+                ["camioane", `Camioane (${countFor("camioane")})`],
+                ["autobuze", `Autobuze (${countFor("autobuze")})`],
               ] as Array<[FilterValue, string]>
             ).map(([key, label]) => {
               const active = filter === key;

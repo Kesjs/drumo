@@ -3,9 +3,9 @@ import { CategoriesShowcase } from "@/components/categories-showcase";
 import { getCurrentUser, listCategories } from "@/lib/data/store";
 
 export const metadata = {
-  title: "Categorii și taxe",
+  title: "Categorii europene și taxe",
   description:
-    "Cele 10 categorii de permis disponibile pe PermiStart: fotografii, condiții de examen, taxe unice în RON/EUR și opțiuni de plată în tranșe.",
+    "Toate cele 15 categorii europene de permis disponibile pe PermiStart (AM – DE): fotografii, condiții de examen, taxe unice în RON/EUR și plată în tranșe.",
 };
 export const dynamic = "force-dynamic";
 

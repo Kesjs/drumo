@@ -1,6 +1,7 @@
 import { PublicHeader, PublicFooter } from "@/components/site-chrome";
 import {
   Hero,
+  ServiceForWho,
   Categories,
   Journey,
   StatsBand,
@@ -24,6 +25,7 @@ export default async function HomePage() {
       <PublicHeader loggedIn={Boolean(user)} overlay />
       <main>
         <Hero />
+        <ServiceForWho />
         <Categories />
         <Journey />
         <StatsBand />

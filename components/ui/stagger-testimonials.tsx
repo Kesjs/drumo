@@ -1,11 +1,50 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/lib/testimonials";
 
 const SQRT_5000 = Math.sqrt(5000);
+
+function StarRating({ rating, isCenter }: { rating: number; isCenter: boolean }) {
+  const formatted = rating.toFixed(1).replace(".", ",");
+  const fillClass = isCenter ? "fill-signal text-signal" : "fill-amber-500 text-amber-500";
+  const emptyClass = isCenter ? "text-white/25" : "text-mute/35";
+
+  return (
+    <div
+      className="flex shrink-0 items-center gap-1.5"
+      aria-label={`Notă ${formatted} din 5`}
+      title={`${formatted} / 5`}
+    >
+      <div className="flex items-center gap-0.5" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((index) => {
+          const isFull = rating >= index;
+          const isHalf = !isFull && rating >= index - 0.5;
+          return (
+            <span key={index} className="relative inline-block h-3.5 w-3.5">
+              <Star className={cn("h-3.5 w-3.5", isFull ? fillClass : emptyClass)} />
+              {isHalf ? (
+                <span className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
+                  <Star className={cn("h-3.5 w-3.5", fillClass)} />
+                </span>
+              ) : null}
+            </span>
+          );
+        })}
+      </div>
+      <span
+        className={cn(
+          "font-mono text-xs font-semibold tabular-nums",
+          isCenter ? "text-signal" : "text-asphalt",
+        )}
+      >
+        {formatted}
+      </span>
+    </div>
+  );
+}
 
 interface TestimonialCardProps {
   position: number;
@@ -66,15 +105,21 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       />
 
       <div>
-        <div className="mb-3.5 flex items-center justify-between gap-2.5 pr-6 sm:mb-4">
-          <span
+        <div className="mb-3 flex items-center justify-between gap-2.5 pr-6 sm:mb-4">
+          <div
             className={cn(
-              "grid h-10 w-10 shrink-0 place-items-center rounded-md font-cond text-base font-bold sm:h-11 sm:w-11 sm:text-lg",
-              isCenter ? "bg-signal text-asphalt" : "border border-line bg-white text-asphalt",
+              "h-11 w-11 shrink-0 overflow-hidden rounded-full sm:h-12 sm:w-12",
+              isCenter ? "ring-2 ring-signal ring-offset-2 ring-offset-asphalt" : "border border-line bg-white",
             )}
           >
-            {testimonial.initials}
-          </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={testimonial.avatar}
+              alt={`Fotografie de profil — ${testimonial.name}`}
+              loading="lazy"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
           <span
             className={cn(
               "whitespace-nowrap rounded px-2.5 py-1 font-mono text-xs font-semibold",
@@ -87,7 +132,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
         <blockquote
           className={cn(
-            "text-sm font-medium leading-relaxed sm:text-lg sm:leading-snug",
+            "text-sm font-medium leading-relaxed sm:text-base sm:leading-relaxed",
             isCenter ? "text-white" : "text-asphalt",
           )}
         >
@@ -97,15 +142,18 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
       <div
         className={cn(
-          "border-t pt-3 text-xs sm:text-sm",
+          "flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 border-t pt-3 text-xs sm:text-sm",
           isCenter ? "border-white/15 text-white/80" : "border-line text-mute",
         )}
       >
-        <span className={cn("font-semibold", isCenter ? "text-white" : "text-asphalt")}>
-          {testimonial.name}
-        </span>
-        {" · "}
-        <span className="font-mono text-xs">{testimonial.location}</span>
+        <div className="min-w-0">
+          <span className={cn("font-semibold", isCenter ? "text-white" : "text-asphalt")}>
+            {testimonial.name}
+          </span>
+          {" · "}
+          <span className="font-mono text-xs">{testimonial.location}</span>
+        </div>
+        <StarRating rating={testimonial.rating} isCenter={isCenter} />
       </div>
     </button>
   );

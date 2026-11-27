@@ -20,8 +20,8 @@ export default async function ImageCreditsPage() {
           licență verificată și respectă obligațiile de atribuire.
         </p>
         <p className="mt-3 max-w-[65ch] text-sm text-mute">
-          Imaginea de fundal din partea de sus a primei pagini este o imagine generată cu inteligență artificială, nu
-          o fotografie reală.
+          Imaginea de fundal din partea de sus a primei pagini și imaginea ilustrativă a șoferului cu card european din
+          secțiunea Servicii sunt imagini generate cu inteligență artificială, nu fotografii reale de persoane.
         </p>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

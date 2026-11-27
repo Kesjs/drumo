@@ -16,30 +16,34 @@ import { btnPrimary, btnGhostDark, btnGhostLight } from "@/lib/ui";
 export const metadata = { title: "Despre noi" };
 export const dynamic = "force-dynamic";
 
-const TEAM_MEMBERS = [
-  {
-    name: "Irina Ionescu",
-    role: "Director general",
-    photo: "/media/team-irina.jpg",
-    bio: "Coordonează direcția educațională PermiStart, standardul editorial pe capitole și calitatea evaluărilor teoretice.",
-  },
-  {
-    name: "Ing. Radu Dumitrescu",
-    role: "Formator principal legislație rutieră",
-    photo: "/media/team-radu.jpg",
-    bio: "Elaborează structura lecțiilor, explicațiile juridice și scenariile foto reale pentru toate cele 15 categorii europene.",
-  },
+const DIRECTOR = {
+  name: "Irina Ionescu",
+  role: "Director general PermiStart",
+  photo: "/media/team-irina.jpg",
+};
+
+const LEAD_MEMBER = {
+  name: "Ing. Radu Dumitrescu",
+  role: "Formator principal legislație rutieră",
+  photo: "/media/team-radu.jpg",
+  tag: "15 categorii · AM – DE",
+  bio: "Elaborează structura capitolelor, explicațiile juridice după OUG 195/2002 și scenariile foto reale pentru toate categoriile europene.",
+};
+
+const OTHER_MEMBERS = [
   {
     name: "Av. Gabriela Marinescu",
     role: "Consilier juridic & Conformitate GDPR",
     photo: "/media/team-gabriela.jpg",
-    bio: "Supraveghează alinierea la OUG 195/2002, transparența plăților și ștergerea automată a actelor KYC la 30 de zile.",
+    tag: "Audit & KYC 30 zile",
+    bio: "Supraveghează transparența contractuală, politicile de rambursare și ștergerea automată a actelor de identitate la cel mult 30 de zile.",
   },
   {
     name: "Elena Stănescu",
     role: "Secretar general & Suport candidați",
     photo: "/media/team-elena.jpg",
-    bio: "Gestionează comunicarea directă în limba română cu candidații din țară și din diaspora, de la înscriere până la atestat.",
+    tag: "România & Diaspora",
+    bio: "Gestionează comunicarea directă în limba română cu candidații din țară și din străinătate, de la înscriere până la atestatul QR.",
   },
 ];
 
@@ -73,6 +77,31 @@ const PRINCIPLES = [
   },
 ];
 
+function DirectorSignature() {
+  return (
+    <svg
+      viewBox="0 0 180 48"
+      className="h-10 w-36 text-asphalt/80"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M8 34C14 18 23 10 25 22C26 32 18 40 28 33C36 27 42 18 47 26C51 32 45 36 53 31C61 26 67 21 72 28C75 32 82 22 90 25C95 27 98 33 106 27C114 21 122 18 126 26C129 31 138 24 148 25C157 26 164 23 172 21"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 39C48 34 102 31 164 33"
+        stroke="#F2B705"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default async function AboutPage() {
   const user = await getCurrentUser();
   return (
@@ -99,11 +128,116 @@ export default async function AboutPage() {
           }
         />
 
-        {/* Editorial narrative & founder statement */}
+        {/* Director highlight card: portrait left, concise story right */}
+        <section className="border-b border-line bg-chalk py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-5">
+            <article className="grid overflow-hidden rounded-xl border border-line bg-white shadow-card lg:grid-cols-[0.42fr_0.58fr]">
+              <div className="relative aspect-[4/5] bg-chalk lg:aspect-auto lg:min-h-[420px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={DIRECTOR.photo}
+                  alt={`${DIRECTOR.name} — ${DIRECTOR.role}`}
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+
+              <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
+                <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
+                  Despre noi
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-mute sm:text-base">
+                  Pasionată de siguranța rutieră și de pregătirea temeinică a noilor șoferi,{" "}
+                  <strong className="font-semibold text-asphalt">{DIRECTOR.name}</strong> a coordonat lansarea
+                  platformei PermiStart cu un obiectiv clar: să ofere candidaților din România și din diaspora o
+                  pregătire teoretică ordonată pe capitole, ușor de urmărit și complet transparentă.
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-mute sm:text-base">
+                  Platforma acoperă integral toate cele 15 categorii europene — de la AM, A1, A2, A și B1, B, BE până la
+                  categoriile profesionale C1, C1E, C, CE, D1, D1E, D și DE — cu lecții foto reale, citire audio,
+                  evaluare adaptivă și atestat electronic verificabil prin cod QR.
+                </p>
+
+                <div className="mt-7 border-t border-line pt-5">
+                  <DirectorSignature />
+                  <p className="mt-2 font-cond text-xl font-bold text-asphalt">{DIRECTOR.name}</p>
+                  <p className="text-sm text-mute">{DIRECTOR.role}</p>
+                </div>
+              </div>
+            </article>
+
+            {/* Other team members in a balanced Bento Grid */}
+            <div className="mt-14">
+              <div className="max-w-2xl">
+                <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
+                  Membrii echipei
+                </h2>
+                <p className="mt-2 text-base text-mute">
+                  Specialiștii care coordonează programa didactică, verificarea conformității GDPR și suportul zilnic
+                  pentru candidați.
+                </p>
+              </div>
+
+              <div className="mt-8 grid gap-5 lg:grid-cols-12">
+                {/* Left tall bento tile */}
+                <article className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-card transition-shadow hover:shadow-lift lg:col-span-5">
+                  <div className="aspect-[4/3] overflow-hidden bg-chalk lg:aspect-[5/4]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={LEAD_MEMBER.photo}
+                      alt={`${LEAD_MEMBER.name} — ${LEAD_MEMBER.role}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <div>
+                      <span className="inline-block rounded bg-chalk px-2.5 py-1 font-mono text-xs font-semibold text-asphalt">
+                        {LEAD_MEMBER.tag}
+                      </span>
+                      <h3 className="mt-3 font-cond text-2xl font-bold text-asphalt">{LEAD_MEMBER.name}</h3>
+                      <p className="mt-0.5 font-mono text-xs font-semibold text-sign">{LEAD_MEMBER.role}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-mute">{LEAD_MEMBER.bio}</p>
+                    </div>
+                  </div>
+                </article>
+
+                {/* Right stacked horizontal bento tiles */}
+                <div className="grid gap-5 lg:col-span-7 lg:grid-rows-2">
+                  {OTHER_MEMBERS.map((member) => (
+                    <article
+                      key={member.name}
+                      className="group grid overflow-hidden rounded-xl border border-line bg-white shadow-card transition-shadow hover:shadow-lift sm:grid-cols-[200px_1fr]"
+                    >
+                      <div className="aspect-[4/3] overflow-hidden bg-chalk sm:aspect-auto sm:h-full">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={member.photo}
+                          alt={`${member.name} — ${member.role}`}
+                          loading="lazy"
+                          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center p-6">
+                        <span className="inline-block w-fit rounded bg-chalk px-2.5 py-1 font-mono text-xs font-semibold text-asphalt">
+                          {member.tag}
+                        </span>
+                        <h3 className="mt-3 font-cond text-2xl font-bold text-asphalt">{member.name}</h3>
+                        <p className="mt-0.5 font-mono text-xs font-semibold text-sign">{member.role}</p>
+                        <p className="mt-2.5 text-sm leading-relaxed text-mute">{member.bio}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* General overview & pull quote */}
         <section className="border-b border-line bg-white py-16 sm:py-20">
           <div className="mx-auto max-w-4xl px-5">
             <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
-              O experiență de pregătire clară, gândită de la zero pentru învățare reală
+              Experiență de învățare personalizată
             </h2>
 
             <blockquote className="mt-8 rounded-xl border border-line bg-chalk p-6 sm:p-8">
@@ -116,30 +250,30 @@ export default async function AboutPage() {
                 primească explicația articolului de lege și să intre în examen sigur pe deciziile lui.”
               </p>
               <footer className="mt-4 flex flex-wrap items-center gap-2 text-sm text-mute">
-                <strong className="font-semibold text-asphalt">Irina Ionescu</strong>
-                <span>· Director general PermiStart</span>
+                <strong className="font-semibold text-asphalt">{DIRECTOR.name}</strong>
+                <span>· {DIRECTOR.role}</span>
               </footer>
             </blockquote>
 
             <div className="mt-8 grid gap-6 text-base leading-relaxed text-mute sm:grid-cols-2">
               <div className="space-y-2">
                 <h3 className="font-cond text-xl font-bold text-asphalt">
-                  Progres structurat, fără presiunea abonamentelor
+                  Progres structurat, fără costuri ascunse
                 </h3>
                 <p className="text-sm leading-relaxed sm:text-base">
-                  În comparație cu aplicațiile clasice de chestionare, am reunit cursurile scrise și audio, indicatoarele
-                  fotografiate pe drumuri reale și evaluarea finală într-un singur parcurs. Din prima seară după prima
-                  tranșă ai acces complet la capitolele categoriei tale, de pe telefon sau desktop.
+                  Am reunit cursurile scrise și audio, indicatoarele fotografiate pe drumuri reale și evaluarea finală
+                  într-un singur parcurs. Din prima seară după prima tranșă ai acces complet la capitolele categoriei
+                  tale, de pe telefon sau desktop.
                 </p>
               </div>
               <div className="space-y-2">
                 <h3 className="font-cond text-xl font-bold text-asphalt">
-                  Evaluare adaptivă și trasabilitate completă
+                  Evaluare adaptivă și trasabilitate QR
                 </h3>
                 <p className="text-sm leading-relaxed sm:text-base">
                   Testarea adaptivă identifică subiectele unde mai apar ezitări și revine punctual asupra lor înaintea
-                  examenului final supravegheat. La final, primești un atestat electronic cu cod QR pe care angajatorii
-                  sau partenerii îl pot verifica instant online.
+                  examenului final supravegheat. La final, primești un atestat electronic cu cod QR verificabil instant
+                  online.
                 </p>
               </div>
             </div>
@@ -163,45 +297,6 @@ export default async function AboutPage() {
                 </div>
               ))}
             </dl>
-          </div>
-        </section>
-
-        {/* Leadership team */}
-        <section className="border-b border-line bg-chalk py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-5">
-            <div className="max-w-2xl">
-              <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
-                Membrii echipei
-              </h2>
-              <p className="mt-3 text-base text-mute">
-                Echipa de conducere, formare și conformitate care supraveghează structura cursurilor, verificările de
-                examen și asistența candidaților.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {TEAM_MEMBERS.map((member) => (
-                <article
-                  key={member.name}
-                  className="group overflow-hidden rounded-xl border border-line bg-white shadow-card transition-shadow hover:shadow-lift"
-                >
-                  <div className="aspect-[4/5] overflow-hidden bg-chalk">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={member.photo}
-                      alt={`${member.name} — ${member.role}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-cond text-xl font-bold text-asphalt">{member.name}</h3>
-                    <p className="mt-0.5 font-mono text-xs font-semibold text-sign">{member.role}</p>
-                    <p className="mt-3 text-sm leading-relaxed text-mute">{member.bio}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 

@@ -798,5 +798,21 @@
     "original_date": "2018-06-22",
     "retrieved_at": "2026-11-27",
     "flagged": false
+  },
+  {
+    "file": "/media/permis-ro-categorii.jpg",
+    "slug": "permis-ro-categorii",
+    "alt_ro": "Model specimen permis de conducere european (România) cu tabelul celor 15 categorii AM–DE",
+    "width": 630,
+    "height": 402,
+    "source": "Wikimedia Commons",
+    "title": "RO licence back.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:RO_licence_back.jpg",
+    "author": "Uniunea Europeană / DRPCIV (specimen public)",
+    "license": "Public domain",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "original_date": "2013-01-19",
+    "retrieved_at": "2026-11-27",
+    "flagged": false
   }
 ]

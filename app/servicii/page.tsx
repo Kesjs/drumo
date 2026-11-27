@@ -21,23 +21,34 @@ export const metadata = {
 };
 export const dynamic = "force-dynamic";
 
-const SERVICE_BLOCKS = [
+const SERVICE_BLOCKS: Array<{
+  id: string;
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
+  ctaLabel: string;
+  ctaHref: string;
+  imageLeft: boolean;
+  contain?: boolean;
+}> = [
   {
     id: "pregatire-teoretica",
     title: "Pregătire teoretică structurată pentru 15 categorii europene",
     body: "Parcurgi legislația rutieră din România (OUG 195/2002 și HG 1391/2006) pe capitole organizate logic, ilustrate cu fotografii reale de pe șoselele naționale. Fiecare lecție include citire audio și test de antrenament cu explicația articolului de lege.",
-    image: "/media/calea-victoriei.webp",
-    alt: "Trafic urban și indicatoare rutiere reale pe Calea Victoriei din București",
+    image: "/media/permis-ro-categorii.jpg",
+    alt: "Model european de permis de conducere din România cu tabelul celor 15 categorii AM–DE",
     ctaLabel: "Vezi categoriile și prețurile",
     ctaHref: "/categorii",
     imageLeft: false,
+    contain: true,
   },
   {
     id: "formare-diaspora",
     title: "Formare online flexibilă pentru candidații din țară și diaspora",
     body: "Studiezi în limba română din orice țară europeană, de pe telefon sau desktop, fără program fix. Taxa unică per categorie se poate achita integral sau în 2–3 tranșe transparente, iar accesul complet la capitole se deschide din prima zi.",
-    image: "/media/cat-b.jpg",
-    alt: "Autoturism pregătit pentru cursanții categoriei B",
+    image: "/media/sofer-permis-mana.jpg",
+    alt: "Șofer la volanul autoturismului prezentând un card european model",
     ctaLabel: "Începe înscrierea",
     ctaHref: "/inscriere",
     imageLeft: true,
@@ -46,8 +57,8 @@ const SERVICE_BLOCKS = [
     id: "examen-si-atestat",
     title: "Evaluare adaptivă, examen supravegheat și atestat QR",
     body: "Motorul adaptiv revine asupra capitolelor unde apar ezitări înainte de examenul final cronometrat la 60 secunde pe întrebare. După promovare primești automat pe e-mail atestatul PDF cu serie unică și cod QR verificabil instant online.",
-    image: "/media/cat-ce.jpg",
-    alt: "Ansamblu greu de transport rutier ilustrativ pentru categoriile profesionale",
+    image: "/media/cat-b.jpg",
+    alt: "Autoturism pregătit pentru cursanții categoriei B",
     ctaLabel: "Verifică un atestat QR",
     ctaHref: "/verificare",
     imageLeft: false,
@@ -112,16 +123,16 @@ export default async function ServicesPage() {
                 </div>
 
                 <div
-                  className={`relative aspect-[16/10] bg-asphalt lg:aspect-auto lg:min-h-[340px] ${
-                    item.imageLeft ? "lg:order-1" : "lg:order-2"
-                  }`}
+                  className={`relative aspect-[16/10] lg:aspect-auto lg:min-h-[340px] ${
+                    item.contain ? "bg-chalk p-5 sm:p-8" : "bg-asphalt"
+                  } ${item.imageLeft ? "lg:order-1" : "lg:order-2"}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.image}
                     alt={item.alt}
                     loading="lazy"
-                    className="h-full w-full object-cover"
+                    className={`h-full w-full ${item.contain ? "object-contain drop-shadow-md" : "object-cover"}`}
                   />
                 </div>
               </article>

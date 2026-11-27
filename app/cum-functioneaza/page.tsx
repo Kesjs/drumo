@@ -24,7 +24,7 @@ const STAGES = [
     phase: "Înscriere și plată",
     title: "Alegi categoria, confirmi datele și deblochezi cursurile",
     detail:
-      "Selectezi categoria dorită (AM, A1, A2, A, B1, B, BE, C, CE sau D) și vezi imediat suma exactă în RON sau EUR. Poți plăti integral sau în 2–3 tranșe: prima tranșă deblochează pe loc toate lecțiile și testele.",
+      "Selectezi categoria dorită (AM, A1, A2, A, B1, B, BE, C1, C1E, C, CE, D1, D1E, D sau DE) și vezi imediat suma exactă în RON sau EUR. Poți plăti integral sau în 2–3 tranșe: prima tranșă deblochează pe loc toate lecțiile și testele.",
     gate: "Acces imediat la capitole după prima tranșă",
   },
   {

@@ -104,7 +104,7 @@ export function CategoriesShowcase({ categories }: { categories: SeedCategory[] 
               <div className="mt-7 flex flex-wrap gap-3">
                 <Magnetic>
                   <Link href="/inscriere?cat=B" className={btnPrimary}>
-                    Începe cu Categoria B · {catBPrices ? catBPrices.totalFormatted : "5.750 lei"}
+                    Începe cu Categoria B · {catBPrices ? catBPrices.totalFormatted : "6.250 lei"}
                   </Link>
                 </Magnetic>
                 <a href="#lista-categorii" className={btnGhostDark}>

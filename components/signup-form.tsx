@@ -2,14 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { CheckCircleIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 import { Button, FieldCheckbox, FieldInput, FieldLabel, FieldSelect, NoticeBox } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/toast";
 import { EU_COUNTRIES } from "@/lib/config";
 import type { SeedCategory } from "@/lib/data/seed-content";
 import { feeFor, formatMoney, suggestedSchedule, type Currency } from "@/lib/domain/money";
 
-type FieldKey = "lastName" | "firstName" | "email" | "phone" | "password" | "consents";
+type FieldKey = "fullName" | "email" | "phone" | "address" | "profession" | "message" | "consent";
+
+const REQUEST_TOPICS = [
+  "Înscriere pregătire teoretică + evaluare online",
+  "Pregătire completă în limba română (Diaspora)",
+  "Informații plată în 2–3 tranșe și acces capitole",
+  "Altă solicitare privind categoriile AM–DE",
+];
 
 export function SignupForm({
   categories,
@@ -18,29 +25,29 @@ export function SignupForm({
   categories: SeedCategory[];
   initialCategoryCode?: string;
 }) {
-  const router = useRouter();
   const toast = useToast();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [contactMode, setContactMode] = useState<"email" | "phone">("email");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
   const [country, setCountry] = useState("RO");
+  const [address, setAddress] = useState("");
+  const [profession, setProfession] = useState("");
   const [categoryCode, setCategoryCode] = useState(
     categories.find((c) => c.code === initialCategoryCode)?.code ?? "B",
   );
-  const [currency, setCurrency] = useState<Currency>("RON");
-  const [consentTerms, setConsentTerms] = useState(false);
-  const [consentPrivacy, setConsentPrivacy] = useState(false);
-  const [consentBiometric, setConsentBiometric] = useState(false);
+  const [topic, setTopic] = useState(REQUEST_TOPICS[0]);
+  const [currency, setCurrency] = useState<Currency>("EUR");
+  const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<FieldKey, string>>>({});
 
   const selectedCat = categories.find((c) => c.code === categoryCode) ?? categories[0];
   const fees = feeFor(selectedCat, currency);
   const schedule = suggestedSchedule(selectedCat, currency);
+  const countryLabel = EU_COUNTRIES.find((c) => c.code === country)?.name ?? country;
 
   function clearFieldError(key: FieldKey) {
     setFieldErrors((prev) => {
@@ -53,32 +60,27 @@ export function SignupForm({
 
   function validateFields(): Partial<Record<FieldKey, string>> {
     const errs: Partial<Record<FieldKey, string>> = {};
-    const last = lastName.trim();
-    const first = firstName.trim();
-    const nameRe = /^[\p{L}\s'-]{2,60}$/u;
-
-    if (last.length < 2 || !nameRe.test(last)) {
-      errs.lastName = "Introdu un nume de familie valid (minim 2 litere).";
+    if (fullName.trim().length < 3) {
+      errs.fullName = "Introdu numele complet (minim 3 caractere).";
     }
-    if (first.length < 2 || !nameRe.test(first)) {
-      errs.firstName = "Introdu un prenume valid (minim 2 litere).";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
+      errs.email = "Introdu o adresă de e-mail validă (ex. nume@exemplu.ro).";
     }
-    if (contactMode === "email") {
-      const emailTrim = email.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailTrim)) {
-        errs.email = "Introdu o adresă de e-mail validă (ex. nume@exemplu.ro).";
-      }
-    } else {
-      const digits = phone.replace(/[^0-9]/g, "");
-      if (digits.length < 8 || digits.length > 15) {
-        errs.phone = "Introdu un număr de telefon valid (minim 8 cifre, ex. +40 722 000 000).";
-      }
+    const digits = phone.replace(/[^0-9]/g, "");
+    if (digits.length < 8 || digits.length > 15) {
+      errs.phone = "Introdu un număr de telefon valid (ex. +40 722 000 000).";
     }
-    if (password.length < 8) {
-      errs.password = "Parola trebuie să aibă cel puțin 8 caractere.";
+    if (address.trim().length < 4) {
+      errs.address = "Introdu orașul sau adresa de domiciliu.";
     }
-    if (!consentTerms || !consentPrivacy || !consentBiometric) {
-      errs.consents = "Bifează toate cele 3 acorduri obligatorii pentru a continua.";
+    if (profession.trim().length < 2) {
+      errs.profession = "Introdu profesia sau domeniul tău.";
+    }
+    if (message.trim().length < 10) {
+      errs.message = "Scrie câteva detalii despre cererea ta (minim 10 caractere).";
+    }
+    if (!consent) {
+      errs.consent = "Bifează acordul pentru Termeni și Politica de confidențialitate.";
     }
     return errs;
   }
@@ -92,47 +94,36 @@ export function SignupForm({
     if (Object.keys(errs).length > 0) {
       const firstKey = Object.keys(errs)[0] as FieldKey;
       const msg = errs[firstKey] || "Verifică datele introduse.";
-      toast.error(msg, "Date incomplete sau invalide");
-      const idMap: Record<FieldKey, string> = {
-        lastName: "s-last",
-        firstName: "s-first",
-        email: "s-email",
-        phone: "s-phone",
-        password: "s-pass",
-        consents: "s-consents",
-      };
-      document.getElementById(idMap[firstKey])?.focus();
+      toast.error(msg, "Date incomplete");
+      document.getElementById(`in-${firstKey}`)?.focus();
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
-          email: contactMode === "email" ? email.trim() : "",
-          phone: contactMode === "phone" ? phone.trim() : "",
-          password,
-          country,
+          name: fullName.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          country: countryLabel,
+          address: address.trim(),
+          profession: profession.trim(),
           categoryCode,
-          currency,
-          consentTerms,
-          consentPrivacy,
-          consentBiometric,
+          topic: `[Cerere ${categoryCode}] ${topic}`,
+          message: message.trim(),
         }),
       });
       const data = await res.json();
       if (!res.ok) {
-        const msg = data.error || "Înscrierea nu a reușit.";
+        const msg = data.error || "Trimiterea cererii nu a reușit.";
         setError(msg);
-        toast.error(msg, "Eroare la înscriere");
+        toast.error(msg, "Eroare la trimitere");
       } else {
-        toast.success("Contul a fost creat. Continuă cu verificarea identității.", "Înscriere reușită");
-        router.push("/verificare-identitate");
-        router.refresh();
+        setSubmittedId(data.id);
+        toast.success("Cererea ta de înscriere a fost înregistrată.", "Cerere trimisă");
       }
     } catch {
       const msg = "Eroare de rețea. Verifică conexiunea și încearcă din nou.";
@@ -143,113 +134,113 @@ export function SignupForm({
     }
   }
 
+  if (submittedId) {
+    return (
+      <div className="mx-auto max-w-2xl rounded-xl border-2 border-asphalt bg-surface p-8 text-asphalt shadow-card">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-signal text-asphalt">
+            <CheckCircleIcon className="h-6 w-6" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 className="font-cond text-3xl font-bold">Cerere înregistrată cu succes</h2>
+            <p className="font-mono text-xs text-mute">Referință: {submittedId}</p>
+          </div>
+        </div>
+        <p className="mt-5 text-sm leading-relaxed text-mute sm:text-base">
+          Mulțumim, <strong className="font-semibold text-asphalt">{fullName}</strong>. Solicitarea ta pentru{" "}
+          <strong className="font-semibold text-asphalt">{selectedCat.name_ro}</strong> ({countryLabel}) a ajuns la
+          echipa PermiStart. Vei primi un răspuns pe <span className="font-mono text-asphalt">{email}</span> sau la{" "}
+          <span className="font-mono text-asphalt">{phone}</span> în cel mult 24 de ore lucrătoare cu pașii de acces și
+          opțiunile de plată în tranșe — fără nicio taxă percepută acum.
+        </p>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link
+            href="/categorii"
+            className="inline-flex min-h-[44px] items-center rounded bg-asphalt px-5 py-2.5 text-sm font-semibold text-white hover:bg-ink"
+          >
+            Înapoi la categorii
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              setSubmittedId(null);
+              setMessage("");
+            }}
+            className="inline-flex min-h-[44px] items-center rounded border border-line bg-chalk px-5 py-2.5 text-sm font-semibold text-asphalt hover:bg-white"
+          >
+            Trimite o altă cerere
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.2fr_0.9fr]">
-      <form noValidate onSubmit={onSubmit} className="space-y-5 rounded-lg border-2 border-asphalt bg-surface p-6">
+    <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
+      <form noValidate onSubmit={onSubmit} className="space-y-5 rounded-xl border border-line bg-surface p-6 sm:p-8">
         {error ? <NoticeBox tone="error">{error}</NoticeBox> : null}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <FieldLabel htmlFor="s-last">Nume de familie</FieldLabel>
+            <FieldLabel htmlFor="in-fullName">Nume complet</FieldLabel>
             <FieldInput
-              id="s-last"
-              value={lastName}
-              aria-invalid={Boolean(fieldErrors.lastName)}
+              id="in-fullName"
+              value={fullName}
+              aria-invalid={Boolean(fieldErrors.fullName)}
               onChange={(e) => {
-                setLastName(e.target.value);
-                clearFieldError("lastName");
+                setFullName(e.target.value);
+                clearFieldError("fullName");
               }}
-              placeholder="ex. Popescu"
+              placeholder="ex. Andrei Popescu"
               className="mt-1.5"
             />
-            {fieldErrors.lastName ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.lastName}</p> : null}
+            {fieldErrors.fullName ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.fullName}</p> : null}
           </div>
-          <div>
-            <FieldLabel htmlFor="s-first">Prenume</FieldLabel>
-            <FieldInput
-              id="s-first"
-              value={firstName}
-              aria-invalid={Boolean(fieldErrors.firstName)}
-              onChange={(e) => {
-                setFirstName(e.target.value);
-                clearFieldError("firstName");
-              }}
-              placeholder="ex. Andrei"
-              className="mt-1.5"
-            />
-            {fieldErrors.firstName ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.firstName}</p> : null}
-          </div>
-        </div>
 
-        <div>
-          <span className="block text-sm font-semibold text-asphalt">Metodă de contact principală</span>
-          <div className="mt-2 flex gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setContactMode("email");
-                clearFieldError("phone");
-              }}
-              className={`min-h-[40px] rounded border px-3.5 text-sm font-semibold ${
-                contactMode === "email" ? "border-asphalt bg-asphalt text-white" : "border-line bg-chalk text-asphalt"
-              }`}
-            >
-              E-mail
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setContactMode("phone");
+          <div>
+            <FieldLabel htmlFor="in-email">Adresă de e-mail</FieldLabel>
+            <FieldInput
+              id="in-email"
+              type="email"
+              value={email}
+              aria-invalid={Boolean(fieldErrors.email)}
+              onChange={(e) => {
+                setEmail(e.target.value);
                 clearFieldError("email");
               }}
-              className={`min-h-[40px] rounded border px-3.5 text-sm font-semibold ${
-                contactMode === "phone" ? "border-asphalt bg-asphalt text-white" : "border-line bg-chalk text-asphalt"
-              }`}
-            >
-              Telefon
-            </button>
+              placeholder="nume@exemplu.ro"
+              className="mt-1.5"
+            />
+            {fieldErrors.email ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.email}</p> : null}
           </div>
-          {contactMode === "email" ? (
-            <div className="mt-3">
-              <FieldLabel htmlFor="s-email">Adresă de e-mail</FieldLabel>
-              <FieldInput
-                id="s-email"
-                type="email"
-                value={email}
-                aria-invalid={Boolean(fieldErrors.email)}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  clearFieldError("email");
-                }}
-                placeholder="nume@exemplu.ro"
-                className="mt-1.5"
-              />
-              {fieldErrors.email ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.email}</p> : null}
-            </div>
-          ) : (
-            <div className="mt-3">
-              <FieldLabel htmlFor="s-phone">Număr de telefon</FieldLabel>
-              <FieldInput
-                id="s-phone"
-                type="tel"
-                value={phone}
-                aria-invalid={Boolean(fieldErrors.phone)}
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                  clearFieldError("phone");
-                }}
-                placeholder="+40 7XX XXX XXX"
-                className="mt-1.5"
-              />
-              {fieldErrors.phone ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.phone}</p> : null}
-            </div>
-          )}
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <FieldLabel htmlFor="s-country">Țară (Uniunea Europeană)</FieldLabel>
-            <FieldSelect id="s-country" value={country} onChange={(e) => setCountry(e.target.value)} className="mt-1.5">
+            <FieldLabel htmlFor="in-phone">Telefon</FieldLabel>
+            <FieldInput
+              id="in-phone"
+              type="tel"
+              value={phone}
+              aria-invalid={Boolean(fieldErrors.phone)}
+              onChange={(e) => {
+                setPhone(e.target.value);
+                clearFieldError("phone");
+              }}
+              placeholder="ex. +40 722 000 000"
+              className="mt-1.5"
+            />
+            {fieldErrors.phone ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.phone}</p> : null}
+          </div>
+
+          <div>
+            <FieldLabel htmlFor="in-country">Țara de reședință</FieldLabel>
+            <FieldSelect
+              id="in-country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="mt-1.5"
+            >
               {EU_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.code}>
                   {c.name}
@@ -257,154 +248,176 @@ export function SignupForm({
               ))}
             </FieldSelect>
           </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <FieldLabel htmlFor="s-cat">Categoria de permis</FieldLabel>
+            <FieldLabel htmlFor="in-address">Adresă de domiciliu</FieldLabel>
+            <FieldInput
+              id="in-address"
+              value={address}
+              aria-invalid={Boolean(fieldErrors.address)}
+              onChange={(e) => {
+                setAddress(e.target.value);
+                clearFieldError("address");
+              }}
+              placeholder="Oraș, stradă sau țară"
+              className="mt-1.5"
+            />
+            {fieldErrors.address ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.address}</p> : null}
+          </div>
+
+          <div>
+            <FieldLabel htmlFor="in-profession">Profesie</FieldLabel>
+            <FieldInput
+              id="in-profession"
+              value={profession}
+              aria-invalid={Boolean(fieldErrors.profession)}
+              onChange={(e) => {
+                setProfession(e.target.value);
+                clearFieldError("profession");
+              }}
+              placeholder="ex. Șofer, student, tehnician"
+              className="mt-1.5"
+            />
+            {fieldErrors.profession ? (
+              <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.profession}</p>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <FieldLabel htmlFor="in-category">Categoria de permis dorită</FieldLabel>
             <FieldSelect
-              id="s-cat"
+              id="in-category"
               value={categoryCode}
               onChange={(e) => setCategoryCode(e.target.value)}
               className="mt-1.5"
             >
-              {categories.map((c) => (
-                <option key={c.id} value={c.code}>
-                  {c.code} · {c.name_ro.replace(/^Categoria\s+\w+\s+[—·]\s+/, "")}
+              {categories.map((cat) => (
+                <option key={cat.code} value={cat.code}>
+                  {cat.name_ro} ({formatMoney(currency === "RON" ? cat.fee_ron : cat.fee_eur, currency)})
+                </option>
+              ))}
+            </FieldSelect>
+          </div>
+
+          <div>
+            <FieldLabel htmlFor="in-topic">Obiectul cererii</FieldLabel>
+            <FieldSelect id="in-topic" value={topic} onChange={(e) => setTopic(e.target.value)} className="mt-1.5">
+              {REQUEST_TOPICS.map((t) => (
+                <option key={t} value={t}>
+                  {t}
                 </option>
               ))}
             </FieldSelect>
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <FieldLabel htmlFor="s-pass">Parolă (minim 8 caractere)</FieldLabel>
-            <FieldInput
-              id="s-pass"
-              type="password"
-              value={password}
-              aria-invalid={Boolean(fieldErrors.password)}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                clearFieldError("password");
-              }}
-              placeholder="Minim 8 caractere"
-              className="mt-1.5"
-            />
-            {fieldErrors.password ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.password}</p> : null}
-          </div>
-          <div>
-            <FieldLabel htmlFor="s-curr">Monedă afișare și plată</FieldLabel>
-            <FieldSelect
-              id="s-curr"
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as Currency)}
-              className="mt-1.5"
-            >
-              <option value="RON">RON (Lei)</option>
-              <option value="EUR">EUR (Euro)</option>
-            </FieldSelect>
-          </div>
+        <div>
+          <FieldLabel htmlFor="in-message">Mesaj și detalii suplimentare</FieldLabel>
+          <textarea
+            id="in-message"
+            rows={4}
+            value={message}
+            aria-invalid={Boolean(fieldErrors.message)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              clearFieldError("message");
+            }}
+            placeholder="Scrie categoria vizată, dacă preferi plata în tranșe sau programul tău de studiu..."
+            className="mt-1.5 w-full rounded border border-line bg-white px-3 py-2 text-sm text-asphalt transition-colors focus:border-asphalt focus:outline-none"
+          />
+          {fieldErrors.message ? <p className="mt-1 text-xs font-medium text-danger">{fieldErrors.message}</p> : null}
         </div>
 
-        <fieldset id="s-consents" tabIndex={-1} className="space-y-3 border-t border-line pt-4 text-xs focus:outline-none">
-          <legend className="font-semibold text-asphalt">Consimțăminte obligatorii (GDPR)</legend>
-          <label className="flex cursor-pointer items-start gap-2.5">
+        <div className="rounded-lg border border-line bg-chalk p-4">
+          <label htmlFor="in-consent" className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-asphalt">
             <FieldCheckbox
-              checked={consentTerms}
-              onCheckedChange={(v) => {
-                setConsentTerms(v);
-                clearFieldError("consents");
+              id="in-consent"
+              checked={consent}
+              onCheckedChange={(checked) => {
+                setConsent(checked);
+                clearFieldError("consent");
               }}
+              className="mt-0.5"
             />
             <span>
-              Am citit{" "}
-              <Link href="/termeni" target="_blank" className="font-semibold text-sign underline">
+              Am citit și accept{" "}
+              <Link href="/termeni" className="font-semibold text-sign underline underline-offset-2">
                 Termenii și condițiile
               </Link>{" "}
               și{" "}
-              <Link href="/rambursari" target="_blank" className="font-semibold text-sign underline">
-                Politica de rambursare
-              </Link>
-              . Înțeleg că documentul emis este un <strong>atestat de reușită PermiStart</strong>, nu permis de
-              conducere oficial.
-            </span>
-          </label>
-          <label className="flex cursor-pointer items-start gap-2.5">
-            <FieldCheckbox
-              checked={consentPrivacy}
-              onCheckedChange={(v) => {
-                setConsentPrivacy(v);
-                clearFieldError("consents");
-              }}
-            />
-            <span>
-              Accept prelucrarea datelor conform{" "}
-              <Link href="/confidentialitate" target="_blank" className="font-semibold text-sign underline">
-                Politicii de confidențialitate
+              <Link href="/confidentialitate" className="font-semibold text-sign underline underline-offset-2">
+                Politica de confidențialitate (GDPR)
               </Link>
               .
             </span>
           </label>
-          <label className="flex cursor-pointer items-start gap-2.5">
-            <FieldCheckbox
-              checked={consentBiometric}
-              onCheckedChange={(v) => {
-                setConsentBiometric(v);
-                clearFieldError("consents");
-              }}
-            />
-            <span>
-              Consimțământ explicit (art. 9 GDPR) pentru prelucrarea fotografiei actului de identitate și a selfie-ului
-              în scopul verificării identității la examen (păstrare scurtă, ștergere automată).
-            </span>
-          </label>
-          {fieldErrors.consents ? <p className="text-xs font-medium text-danger">{fieldErrors.consents}</p> : null}
-        </fieldset>
+          {fieldErrors.consent ? <p className="mt-1.5 text-xs font-medium text-danger">{fieldErrors.consent}</p> : null}
+        </div>
 
-        <Button type="submit" size="lg" disabled={loading} className="w-full">
-          {loading ? "Se creează contul..." : "Creează contul și continuă"}
+        <Button type="submit" disabled={loading} className="w-full">
+          {loading ? "Se trimite cererea..." : "Trimite cererea de înscriere"}
         </Button>
       </form>
 
-      <aside className="space-y-4">
-        <div className="rounded-lg border-2 border-asphalt bg-surface p-6">
-          <p className="font-mono text-xs text-sign">TAXĂ CATEGORIE · FĂRĂ ABONAMENT</p>
-          <h2 className="mt-1 font-cond text-3xl font-bold">{selectedCat.name_ro.replace(" — ", " · ")}</h2>
-          <p className="mt-2 text-sm text-mute">{selectedCat.short_ro}</p>
+      {/* Transparent tariff & pre-registration summary */}
+      <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+        <div className="rounded-xl border border-line bg-asphalt p-6 text-white">
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-mono text-xs font-semibold text-signal">Rezumat tarif</span>
+            <div className="inline-flex rounded border border-white/20 p-0.5 text-xs">
+              {(["EUR", "RON"] as const).map((curr) => (
+                <button
+                  key={curr}
+                  type="button"
+                  onClick={() => setCurrency(curr)}
+                  className={`rounded px-2.5 py-1 font-mono font-semibold transition-colors ${
+                    currency === curr ? "bg-signal text-asphalt" : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {curr}
+                </button>
+              ))}
+            </div>
+          </div>
 
-          <dl className="mt-5 space-y-2.5 border-t border-line pt-4 text-sm">
-            <div className="flex justify-between">
-              <dt className="text-mute">Taxă unică totală</dt>
-              <dd className="font-mono text-lg font-bold tabular-nums text-asphalt">
+          <h2 className="mt-4 font-cond text-2xl font-bold text-white">{selectedCat.name_ro}</h2>
+          <p className="mt-1 text-sm text-white/75">{selectedCat.short_ro}</p>
+
+          <dl className="mt-5 space-y-3 border-t border-white/15 pt-4 text-sm">
+            <div className="flex items-baseline justify-between gap-2">
+              <dt className="text-white/75">Taxă totală pregătire</dt>
+              <dd className="font-cond text-3xl font-bold tabular-nums text-signal">
                 {formatMoney(fees.total, currency)}
               </dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-mute">Sau prima tranșă minimă (deblochează cursurile)</dt>
-              <dd className="font-mono font-semibold tabular-nums text-asphalt">
-                {formatMoney(fees.minFirst, currency)}
+            <div className="flex items-baseline justify-between gap-2 text-xs">
+              <dt className="text-white/70">Sau în {schedule.length} tranșe, de la</dt>
+              <dd className="font-mono font-semibold text-white">{formatMoney(fees.minFirst, currency)} prima tranșă</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-2 text-xs">
+              <dt className="text-white/70">Examen teoretic online</dt>
+              <dd className="font-mono text-white">
+                {selectedCat.exam_question_count} întrebări · prag {selectedCat.exam_pass_mark}/
+                {selectedCat.exam_question_count}
               </dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-mute">Tranșe maxime permise</dt>
-              <dd className="font-mono tabular-nums">{selectedCat.max_installments}</dd>
-            </div>
           </dl>
-
-          <div className="mt-4 border-t border-line pt-3 text-xs text-mute">
-            <p className="font-semibold text-asphalt">Exemplu eșalonare ({selectedCat.max_installments} tranșe):</p>
-            <p className="mt-1 font-mono tabular-nums">
-              {schedule.map((amt, idx) => `${idx + 1}: ${formatMoney(amt, currency)}`).join(" · ")}
-            </p>
-          </div>
         </div>
 
-        <NoticeBox tone="info" title="Ce plătești și când se deblochează">
-          <ul className="list-disc space-y-1 pl-4 text-xs">
-            <li>Cursurile și evaluările se deblochează la prima plată.</li>
-            <li>Examenul se deblochează după plata integrală, KYC aprobat și evaluarea globală ≥ {selectedCat.readiness_threshold}%.</li>
-            <li>Rambursare 14 zile dacă nu ai început cursurile.</li>
-          </ul>
-        </NoticeBox>
+        <div className="rounded-xl border border-line bg-white p-5 text-xs leading-relaxed text-mute">
+          <div className="flex items-center gap-2 font-semibold text-asphalt">
+            <ShieldCheckIcon className="h-5 w-5 text-sign" aria-hidden="true" />
+            <span>Fără plată online obligatorie la înscriere</span>
+          </div>
+          <p className="mt-2">
+            Acest formular trimite cererea ta de înscriere către echipa PermiStart. Confirmăm eligibilitatea și
+            modalitatea de plată dorită înainte de activarea accesului.
+          </p>
+        </div>
       </aside>
     </div>
   );

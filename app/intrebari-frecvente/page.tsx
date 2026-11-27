@@ -19,7 +19,7 @@ const FAQ_GROUPS = [
       },
       {
         q: "Cum funcționează plata în tranșe?",
-        a: "Prima tranșă (minimul afișat pentru categoria ta, de exemplu de la 750 lei / 150 € pentru AM sau 2.000 lei / 400 € pentru B) deblochează imediat toate cursurile pe capitole, testele și evaluarea adaptivă. Examenul teoretic final devine accesibil odată ce taxa este achitată integral.",
+        a: "Prima tranșă (minimul afișat pentru categoria ta, de exemplu de la 500 lei / 100 € pentru AM sau 2.250 lei / 450 € pentru B) deblochează imediat toate cursurile pe capitole, testele și evaluarea adaptivă. Examenul teoretic final devine accesibil odată ce taxa este achitată integral.",
       },
       {
         q: "Cum pot solicita rambursarea?",

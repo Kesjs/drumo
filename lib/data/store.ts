@@ -388,7 +388,7 @@ let writeLock: Promise<void> = Promise.resolve();
 function syncCatalogSeed(db: LocalDb): boolean {
   const catB = db.categories.find((c) => c.code === "B");
   const hasAllEu = SEED_CATEGORIES.every((sc) => db.categories.some((c) => c.code === sc.code));
-  if (hasAllEu && (!catB || catB.fee_eur >= 50_000)) return false;
+  if (hasAllEu && (!catB || catB.fee_eur >= 125_000)) return false;
   db.categories = structuredClone(SEED_CATEGORIES);
   db.chapters = structuredClone(SEED_CHAPTERS);
   db.questions = structuredClone(SEED_QUESTIONS);

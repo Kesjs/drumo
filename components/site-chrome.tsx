@@ -21,6 +21,7 @@ type NavItem =
 
 const PUBLIC_NAV: NavItem[] = [
   { kind: "link", href: "/categorii", label: "Categorii" },
+  { kind: "link", href: "/servicii", label: "Servicii" },
   {
     kind: "dropdown",
     id: "platforma",
@@ -336,6 +337,7 @@ export function PublicFooter() {
           <p className="font-semibold text-chalk">Platformă</p>
           <ul className="space-y-0.5">
             <li><Link className={linkCls} href="/categorii">Categorii de permis</Link></li>
+            <li><Link className={linkCls} href="/servicii">Servicii</Link></li>
             <li><Link className={linkCls} href="/cum-functioneaza">Cum funcționează</Link></li>
             <li><Link className={linkCls} href="/cursuri">Cursuri pe capitole</Link></li>
             <li><Link className={linkCls} href="/examen">Examen online</Link></li>

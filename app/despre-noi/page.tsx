@@ -3,6 +3,7 @@ import {
   ArrowUpRightIcon,
   BanknotesIcon,
   BookOpenIcon,
+  CheckBadgeIcon,
   LockClosedIcon,
   ScaleIcon,
 } from "@heroicons/react/24/outline";
@@ -14,6 +15,40 @@ import { btnPrimary, btnGhostDark, btnGhostLight } from "@/lib/ui";
 
 export const metadata = { title: "Despre noi" };
 export const dynamic = "force-dynamic";
+
+const TEAM_MEMBERS = [
+  {
+    name: "Irina Ionescu",
+    role: "Director general",
+    photo: "/media/team-irina.jpg",
+    bio: "Coordonează direcția educațională PermiStart, standardul editorial pe capitole și calitatea evaluărilor teoretice.",
+  },
+  {
+    name: "Ing. Radu Dumitrescu",
+    role: "Formator principal legislație rutieră",
+    photo: "/media/team-radu.jpg",
+    bio: "Elaborează structura lecțiilor, explicațiile juridice și scenariile foto reale pentru toate cele 15 categorii europene.",
+  },
+  {
+    name: "Av. Gabriela Marinescu",
+    role: "Consilier juridic & Conformitate GDPR",
+    photo: "/media/team-gabriela.jpg",
+    bio: "Supraveghează alinierea la OUG 195/2002, transparența plăților și ștergerea automată a actelor KYC la 30 de zile.",
+  },
+  {
+    name: "Elena Stănescu",
+    role: "Secretar general & Suport candidați",
+    photo: "/media/team-elena.jpg",
+    bio: "Gestionează comunicarea directă în limba română cu candidații din țară și din diaspora, de la înscriere până la atestat.",
+  },
+];
+
+const KEY_FIGURES = [
+  { value: "15", label: "Categorii europene (AM – DE) acoperite integral" },
+  { value: "100%", label: "Aliniere la OUG 195/2002 și HG 1391/2006" },
+  { value: "72h", label: "Termen maxim de emitere pentru atestatul cu cod QR" },
+  { value: "30 zile", label: "Retenție maximă KYC criptat înainte de ștergere" },
+];
 
 const PRINCIPLES = [
   {
@@ -63,6 +98,112 @@ export default async function AboutPage() {
             </>
           }
         />
+
+        {/* Editorial narrative & founder statement */}
+        <section className="border-b border-line bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl px-5">
+            <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
+              O experiență de pregătire clară, gândită de la zero pentru învățare reală
+            </h2>
+
+            <blockquote className="mt-8 rounded-xl border border-line bg-chalk p-6 sm:p-8">
+              <p aria-hidden="true" className="font-cond text-4xl font-bold leading-none text-sign">
+                „
+              </p>
+              <p className="mt-2 text-base font-medium leading-relaxed text-asphalt sm:text-lg">
+                Codul rutier nu se stăpânește memorând mecanic variante izolate. Am construit PermiStart ca fiecare
+                candidat — fie că învață din România sau din diaspora — să parcurgă materia ordonat pe capitole, să
+                primească explicația articolului de lege și să intre în examen sigur pe deciziile lui.”
+              </p>
+              <footer className="mt-4 flex flex-wrap items-center gap-2 text-sm text-mute">
+                <strong className="font-semibold text-asphalt">Irina Ionescu</strong>
+                <span>· Director general PermiStart</span>
+              </footer>
+            </blockquote>
+
+            <div className="mt-8 grid gap-6 text-base leading-relaxed text-mute sm:grid-cols-2">
+              <div className="space-y-2">
+                <h3 className="font-cond text-xl font-bold text-asphalt">
+                  Progres structurat, fără presiunea abonamentelor
+                </h3>
+                <p className="text-sm leading-relaxed sm:text-base">
+                  În comparație cu aplicațiile clasice de chestionare, am reunit cursurile scrise și audio, indicatoarele
+                  fotografiate pe drumuri reale și evaluarea finală într-un singur parcurs. Din prima seară după prima
+                  tranșă ai acces complet la capitolele categoriei tale, de pe telefon sau desktop.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-cond text-xl font-bold text-asphalt">
+                  Evaluare adaptivă și trasabilitate completă
+                </h3>
+                <p className="text-sm leading-relaxed sm:text-base">
+                  Testarea adaptivă identifică subiectele unde mai apar ezitări și revine punctual asupra lor înaintea
+                  examenului final supravegheat. La final, primești un atestat electronic cu cod QR pe care angajatorii
+                  sau partenerii îl pot verifica instant online.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Key metrics band */}
+        <section className="bg-asphalt py-14 text-white sm:py-16">
+          <div className="mx-auto max-w-6xl px-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <CheckBadgeIcon className="h-7 w-7 text-signal" aria-hidden="true" />
+              <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-white sm:text-4xl">
+                Reperele platformei PermiStart
+              </h2>
+            </div>
+            <dl className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {KEY_FIGURES.map((item) => (
+                <div key={item.label} className="border-t border-white/20 pt-5">
+                  <dt className="font-cond text-4xl font-bold tabular-nums text-signal sm:text-5xl">{item.value}</dt>
+                  <dd className="mt-2 max-w-[26ch] text-sm text-white/85">{item.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* Leadership team */}
+        <section className="border-b border-line bg-chalk py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-5">
+            <div className="max-w-2xl">
+              <h2 className="font-cond text-3xl font-bold tracking-[-0.015em] text-asphalt sm:text-4xl">
+                Membrii echipei
+              </h2>
+              <p className="mt-3 text-base text-mute">
+                Echipa de conducere, formare și conformitate care supraveghează structura cursurilor, verificările de
+                examen și asistența candidaților.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {TEAM_MEMBERS.map((member) => (
+                <article
+                  key={member.name}
+                  className="group overflow-hidden rounded-xl border border-line bg-white shadow-card transition-shadow hover:shadow-lift"
+                >
+                  <div className="aspect-[4/5] overflow-hidden bg-chalk">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={member.photo}
+                      alt={`${member.name} — ${member.role}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-cond text-xl font-bold text-asphalt">{member.name}</h3>
+                    <p className="mt-0.5 font-mono text-xs font-semibold text-sign">{member.role}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-mute">{member.bio}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Principles */}
         <section className="mx-auto max-w-6xl px-5 py-16 sm:py-20">
